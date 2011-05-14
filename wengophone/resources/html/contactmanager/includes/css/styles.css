@@ -1,0 +1,85 @@
+@import url('window.css');
+@import url('contacts.css');
+@import url('multiwindow.css');
+@import url('tooltip.css');
+@import url('form.css');
+@import url('editinplace.css');
+@import url('smoothness/jquery-ui-1.7.1.custom.css');
+
+body, form, fieldset { margin: 0px; padding: 0px; border: 0px; }
+
+body { 
+	background:#000;
+	font-size:11px;
+	font-family:tahoma, helvetica, arial;
+	width:100%;
+	height:100%;
+	text-align:center;
+}
+
+.clear {
+	clear:both;
+}
+
+
+.ui-layout-pane { /* all 'panes' */ 
+	background: #FFF; 
+	border: 1px solid #BBB; 
+	padding: 10px; 
+	overflow: auto;
+} 
+
+.ui-layout-resizer { /* all 'resizer-bars' */ 
+	background: #DDD; 
+} 
+
+.ui-layout-toggler { /* all 'toggler-buttons' */ 
+	background: #AAA; 
+} 
+
+.example { color:#808080; }
+.exampleDim { color:#BBBBBB; }
+
+/* Edit Area CSS Starts Here */
+.editarea {
+	display:none;
+	border:0px solid red;
+	text-align:left;
+}
+	.editarea div.edit-section-top {
+		position:relative;
+		width:100%;
+		height:30px;
+		border-bottom:1px solid #898c95;
+	}
+		.editarea div.edit-section-top #bttn_save_group, 
+		.editarea div.edit-section-top #bttn_edit_group, 
+		.editarea div.edit-section-top #bttn_edit_contact, 
+		.editarea div.edit-section-top #bttn_edit_contact_settings, 
+		.editarea div.edit-section-top #bttn_save_contact_settings, 
+		.editarea div.edit-section-top #bttn_save_contact {
+			float:left;
+			margin:4px 0px 0px 4px;
+		}
+		.editarea div.edit-section-top #bttn_delete_group, .editarea div.edit-section-top #bttn_delete_contact {
+			float:right;
+			margin:4px 4px 0px 0px;
+		}
+		.editarea div.edit-section-top #bttn_save_contact {
+			display:none;
+		}
+	.editarea div.edit-section-content {
+		position:relative;
+		display:block;
+		width:100%;
+		height:100%;
+		overflow:auto;
+	}
+	.editarea .edit-section-content div.editable {
+		display:block;
+		width:100%;
+		height:50px;
+		padding:0px 0px 0px 0px;
+		border:1px sold red;
+	}
+/* Edit Area CSS Ends Here */

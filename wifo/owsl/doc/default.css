@@ -1,0 +1,129 @@
+*
+{
+	margin: 0px;
+	padding: 0px;
+}
+body
+{
+	margin: 10px;
+	font-family: sans-serif;
+	font-size: 90%;
+	vertical-align: top;
+	text-align: left;
+	background-color: white;
+	color: black;
+	cursor: default;
+}
+acronym
+{
+	color: navy;
+	border-bottom-style: none;
+}
+acronym:hover
+{
+	border-bottom-style: dotted;
+	cursor: help;
+}
+a
+{
+	color: blue;
+	text-decoration: none;
+}
+a:hover
+{
+	text-decoration: underline;
+	cursor: pointer;
+}
+h1, h2, h3, h4, h5, h6
+{
+	font-size: 100%;
+	font-stretch: normal;
+	font-variant: normal;
+	font-style: normal;
+	font-weight: normal;
+}
+h1
+{
+	margin: 0em 0em 2em 0em;
+	text-align: center;
+	font-size: 150%;
+	font-weight: bold;
+	font-variant: small-caps;
+}
+h2
+{
+	margin: 2em 0em 1em 0em;
+	font-size: 130%;
+	font-weight: bold;
+	color: purple;
+	border-bottom: medium solid purple;
+}
+h3
+{
+	margin: 1.5em 0em 1em 0em;
+	font-size: 120%;
+	font-weight: bold;
+	font-style: italic;
+	color: maroon;
+}
+h4
+{
+	margin: 1.5em 0em 1em 2em;
+	font-weight: bold;
+}
+p
+{
+	margin-top: 1em;
+}
+p.caption
+{
+	margin: 0em 2em 1em 2em;
+	font-weight: bold;
+	font-style: italic;
+}
+p.useless
+{
+	color: silver;
+}
+ul, ol
+{
+	margin-left: 2em;
+}
+li
+{
+	margin: 0.5em 0em 0em 1em;
+}
+code
+{
+	font-family: monospace;
+	white-space: pre;
+}
+code.block
+{
+	display: block;
+	margin: 1em 2em;
+	padding: 1em;
+	border: thin solid black;
+	background-color: #F0F0F0;
+}
+code em
+{
+	font-weight: normal;
+	font-style: italic;
+	color: green;
+}
+img
+{
+	display: block;
+	margin: 1em 2em ;
+	border-style: none;
+}
+img.border
+{
+	border: thin solid black;
+}
+img.padded_border
+{
+	padding: 1em;
+	border: thin solid black;
+}

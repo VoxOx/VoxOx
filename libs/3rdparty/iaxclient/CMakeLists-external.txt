@@ -1,0 +1,9 @@
+if (NOT IAXCLIENT_FOUND)
+	find_package(IAXCLIENT REQUIRED)
+endif (NOT IAXCLIENT_FOUND)
+
+ow_create_project(iaxclient)
+
+ow_use_public_libraries(
+	IAXCLIENT
+)

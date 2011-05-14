@@ -1,0 +1,101 @@
+.message, .nextmessage {
+	position: relative;
+	display: block;
+	text-align: left;
+	word-wrap: break-word;
+}
+
+div.message {
+	margin: 0px 0px 5px 0px;
+}
+
+.nextmessage {
+	margin-top: 3px;
+	padding-top: 4px;
+    border-top-width: 1px;
+    border-top-style:groove;
+    border-top-color:rgba(0,0,0,.1);
+}
+
+.buddyicon[background="Incoming/buddy_icon.png"],
+.buddyicon[background="Outgoing/buddy_icon.png"] {
+	display: none;
+}
+
+.buddyicon[background="Incoming/buddy_icon.png"] ~ .capsule,
+.buddyicon[background="Outgoing/buddy_icon.png"] ~ .capsule {
+	margin-left: 3px;
+}
+
+.buddyicon {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	top: 5px;
+	left: -2px;
+}
+
+.capsule {
+	margin: 0px 4px 0px 36px;
+	border-width: 1px;
+	border-style: solid;
+	-webkit-border-radius:8px;
+	-webkit-box-shadow:0px 1px 2px rgba(129,129,129,.8);
+}
+
+.context, .content {
+	padding: 5px 6px;
+}
+
+.sender {
+	font-size: 90%;
+	padding: 1px 6px;
+	font-weight: bold;	
+	line-height: 16px;
+	background: rgba(255, 255, 255, .8);
+	-webkit-border-top-left-radius:6px;
+	-webkit-border-top-right-radius:6px;
+}
+
+.time, .status {
+	display: block;
+	position: relative;
+	color: #888;
+	font-size: 90%;
+	text-align: center;
+}
+
+.time {
+	margin-top: 6px;
+	margin-bottom: 5px;
+}
+
+.capsule_timestamp {
+	position: absolute;
+	right: 10px;
+	font-size: 90%;
+	top: 4px;
+	visibility: hidden;
+}
+
+.message:hover .capsule_timestamp {
+	display:visible;
+	visibility: visible;
+}
+
+.status {
+	margin-top: 11px;
+	margin-bottom: 11px;
+}
+
+/* set defaults, otherwise it will be blank when "Normal" is chosen */
+
+.incoming .capsule {
+	border-color: rgba(106,181,241,1);
+	background: rgba(106,181,241,1);
+}
+
+.outgoing .capsule {
+	border-color: rgba(245,166,34,1);
+	background:   rgba(245,166,34,1);
+}

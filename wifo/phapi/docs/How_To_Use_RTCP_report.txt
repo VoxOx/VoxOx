@@ -1,0 +1,48 @@
+If you find bug,feel free to mail to me.
+@author: ThaiHuynh Nghia nghia.th@wengo.fr
+
+Guide to using RTCP report:
+1) You have to define RTCP and QOS_DEBUG_ENABLE before building the source code for ORTP lib, PHAPI lib and your GUI.
+2) Include "phapi.h" and "sqlite_rtcpreport.h" in your source code, and include phapi.lib,sqlitelib.lib in your project.
+   in your program, you can declare a callback for rtcp like below:
+   in your x.h:
+		void _rtcp_reportcb (const double myFraction,guint32 myJitter,const double myrtt,const double myEjb,double myR_factor,double MyMos_factor,int status);
+		extern  jt_rtcpCallbacks_t   myrtcpcb;
+   in your x.c or x.cpp:
+		jt_rtcpCallbacks_t   myrtcpcb ={_rtcp_reportcb};
+		void _rtcp_reportcb (const double myFraction,guint32 myJitter,const double myrtt,const double myEjb,double myR_factor,double MyMos_factor,int status)
+			{
+			const char* nameRecord=NULL;
+			char SQLINSERT[2000];
+
+			if (status == 0)
+				nameRecord = "RR";
+			else 
+				nameRecord = "SR";
+
+				sprintf(SQLINSERT,"INSERT INTO %s VALUES\
+											('%f','%d', '%f','%f','%f','%f');",nameRecord,myFraction,myJitter,myrtt,myEjb,myR_factor,MyMos_factor);
+				DoSqlideSQL((const char*)SQLINSERT);
+				
+			}
+3) After you have callback function.
+   To enable RTCP report,You have 4 functions from phapi like and 2 functions from sqlite (see note) like below:
+   From phapi.h	
+		1.void phrtcp_report_set_cb(jt_rtcpCallbacks_t *cbk);
+		  You have to call this function at least one times, you can call it when you call phinit.
+		
+		2.void phrtcp_QoS_enable_rtcp_report(int ToF);
+		   @param ToF: 1 True or 0 False
+		   
+		3.int phrtcp_report_begin();
+		4.int phrtcp_report_end();
+	From sqlite_rtcpreport.h
+		1.int sqlite_rtcp_prepare_db(const char* dbname);
+		2.int sqlite_rtcp_close_db();
+4)For outgoing call:
+	You can call: sqlite_rtcp_prepare_db();phrtcp_report_begin(); when you click button CALL
+  For incoming call:
+	From callback function callProgress,go to case phINCALL,then  call sqlite_rtcp_prepare_db();phrtcp_report_begin()
+  In the end, for outgoing and incoming call, you need go to case phCALLCLOSED in cb callProgress, then call
+	phrtcp_report_end();sqlite_rtcp_close_db();
+5)After that you can go to your main folder where you put your project to see wengo.db ( i will change the name of db later )

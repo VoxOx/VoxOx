@@ -1,0 +1,88 @@
+# vim: filetype=cmake
+set_target_properties(
+	${BINARY_NAME}
+	PROPERTIES
+		INSTALL_RPATH
+			${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/voxox
+		INSTALL_RPATH_USE_LINK_PATH
+			ON
+)
+
+install(TARGETS
+	${BINARY_NAME}
+	RUNTIME DESTINATION bin)
+
+install(PROGRAMS
+	${TMP_BUILD_DIR}/libwebcam.so
+	${TMP_BUILD_DIR}/libphapi.so
+	${TMP_BUILD_DIR}/libphapiutil.so
+	${TMP_BUILD_DIR}/phapi-plugins/libphspeexplugin.so
+	${TMP_BUILD_DIR}/libsfp-plugin.so
+	${TMP_BUILD_DIR}/libowbase.so
+	${TMP_BUILD_DIR}/libowsl.so
+	${TMP_BUILD_DIR}/libowutil.so
+	${TMP_BUILD_DIR}/libpsiidle.so
+	${TMP_BUILD_DIR}/libgcrypt.so.11
+	DESTINATION lib${LIB_SUFFIX}/voxox
+	)
+	
+if (PHAPI_CODEC_AMR_SUPPORT)
+	install(PROGRAMS
+		${TMP_BUILD_DIR}/phapi-plugins/libphamrplugin.so
+		DESTINATION lib${LIB_SUFFIX}/voxox)
+endif (PHAPI_CODEC_AMR_SUPPORT)
+
+if (PHAPI_CODEC_ILBC_SUPPORT)
+	install(PROGRAMS
+		${TMP_BUILD_DIR}/phapi-plugins/libphilbcplugin.so
+		DESTINATION lib${LIB_SUFFIX}/voxox)
+endif (PHAPI_CODEC_ILBC_SUPPORT)
+	
+
+if (ENABLE_CRASHREPORT)
+	install(PROGRAMS
+		${TMP_BUILD_DIR}/libowmemorydump.so
+		DESTINATION lib${LIB_SUFFIX}/voxox
+	)
+endif (ENABLE_CRASHREPORT)
+
+if (CURL_INTERNAL)
+	install(PROGRAMS
+		${TMP_BUILD_DIR}/libcurl.so
+		DESTINATION lib${LIB_SUFFIX}/voxox)
+endif (CURL_INTERNAL)
+
+if (LIBPURPLE_INTERNAL)
+	install(PROGRAMS
+		${TMP_BUILD_DIR}/liblibpurple.so
+		DESTINATION lib${LIB_SUFFIX}/voxox)
+endif (LIBPURPLE_INTERNAL)
+
+install(DIRECTORY
+	${TMP_BUILD_DIR}/lang
+	DESTINATION ${DATA_INSTALL_DIR}
+	PATTERN "*.qm")
+
+install(DIRECTORY
+	# Keep trailing slash here. See 'install' doc.
+	${CMAKE_SOURCE_DIR}/wengophone/resources/
+	DESTINATION ${DATA_INSTALL_DIR}
+	PATTERN "qutecom.css" EXCLUDE
+	PATTERN ".svn" EXCLUDE
+	PATTERN "CMakeLists.txt" EXCLUDE)
+
+install(FILES
+	${CMAKE_SOURCE_DIR}/wengophone/res/voxox.desktop
+	DESTINATION share/applications)
+
+foreach(size 16 32 48 64)
+	install(FILES
+		${CMAKE_SOURCE_DIR}/wengophone/res/voxox_${size}x${size}.png
+		DESTINATION share/icons/hicolor/${size}x${size}/apps/
+		RENAME voxox.png)
+endforeach(size)
+
+install(FILES
+	${CMAKE_SOURCE_DIR}/wengophone/COPYING
+	DESTINATION ${DATA_INSTALL_DIR})
+

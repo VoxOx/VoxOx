@@ -1,0 +1,55 @@
+div.window {
+	margin:0px;
+	padding:0px;
+	display: block;
+	width: 773px;
+	height: 489px;
+	background: transparent url('../../images/window/img_settings_window_lrg.png') 0px 0px no-repeat;
+}
+
+div.window div.window_body {
+	position:absolute;
+	top:27px;
+	left:8px;
+	width: 756px;
+	height: 452px;
+	border:1px solid #383a3d;
+	background-color:#FFF;
+}
+
+div.window_btmbar {
+	position:relative;
+	padding:0px;
+	margin:0px;
+	width:100%;
+	height:25px;
+	background:#000 url('../../images/window/bgbtmbar.gif') 0px 0px repeat-x;
+	border:0px;
+	border-top:1px solid #383a3d;
+}
+
+div.window_btmbar div.bttn_btmbar_add {
+	padding:0px;
+	margin:0px;
+	border:0px;
+	width:33px;
+	height:25px;
+	background:transparent url('../../images/window/bttn_btmbaradd.png') 0px 0px no-repeat;
+	cursor:pointer;
+}
+	div.window_btmbar div.bttn_btmbar_add:active {
+		background:transparent url('../../images/window/bttn_btmbaradd.png') 0px -25px no-repeat;
+	}
+
+	#Bttn_Add_Group {
+		position:absolute;
+		left:0px;
+		top:0px;
+	}
+	
+	#Bttn_Add_Contact {
+		position:absolute;
+		left:145px;
+		top:0px;
+		border-left:1px solid #383a3d;
+	}

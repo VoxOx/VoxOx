@@ -1,0 +1,13 @@
+ow_create_project(openssl)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/win32/libeay32.lib
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/win32/openssl.lib
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/win32/ssleay32.lib
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+ow_copy_dir(${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/win32/*.dll ${BUILD_DIR})

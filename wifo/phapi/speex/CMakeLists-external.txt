@@ -1,0 +1,9 @@
+if (NOT SPEEX_FOUND)
+	find_package(Speex REQUIRED)
+endif (NOT SPEEX_FOUND)
+
+ow_create_project(speex)
+
+ow_use_public_libraries(
+	SPEEX
+)

@@ -1,0 +1,5 @@
+<settings>
+<ftp.server><string>ftp.openwengo.com</string></ftp.server>
+<ftp.login><string>wengophone</string></ftp.login>
+<ftp.password><string>coredump</string></ftp.password>
+</settings>

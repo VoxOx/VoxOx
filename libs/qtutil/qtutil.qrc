@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/" >
+        <file>pics/clear.png</file>
+        <file>pics/refresh.png</file>
+        <file>pics/parent_folder.png</file>
+        <file>pics/expand_button/down.png</file>
+        <file>pics/expand_button/down_hover.png</file>
+        <file>pics/expand_button/right.png</file>
+        <file>pics/expand_button/right_hover.png</file>
+        <file>pics/expand_button/up.png</file>
+        <file>pics/expand_button/up_hover.png</file>
+        <file>pics/desktopservice/16x16/file.png</file>
+        <file>pics/desktopservice/16x16/folder.png</file>
+        <file>pics/desktopservice/32x32/file.png</file>
+        <file>pics/desktopservice/32x32/folder.png</file>
+        <file>pics/desktopservice/64x64/file.png</file>
+        <file>pics/desktopservice/64x64/folder.png</file>
+        <file>pics/desktopservice/128x128/file.png</file>
+        <file>pics/desktopservice/128x128/folder.png</file>
+    </qresource>
+</RCC>

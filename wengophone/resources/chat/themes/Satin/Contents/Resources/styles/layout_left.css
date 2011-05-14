@@ -1,0 +1,46 @@
+@import url("layout_all.css");
+
+.nameheader {
+	margin: 0px 77px 6px 25px;
+	}
+.name {
+	left: 0px;
+	padding: 4px 0px 0px 12px;
+	margin: 0px 0px 0px -25px;
+	}
+.protocol {
+	float: right;
+	right: 0px;
+	padding: 5px 12px 1px 50px;
+	margin: 0px -78px 0px 0px;
+	}
+.messagecontainer {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 48px;
+	}
+.buddyicon img {
+	height: 32px;
+	width: 32px;
+	z-index: 3;
+	}
+.buddyicon {
+	position: relative;
+	top: -6px;
+	z-index: 4;
+	float: left;
+	margin-left: 10px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	}
+.junkIcon {
+	#background: url("../images/buddy_background.png") top left no-repeat;
+	#height: 40px;
+	#width: 40px;
+	#padding: 2px 0px 0px 4px;
+	#border: 1px solid #999999;
+	}
+.junkIcon img {
+	#margin-top: 2px;
+	#margin-left: 4px;
+	}

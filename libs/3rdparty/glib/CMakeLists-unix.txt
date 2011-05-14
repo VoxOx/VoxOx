@@ -1,0 +1,9 @@
+if (NOT GLIB2_FOUND)
+	find_package(GLIB2 REQUIRED)
+endif (NOT GLIB2_FOUND)
+
+ow_create_project(glib2)
+
+ow_use_public_libraries(
+	GLIB2
+)

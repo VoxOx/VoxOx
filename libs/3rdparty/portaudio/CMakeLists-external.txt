@@ -1,0 +1,9 @@
+if (NOT PORTAUDIO_FOUND)
+	find_package(Portaudio REQUIRED)
+endif (NOT PORTAUDIO_FOUND)
+
+ow_create_project(portaudio)
+
+ow_use_public_libraries(
+	PORTAUDIO
+)

@@ -1,0 +1,72 @@
+<refentry id="ortp-Library-management-functions">
+<refmeta>
+<refentrytitle>Library management functions</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>ORTP Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Library management functions</refname><refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+#include &lt;ortp.h&gt;
+
+
+void        <link linkend="ortp-init">ortp_init</link>                       ();
+void        <link linkend="ortp-scheduler-init">ortp_scheduler_init</link>             ();
+void        <link linkend="ortp-exit">ortp_exit</link>                       ();
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="ortp-init">ortp_init ()</title>
+<programlisting>void        ortp_init                       ();</programlisting>
+<para>
+Initialize the oRTP library. You should call this function first before using
+oRTP API.</para>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="ortp-scheduler-init">ortp_scheduler_init ()</title>
+<programlisting>void        ortp_scheduler_init             ();</programlisting>
+<para>
+Initialize the oRTP scheduler. You only have to do that if you intend to use the
+scheduled mode of the <link linkend="RtpSession">RtpSession</link> in your application.</para>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="ortp-exit">ortp_exit ()</title>
+<programlisting>void        ortp_exit                       ();</programlisting>
+<para>
+Gracefully uninitialize the library, including shutdowning the scheduler if it was started.</para>
+<para>
+
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

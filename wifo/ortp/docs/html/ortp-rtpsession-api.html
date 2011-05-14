@@ -1,0 +1,2440 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>RtpSession API</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="oRTP Reference Manual"
+HREF="book1.html"><LINK
+REL="UP"
+TITLE="oRTP API"
+HREF="ortpapi.html"><LINK
+REL="PREVIOUS"
+TITLE="Library management functions"
+HREF="ortp-library-management-functions.html"><LINK
+REL="NEXT"
+TITLE="RTP payloads and profiles"
+HREF="ortp-rtp-payloads-and-profiles.html"><STYLE
+TYPE="text/css"
+>.synopsis, .classsynopsis {
+    background: #eeeeee;
+    border: solid 1px #aaaaaa;
+    padding: 0.5em;
+}
+.programlisting {
+    background: #eeeeff;
+    border: solid 1px #aaaaff;
+    padding: 0.5em;
+}
+.variablelist {
+    padding: 4px;
+    margin-left: 3em;
+}
+.navigation {
+    background: #ffeeee;
+    border: solid 1px #ffaaaa;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.navigation a {
+    color: #770000;
+}
+.navigation a:visited {
+    color: #550000;
+}
+.navigation .title {
+    font-size: 200%;
+}</STYLE
+></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><TABLE
+WIDTH="100%"
+CLASS="navigation"
+SUMMARY="Navigation header"
+CELLPADDING="2"
+CELLSPACING="2"
+><TR
+VALIGN="middle"
+><TD
+><A
+ACCESSKEY="p"
+HREF="ortp-library-management-functions.html"
+><IMG
+SRC="left.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Prev"></A
+></TD
+><TD
+><A
+ACCESSKEY="u"
+HREF="ortpapi.html"
+><IMG
+SRC="up.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Up"></A
+></TD
+><TD
+><A
+ACCESSKEY="h"
+HREF="book1.html"
+><IMG
+SRC="home.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Home"></A
+></TD
+><TH
+WIDTH="100%"
+align="center"
+>oRTP Reference Manual</TH
+><TD
+><A
+ACCESSKEY="n"
+HREF="ortp-rtp-payloads-and-profiles.html"
+><IMG
+SRC="right.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Next"></A
+></TD
+></TR
+></TABLE
+><H1
+><A
+NAME="ORTP-RTPSESSION-API"
+></A
+>RtpSession API</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN49"
+></A
+><H2
+>Name</H2
+>RtpSession API&nbsp;--&nbsp;The RtpSession object provides control on a RTP session as defined in RFC 1889.</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN52"
+></A
+><H2
+>Synopsis</H2
+><PRE
+CLASS="SYNOPSIS"
+>&#13;#include &lt;ortp.h&gt;
+
+
+struct      <A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+>;
+enum        <A
+HREF="ortp-rtpsession-api.html#RTPSESSIONMODE"
+>RtpSessionMode</A
+>;
+#define     <A
+HREF="ortp-rtpsession-api.html#RTP-CALLBACK-TABLE-MAX-ENTRIES-CAPS"
+>RTP_CALLBACK_TABLE_MAX_ENTRIES</A
+>
+<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+>* <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-NEW"
+>rtp_session_new</A
+>                 (gint mode);
+void        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-SCHEDULING-MODE"
+>rtp_session_set_scheduling_mode</A
+> (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gint yesno);
+void        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-BLOCKING-MODE"
+>rtp_session_set_blocking_mode</A
+>   (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gint yesno);
+void        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-PROFILE"
+>rtp_session_set_profile</A
+>         (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> *profile);
+int         <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-LOCAL-ADDR"
+>rtp_session_set_local_addr</A
+>      (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gchar *addr,
+                                             gint port);
+gint        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-REMOTE-ADDR"
+>rtp_session_set_remote_addr</A
+>     (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             struct sockaddr_in *dest);
+void        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-JITTER-COMPENSATION"
+>rtp_session_set_jitter_compensation</A
+>
+                                            (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             int milisec);
+void        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-SSRC"
+>rtp_session_set_ssrc</A
+>            (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             guint32 ssrc);
+void        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-SEQ-NUMBER"
+>rtp_session_set_seq_number</A
+>      (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             guint16 seq);
+int         <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-PAYLOAD-TYPE"
+>rtp_session_set_payload_type</A
+>    (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             int paytype);
+int         <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SIGNAL-CONNECT"
+>rtp_session_signal_connect</A
+>      (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             char *signal,
+                                             RtpCallback cb,
+                                             gpointer user_data);
+int         <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SIGNAL-DISCONNECT-BY-CALLBACK"
+>rtp_session_signal_disconnect_by_callback</A
+>
+                                            (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             char *signal,
+                                             RtpCallback cb);
+gint        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SEND-WITH-TS"
+>rtp_session_send_with_ts</A
+>        (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gchar *buffer,
+                                             gint len,
+                                             guint32 userts);
+gint        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-RECV-WITH-TS"
+>rtp_session_recv_with_ts</A
+>        (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gchar *buffer,
+                                             gint len,
+                                             guint32 time,
+                                             gint *have_more);
+gint        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SENDM-WITH-TS"
+>rtp_session_sendm_with_ts</A
+>       (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             mblk_t *mp,
+                                             guint32 userts);
+mblk_t*     <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-RECVM-WITH-TS"
+>rtp_session_recvm_with_ts</A
+>       (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             guint32 user_ts);
+mblk_t*     <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-CREATE-PACKET"
+>rtp_session_create_packet</A
+>       (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gint header_size,
+                                             char *payload,
+                                             gint payload_size);
+guint32     <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-GET-CURRENT-SEND-TS"
+>rtp_session_get_current_send_ts</A
+> (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session);
+void        <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-RESET"
+>rtp_session_reset</A
+>               (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session);</PRE
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN127"
+></A
+><H2
+>Description</H2
+><P
+>The following api provides the application a way to define a RTP session, send or receives
+data through it, and to keep informed of the evolution of the RTP session through a simple
+callback mecanism (see <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SIGNAL-CONNECT"
+>rtp_session_signal_connect</A
+>() for details).</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN131"
+></A
+><H2
+>Details</H2
+><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN133"
+></A
+><H3
+><A
+NAME="RTPSESSION"
+></A
+>struct RtpSession</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>struct RtpSession {
+
+	RtpSession *next;	/* next RtpSession, when the session are enqueued by the scheduler */
+	RtpProfile *profile;
+	GMutex *lock;
+	guint32 ssrc;
+	gint payload_type;
+	gint max_buf_size;
+#ifdef TARGET_IS_HPUXKERNEL
+	mblk_t *dest_mproto; 	/* a M_PROTO that contains the destination address for outgoing packets*/
+#endif
+	RtpSignalTable on_ssrc_changed;
+	RtpSignalTable on_payload_type_changed;
+	RtpSignalTable on_telephone_event_packet;
+	RtpSignalTable on_telephone_event;
+	RtpSignalTable on_timestamp_jump;
+	RtpStream rtp;
+	RtcpStream rtcp;
+	RtpSessionMode mode;
+#ifdef BUILD_SCHEDULER
+	struct _RtpScheduler *sched;
+#endif
+	guint32 flags;
+	rtp_stats_t stats;
+	gint mask_pos;	/* the position in the scheduler mask of RtpSession */
+	gpointer user_data;
+	
+	/* telephony events extension */
+	gint telephone_events_pt;	/* the payload type used for telephony events */
+	mblk_t *current_tev;		/* the pending telephony events */
+	
+	#ifdef RTCP
+	GList *contributing_sources;
+	#endif
+};</PRE
+><P
+>Users should not manipulate this structure directly.</P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN138"
+></A
+><H3
+><A
+NAME="RTPSESSIONMODE"
+></A
+>enum RtpSessionMode</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>typedef enum {
+	RTP_SESSION_RECVONLY,
+	RTP_SESSION_SENDONLY,
+	RTP_SESSION_SENDRECV
+} RtpSessionMode;</PRE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN143"
+></A
+><H3
+><A
+NAME="RTP-CALLBACK-TABLE-MAX-ENTRIES-CAPS"
+></A
+>RTP_CALLBACK_TABLE_MAX_ENTRIES</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define RTP_CALLBACK_TABLE_MAX_ENTRIES	5</PRE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN148"
+></A
+><H3
+><A
+NAME="RTP-SESSION-NEW"
+></A
+>rtp_session_new ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+><A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+>* rtp_session_new                 (gint mode);</PRE
+><P
+>Creates a new rtp session.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN157"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>mode</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> One of the <A
+HREF="ortp-rtpsession-api.html#RTPSESSIONMODE"
+>RtpSessionMode</A
+> flags.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN163"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> the newly created rtp session.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN168"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-SCHEDULING-MODE"
+></A
+>rtp_session_set_scheduling_mode ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>void        rtp_session_set_scheduling_mode (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gint yesno);</PRE
+><P
+>Sets the scheduling mode of the rtp session. If <VAR
+CLASS="PARAMETER"
+>yesno</VAR
+> is 1, the rtp session is in
+the scheduled mode: this means that packet input/output for that session
+is done by a thread that is in charge of getting and sending packet at regular time
+interval. This is very usefull for outgoing packets, that have to be sent at a time that
+matches their timestamp.
+If <VAR
+CLASS="PARAMETER"
+>yesno</VAR
+> is zero, then the session is not scheduled. All recv and send operation will
+occur when calling respectively <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-RECV-WITH-TS"
+>rtp_session_recv_with_ts</A
+>() and <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SEND-WITH-TS"
+>rtp_session_send_with_ts</A
+>().</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN181"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN186"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>yesno</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	a boolean to indicate the scheduling mode.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN191"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-BLOCKING-MODE"
+></A
+>rtp_session_set_blocking_mode ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>void        rtp_session_set_blocking_mode   (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gint yesno);</PRE
+><P
+>This function defines the behaviour of the <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-RECV-WITH-TS"
+>rtp_session_recv_with_ts</A
+>() and 
+<A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SEND-WITH-TS"
+>rtp_session_send_with_ts</A
+>() functions. If <VAR
+CLASS="PARAMETER"
+>yesno</VAR
+> is 1, <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-RECV-WITH-TS"
+>rtp_session_recv_with_ts</A
+>()
+will block until it is time for the packet to be received, according to the timestamp
+passed to the function. After this time, the function returns.
+For <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SEND-WITH-TS"
+>rtp_session_send_with_ts</A
+>(), it will block until it is time for the packet to be sent.
+If <VAR
+CLASS="PARAMETER"
+>yesno</VAR
+> is 0, then the two functions will return immediately.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN206"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN211"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>yesno</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a boolean</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN216"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-PROFILE"
+></A
+>rtp_session_set_profile ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>void        rtp_session_set_profile         (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> *profile);</PRE
+><P
+>Set the RTP profile to be used for the session. By default, all session are created by
+<A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-NEW"
+>rtp_session_new</A
+>() are initialized with the AV profile, as defined in RFC 1890. The application
+can set any other profile instead using that function.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN226"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN231"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp profile</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN236"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-LOCAL-ADDR"
+></A
+>rtp_session_set_local_addr ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>int         rtp_session_set_local_addr      (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gchar *addr,
+                                             gint port);</PRE
+><P
+>Specify the local addr to be use to listen for rtp packets or to send rtp packet from.
+In case where the rtp session is send-only, then it is not required to call this function:
+when calling <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-REMOTE-ADDR"
+>rtp_session_set_remote_addr</A
+>(), if no local address has been set, then the 
+default INADRR_ANY (0.0.0.0) IP address with a random port will be used. Calling 
+rtp_sesession_set_local_addr() is mandatory when the session is send-only or duplex.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN248"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a rtp session freshly created.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN253"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>addr</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a local IP address in the xxx.xxx.xxx.xxx form.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN258"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>port</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a local port.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN263"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> 0 on success.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN268"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-REMOTE-ADDR"
+></A
+>rtp_session_set_remote_addr ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>gint        rtp_session_set_remote_addr     (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             struct sockaddr_in *dest);</PRE
+><P
+>Sets the remote address of the rtp session, ie the destination address where rtp packet
+are sent. If the session is recv-only or duplex, it sets also the origin of incoming RTP 
+packets. Rtp packets that don't come from addr:port are discarded.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN278"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a rtp session freshly created.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN283"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>dest</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+></P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN288"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> 0 on success.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN293"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-JITTER-COMPENSATION"
+></A
+>rtp_session_set_jitter_compensation ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>void        rtp_session_set_jitter_compensation
+                                            (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             int milisec);</PRE
+><P
+>Sets the time interval for which packet are buffered instead of being delivered to the 
+application.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN301"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a RtpSession</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN306"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>milisec</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> the time interval in milisec to be jitter compensed.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN311"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-SSRC"
+></A
+>rtp_session_set_ssrc ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>void        rtp_session_set_ssrc            (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             guint32 ssrc);</PRE
+><P
+>Sets the SSRC of the session.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN320"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN325"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>ssrc</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> an unsigned 32bit integer representing the synchronisation source identifier (SSRC).</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN330"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-SEQ-NUMBER"
+></A
+>rtp_session_set_seq_number ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>void        rtp_session_set_seq_number      (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             guint16 seq);</PRE
+><P
+>sets the initial sequence number of a sending session.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN339"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a rtp session freshly created.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN344"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>seq</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>&#13;</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN349"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SET-PAYLOAD-TYPE"
+></A
+>rtp_session_set_payload_type ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>int         rtp_session_set_payload_type    (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             int paytype);</PRE
+><P
+>Sets the payload type of the rtp session. It decides of the payload types written in the
+of the rtp header for the outgoing stream, if the session is SENDRECV or SENDONLY.
+For the incoming stream, it sets the waited payload type. If that value does not match
+at any time this waited value, then the application can be informed by registering
+for the "payload_type_changed" signal, so that it can make the necessary changes
+on the downstream decoder that deals with the payload of the packets.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN357"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN362"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>paytype</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> the payload type</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN367"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> 0 on success, -1 if the payload is not defined.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN372"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SIGNAL-CONNECT"
+></A
+>rtp_session_signal_connect ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>int         rtp_session_signal_connect      (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             char *signal,
+                                             RtpCallback cb,
+                                             gpointer user_data);</PRE
+><P
+>This function provides the way for an application to be informed of various events that
+may occur during a rtp session. <VAR
+CLASS="PARAMETER"
+>signal</VAR
+> is a string identifying the event, and <VAR
+CLASS="PARAMETER"
+>cb</VAR
+> is 
+a user supplied function in charge of processing it. The application can register
+several callbacks for the same signal, in the limit of <A
+HREF="ortp-rtpsession-api.html#RTP-CALLBACK-TABLE-MAX-ENTRIES-CAPS"
+>RTP_CALLBACK_TABLE_MAX_ENTRIES</A
+>.
+Here are name and meaning of supported signals types:</P
+><P
+>"ssrc_changed" : the SSRC of the incoming stream has changed.</P
+><P
+>"payload_type_changed" : the payload type of the incoming stream has changed.</P
+><P
+>"telephone-event_packet" : a telephone-event rtp packet (RFC1833) is received.</P
+><P
+>"telephone-event" : a telephone event has occured. This is a shortcut for "telephone-event_packet".</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN389"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> 	a rtp session</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN394"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>signal</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		the name of a signal</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN399"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>cb</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>			a RtpCallback</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN405"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>user_data</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	a pointer to any data to be passed when invoking the callback.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN410"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> 0 on success, -EOPNOTSUPP if the signal does not exists, -1 if no more callbacks
+can be assigned to the signal type.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN415"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SIGNAL-DISCONNECT-BY-CALLBACK"
+></A
+>rtp_session_signal_disconnect_by_callback ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>int         rtp_session_signal_disconnect_by_callback
+                                            (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             char *signal,
+                                             RtpCallback cb);</PRE
+><P
+>Removes callback function <VAR
+CLASS="PARAMETER"
+>cb</VAR
+> to the list of callbacks for signal <VAR
+CLASS="PARAMETER"
+>signal</VAR
+>.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN426"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN431"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>signal</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	a signal name</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN436"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>cb</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a callback function.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN441"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> 0 on success, -ENOENT if the callbacks was not found.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN446"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SEND-WITH-TS"
+></A
+>rtp_session_send_with_ts ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>gint        rtp_session_send_with_ts        (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gchar *buffer,
+                                             gint len,
+                                             guint32 userts);</PRE
+><P
+>Send a rtp datagram to the destination set by <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-REMOTE-ADDR"
+>rtp_session_set_remote_addr</A
+>() containing
+the data from <VAR
+CLASS="PARAMETER"
+>buffer</VAR
+> with timestamp <VAR
+CLASS="PARAMETER"
+>userts</VAR
+>. This is a high level function that uses
+<A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-CREATE-PACKET"
+>rtp_session_create_packet</A
+>() and <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SENDM-WITH-TS"
+>rtp_session_sendm_with_ts</A
+>() to send the data.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN463"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN468"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>buffer</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	a buffer containing the data to be sent in a rtp packet.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN473"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>len</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		the length of the data buffer, in bytes.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN478"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>userts</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	the timestamp of the data to be sent. Refer to the rfc to know what it is.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN483"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> the number of bytes sent over the network.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN488"
+></A
+><H3
+><A
+NAME="RTP-SESSION-RECV-WITH-TS"
+></A
+>rtp_session_recv_with_ts ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>gint        rtp_session_recv_with_ts        (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gchar *buffer,
+                                             gint len,
+                                             guint32 time,
+                                             gint *have_more);</PRE
+><P
+>Tries to read the bytes of the incoming rtp stream related to timestamp <VAR
+CLASS="PARAMETER"
+>time</VAR
+>. In case 
+where the user supplied buffer <VAR
+CLASS="PARAMETER"
+>buffer</VAR
+> is not large enough to get all the data 
+related to timestamp <VAR
+CLASS="PARAMETER"
+>time</VAR
+>, then *( <VAR
+CLASS="PARAMETER"
+>have_more</VAR
+>) is set to 1 to indicate that the application
+should recall the function with the same timestamp to get more data.</P
+><P
+> When the rtp session is scheduled (see <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-SCHEDULING-MODE"
+>rtp_session_set_scheduling_mode</A
+>() ), and the 
+blocking mode is on (see <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-BLOCKING-MODE"
+>rtp_session_set_blocking_mode</A
+>() ), then the calling thread
+is suspended until the timestamp given as argument expires, whatever a received packet 
+fits the query or not.</P
+><P
+>Important note: it is clear that the application cannot know the timestamp of the first
+packet of the incoming stream, because it can be random. The <VAR
+CLASS="PARAMETER"
+>time</VAR
+> timestamp given to the
+function is used relatively to first timestamp of the stream. In simple words, 0 is a good
+value to start calling this function.</P
+><P
+>This function internally calls <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-RECVM-WITH-TS"
+>rtp_session_recvm_with_ts</A
+>() to get a rtp packet. The content
+of this packet is then copied into the user supplied buffer in an intelligent manner:
+the function takes care of the size of the supplied buffer and the timestamp given in  
+argument. Using this function it is possible to read continous audio data (e.g. pcma,pcmu...)
+with for example a standart buffer of size of 160 with timestamp incrementing by 160 while the incoming
+stream has a different packet size.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN512"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN517"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>buffer</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	a user supplied buffer to write the data.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN522"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>len</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		the length in bytes of the user supplied buffer.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN527"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>time</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	the timestamp wanted.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN532"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>have_more</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> the address of an integer to indicate if more data is availlable for the given timestamp.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN537"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> if a packet was availlable with the corresponding timestamp supplied in argument 
+then the number of bytes written in the user supplied buffer is returned. If no packets
+are availlable, either because the sender has not started to send the stream, or either
+because silence packet are not transmitted, or either because the packet was lost during
+network transport, then the function returns zero.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN542"
+></A
+><H3
+><A
+NAME="RTP-SESSION-SENDM-WITH-TS"
+></A
+>rtp_session_sendm_with_ts ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>gint        rtp_session_sendm_with_ts       (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             mblk_t *mp,
+                                             guint32 userts);</PRE
+><P
+>Send the rtp datagram <VAR
+CLASS="PARAMETER"
+>mp</VAR
+> to the destination set by <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-REMOTE-ADDR"
+>rtp_session_set_remote_addr</A
+>() 
+with timestamp <VAR
+CLASS="PARAMETER"
+>timestamp</VAR
+>. For audio data, the timestamp is the number
+of the first sample resulting of the data transmitted. See rfc1889 for details.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN556"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN561"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>mp</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	a rtp packet presented as a mblk_t.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN566"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>userts</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+></P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN571"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> the number of bytes sent over the network.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN576"
+></A
+><H3
+><A
+NAME="RTP-SESSION-RECVM-WITH-TS"
+></A
+>rtp_session_recvm_with_ts ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>mblk_t*     rtp_session_recvm_with_ts       (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             guint32 user_ts);</PRE
+><P
+>Try to get a rtp packet presented as a mblk_t structure from the rtp session.
+The <VAR
+CLASS="PARAMETER"
+>user_ts</VAR
+> parameter is relative to the first timestamp of the incoming stream. In other
+words, the application does not have to know the first timestamp of the stream, it can
+simply call for the first time this function with <VAR
+CLASS="PARAMETER"
+>user_ts</VAR
+>=0, and then incrementing it
+as it want. The RtpSession takes care of synchronisation between the stream timestamp
+and the user timestamp given here.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN588"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN593"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>user_ts</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	a timestamp.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN598"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp packet presented as a mblk_t.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN603"
+></A
+><H3
+><A
+NAME="RTP-SESSION-CREATE-PACKET"
+></A
+>rtp_session_create_packet ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>mblk_t*     rtp_session_create_packet       (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session,
+                                             gint header_size,
+                                             char *payload,
+                                             gint payload_size);</PRE
+><P
+>Allocates a new rtp packet. In the header, ssrc and payload_type according to the session's
+context. Timestamp and seq number are not set, there will be set when the packet is going to be
+sent with <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SENDM-WITH-TS"
+>rtp_session_sendm_with_ts</A
+>().</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN615"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN620"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>header_size</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	the rtp header size. For standart size (without extensions), it is RTP_FIXED_HEADER_SIZE</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN626"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>payload</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>data to be copied into the rtp packet.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN631"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>payload_size</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> size of data carried by the rtp packet.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN636"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp packet in a mblk_t (message block) structure.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN641"
+></A
+><H3
+><A
+NAME="RTP-SESSION-GET-CURRENT-SEND-TS"
+></A
+>rtp_session_get_current_send_ts ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>guint32     rtp_session_get_current_send_ts (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session);</PRE
+><P
+>When the rtp session is scheduled and has started to send packets, this function
+computes the timestamp that matches to the present time. Using this function can be 
+usefull when sending discontinuous streams. Some time can be elapsed between the end
+of a stream burst and the begin of a new stream burst, and the application may be not
+not aware of this elapsed time. In order to get a valid (current) timestamp to pass to 
+#<A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SEND-WITH-TS"
+>rtp_session_send_with_ts</A
+>() or #<A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SENDM-WITH-TS"
+>rtp_session_sendm_with_ts</A
+>(), the application may
+use <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-GET-CURRENT-SEND-TS"
+>rtp_session_get_current_send_ts</A
+>().</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN653"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN658"><SPAN
+STYLE="white-space: nowrap"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Returns</I
+></SPAN
+> :</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> the actual send timestamp for the rtp session.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN663"
+></A
+><H3
+><A
+NAME="RTP-SESSION-RESET"
+></A
+>rtp_session_reset ()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>void        rtp_session_reset               (<A
+HREF="ortp-rtpsession-api.html#RTPSESSION"
+>RtpSession</A
+> *session);</PRE
+><P
+>Reset the session: local and remote addresses are kept unchanged but the internal
+queue for ordering and buffering packets is flushed, the session is ready to be
+re-synchronised to another incoming stream.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN671"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>session</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> a rtp session.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+><TABLE
+CLASS="navigation"
+WIDTH="100%"
+SUMMARY="Navigation footer"
+CELLPADDING="2"
+CELLSPACING="2"
+><TR
+VALIGN="middle"
+><TD
+ALIGN="left"
+><A
+ACCESSKEY="p"
+HREF="ortp-library-management-functions.html"
+><B
+>&lt;&lt;&lt;&nbsp;Library management functions</B
+></A
+></TD
+><TD
+ALIGN="right"
+><A
+ACCESSKEY="n"
+HREF="ortp-rtp-payloads-and-profiles.html"
+><B
+>RTP payloads and profiles&nbsp;&gt;&gt;&gt;</B
+></A
+></TD
+></TR
+></TABLE
+></BODY
+></HTML
+>

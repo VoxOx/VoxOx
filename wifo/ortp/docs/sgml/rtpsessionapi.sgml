@@ -1,0 +1,612 @@
+<refentry id="ortp-RtpSession-API">
+<refmeta>
+<refentrytitle>RtpSession API</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>ORTP Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>RtpSession API</refname><refpurpose>The RtpSession object provides control on a RTP session as defined in RFC 1889.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+#include &lt;ortp.h&gt;
+
+
+struct      <link linkend="RtpSession">RtpSession</link>;
+enum        <link linkend="RtpSessionMode">RtpSessionMode</link>;
+#define     <link linkend="RTP-CALLBACK-TABLE-MAX-ENTRIES-CAPS">RTP_CALLBACK_TABLE_MAX_ENTRIES</link>
+<link linkend="RtpSession">RtpSession</link>* <link linkend="rtp-session-new">rtp_session_new</link>                 (<link linkend="gint">gint</link> mode);
+void        <link linkend="rtp-session-set-scheduling-mode">rtp_session_set_scheduling_mode</link> (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gint">gint</link> yesno);
+void        <link linkend="rtp-session-set-blocking-mode">rtp_session_set_blocking_mode</link>   (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gint">gint</link> yesno);
+void        <link linkend="rtp-session-set-profile">rtp_session_set_profile</link>         (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="RtpProfile">RtpProfile</link> *profile);
+int         <link linkend="rtp-session-set-local-addr">rtp_session_set_local_addr</link>      (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> *addr,
+                                             <link linkend="gint">gint</link> port);
+<link linkend="gint">gint</link>        <link linkend="rtp-session-set-remote-addr">rtp_session_set_remote_addr</link>     (<link linkend="RtpSession">RtpSession</link> *session,
+                                             struct <link linkend="sockaddr-in">sockaddr_in</link> *dest);
+void        <link linkend="rtp-session-set-jitter-compensation">rtp_session_set_jitter_compensation</link>
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             int milisec);
+void        <link linkend="rtp-session-set-ssrc">rtp_session_set_ssrc</link>            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="guint32">guint32</link> ssrc);
+void        <link linkend="rtp-session-set-seq-number">rtp_session_set_seq_number</link>      (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="guint16">guint16</link> seq);
+int         <link linkend="rtp-session-set-payload-type">rtp_session_set_payload_type</link>    (<link linkend="RtpSession">RtpSession</link> *session,
+                                             int paytype);
+int         <link linkend="rtp-session-signal-connect">rtp_session_signal_connect</link>      (<link linkend="RtpSession">RtpSession</link> *session,
+                                             char *signal,
+                                             <link linkend="RtpCallback">RtpCallback</link> cb,
+                                             <link linkend="gpointer">gpointer</link> user_data);
+int         <link linkend="rtp-session-signal-disconnect-by-callback">rtp_session_signal_disconnect_by_callback</link>
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             char *signal,
+                                             <link linkend="RtpCallback">RtpCallback</link> cb);
+<link linkend="gint">gint</link>        <link linkend="rtp-session-send-with-ts">rtp_session_send_with_ts</link>        (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> *buffer,
+                                             <link linkend="gint">gint</link> len,
+                                             <link linkend="guint32">guint32</link> userts);
+<link linkend="gint">gint</link>        <link linkend="rtp-session-recv-with-ts">rtp_session_recv_with_ts</link>        (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> *buffer,
+                                             <link linkend="gint">gint</link> len,
+                                             <link linkend="guint32">guint32</link> time,
+                                             <link linkend="gint">gint</link> *have_more);
+<link linkend="gint">gint</link>        <link linkend="rtp-session-sendm-with-ts">rtp_session_sendm_with_ts</link>       (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="mblk-t">mblk_t</link> *mp,
+                                             <link linkend="guint32">guint32</link> userts);
+<link linkend="mblk-t">mblk_t</link>*     <link linkend="rtp-session-recvm-with-ts">rtp_session_recvm_with_ts</link>       (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="guint32">guint32</link> user_ts);
+<link linkend="mblk-t">mblk_t</link>*     <link linkend="rtp-session-create-packet">rtp_session_create_packet</link>       (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gint">gint</link> header_size,
+                                             char *payload,
+                                             <link linkend="gint">gint</link> payload_size);
+<link linkend="guint32">guint32</link>     <link linkend="rtp-session-get-current-send-ts">rtp_session_get_current_send_ts</link> (<link linkend="RtpSession">RtpSession</link> *session);
+void        <link linkend="rtp-session-reset">rtp_session_reset</link>               (<link linkend="RtpSession">RtpSession</link> *session);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+The following api provides the application a way to define a RTP session, send or receives
+data through it, and to keep informed of the evolution of the RTP session through a simple
+callback mecanism (see <link linkend="rtp-session-signal-connect">rtp_session_signal_connect</link>() for details).
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="RtpSession">struct RtpSession</title>
+<programlisting>struct RtpSession {
+
+	RtpSession *next;	/* next RtpSession, when the session are enqueued by the scheduler */
+	RtpProfile *profile;
+	GMutex *lock;
+	guint32 ssrc;
+	gint payload_type;
+	gint max_buf_size;
+#ifdef TARGET_IS_HPUXKERNEL
+	mblk_t *dest_mproto; 	/* a M_PROTO that contains the destination address for outgoing packets*/
+#endif
+	RtpSignalTable on_ssrc_changed;
+	RtpSignalTable on_payload_type_changed;
+	RtpSignalTable on_telephone_event_packet;
+	RtpSignalTable on_telephone_event;
+	RtpSignalTable on_timestamp_jump;
+	RtpStream rtp;
+	RtcpStream rtcp;
+	RtpSessionMode mode;
+#ifdef BUILD_SCHEDULER
+	struct _RtpScheduler *sched;
+#endif
+	guint32 flags;
+	rtp_stats_t stats;
+	gint mask_pos;	/* the position in the scheduler mask of RtpSession */
+	gpointer user_data;
+	
+	/* telephony events extension */
+	gint telephone_events_pt;	/* the payload type used for telephony events */
+	mblk_t *current_tev;		/* the pending telephony events */
+	
+	#ifdef RTCP
+	GList *contributing_sources;
+	#endif
+};
+</programlisting>
+<para>
+Users should not manipulate this structure directly.
+</para></refsect2>
+<refsect2>
+<title><anchor id="RtpSessionMode">enum RtpSessionMode</title>
+<programlisting>typedef enum {
+	RTP_SESSION_RECVONLY,
+	RTP_SESSION_SENDONLY,
+	RTP_SESSION_SENDRECV
+} RtpSessionMode;
+</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="RTP-CALLBACK-TABLE-MAX-ENTRIES-CAPS">RTP_CALLBACK_TABLE_MAX_ENTRIES</title>
+<programlisting>#define RTP_CALLBACK_TABLE_MAX_ENTRIES	5
+</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-new">rtp_session_new ()</title>
+<programlisting><link linkend="RtpSession">RtpSession</link>* rtp_session_new                 (<link linkend="gint">gint</link> mode);</programlisting>
+<para>
+Creates a new rtp session.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>mode</parameter>&nbsp;:</term>
+<listitem><simpara> One of the <link linkend="RtpSessionMode">RtpSessionMode</link> flags.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the newly created rtp session.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-scheduling-mode">rtp_session_set_scheduling_mode ()</title>
+<programlisting>void        rtp_session_set_scheduling_mode (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gint">gint</link> yesno);</programlisting>
+<para>
+Sets the scheduling mode of the rtp session. If <parameter>yesno</parameter> is 1, the rtp session is in
+the scheduled mode: this means that packet input/output for that session
+is done by a thread that is in charge of getting and sending packet at regular time
+interval. This is very usefull for outgoing packets, that have to be sent at a time that
+matches their timestamp.
+If <parameter>yesno</parameter> is zero, then the session is not scheduled. All recv and send operation will
+occur when calling respectively <link linkend="rtp-session-recv-with-ts">rtp_session_recv_with_ts</link>() and <link linkend="rtp-session-send-with-ts">rtp_session_send_with_ts</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>yesno</parameter>&nbsp;:</term>
+<listitem><simpara>	a boolean to indicate the scheduling mode.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-blocking-mode">rtp_session_set_blocking_mode ()</title>
+<programlisting>void        rtp_session_set_blocking_mode   (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gint">gint</link> yesno);</programlisting>
+<para>
+This function defines the behaviour of the <link linkend="rtp-session-recv-with-ts">rtp_session_recv_with_ts</link>() and 
+<link linkend="rtp-session-send-with-ts">rtp_session_send_with_ts</link>() functions. If <parameter>yesno</parameter> is 1, <link linkend="rtp-session-recv-with-ts">rtp_session_recv_with_ts</link>()
+will block until it is time for the packet to be received, according to the timestamp
+passed to the function. After this time, the function returns.
+For <link linkend="rtp-session-send-with-ts">rtp_session_send_with_ts</link>(), it will block until it is time for the packet to be sent.
+If <parameter>yesno</parameter> is 0, then the two functions will return immediately.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>yesno</parameter>&nbsp;:</term>
+<listitem><simpara> a boolean
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-profile">rtp_session_set_profile ()</title>
+<programlisting>void        rtp_session_set_profile         (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="RtpProfile">RtpProfile</link> *profile);</programlisting>
+<para>
+Set the RTP profile to be used for the session. By default, all session are created by
+<link linkend="rtp-session-new">rtp_session_new</link>() are initialized with the AV profile, as defined in RFC 1890. The application
+can set any other profile instead using that function.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>profile</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp profile
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-local-addr">rtp_session_set_local_addr ()</title>
+<programlisting>int         rtp_session_set_local_addr      (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> *addr,
+                                             <link linkend="gint">gint</link> port);</programlisting>
+<para>
+Specify the local addr to be use to listen for rtp packets or to send rtp packet from.
+In case where the rtp session is send-only, then it is not required to call this function:
+when calling <link linkend="rtp-session-set-remote-addr">rtp_session_set_remote_addr</link>(), if no local address has been set, then the 
+default INADRR_ANY (0.0.0.0) IP address with a random port will be used. Calling 
+<link linkend="rtp-sesession-set-local-addr">rtp_sesession_set_local_addr</link>() is mandatory when the session is send-only or duplex.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara>		a rtp session freshly created.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>addr</parameter>&nbsp;:</term>
+<listitem><simpara>		a local IP address in the xxx.xxx.xxx.xxx form.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&nbsp;:</term>
+<listitem><simpara>		a local port.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> 0 on success.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-remote-addr">rtp_session_set_remote_addr ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_set_remote_addr     (<link linkend="RtpSession">RtpSession</link> *session,
+                                             struct <link linkend="sockaddr-in">sockaddr_in</link> *dest);</programlisting>
+<para>
+Sets the remote address of the rtp session, ie the destination address where rtp packet
+are sent. If the session is recv-only or duplex, it sets also the origin of incoming RTP 
+packets. Rtp packets that don't come from addr:port are discarded.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara>		a rtp session freshly created.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> 0 on success.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-jitter-compensation">rtp_session_set_jitter_compensation ()</title>
+<programlisting>void        rtp_session_set_jitter_compensation
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             int milisec);</programlisting>
+<para>
+Sets the time interval for which packet are buffered instead of being delivered to the 
+application.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a RtpSession
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>milisec</parameter>&nbsp;:</term>
+<listitem><simpara> the time interval in milisec to be jitter compensed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-ssrc">rtp_session_set_ssrc ()</title>
+<programlisting>void        rtp_session_set_ssrc            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="guint32">guint32</link> ssrc);</programlisting>
+<para>
+Sets the SSRC of the session.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ssrc</parameter>&nbsp;:</term>
+<listitem><simpara> an unsigned 32bit integer representing the synchronisation source identifier (SSRC).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-seq-number">rtp_session_set_seq_number ()</title>
+<programlisting>void        rtp_session_set_seq_number      (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="guint16">guint16</link> seq);</programlisting>
+<para>
+sets the initial sequence number of a sending session.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara>		a rtp session freshly created.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>seq</parameter>&nbsp;:</term>
+<listitem><simpara>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-set-payload-type">rtp_session_set_payload_type ()</title>
+<programlisting>int         rtp_session_set_payload_type    (<link linkend="RtpSession">RtpSession</link> *session,
+                                             int paytype);</programlisting>
+<para>
+Sets the payload type of the rtp session. It decides of the payload types written in the
+of the rtp header for the outgoing stream, if the session is SENDRECV or SENDONLY.
+For the incoming stream, it sets the waited payload type. If that value does not match
+at any time this waited value, then the application can be informed by registering
+for the "payload_type_changed" signal, so that it can make the necessary changes
+on the downstream decoder that deals with the payload of the packets.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>paytype</parameter>&nbsp;:</term>
+<listitem><simpara> the payload type
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> 0 on success, -1 if the payload is not defined.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-signal-connect">rtp_session_signal_connect ()</title>
+<programlisting>int         rtp_session_signal_connect      (<link linkend="RtpSession">RtpSession</link> *session,
+                                             char *signal,
+                                             <link linkend="RtpCallback">RtpCallback</link> cb,
+                                             <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+This function provides the way for an application to be informed of various events that
+may occur during a rtp session. <parameter>signal</parameter> is a string identifying the event, and <parameter>cb</parameter> is 
+a user supplied function in charge of processing it. The application can register
+several callbacks for the same signal, in the limit of <link linkend="RTP-CALLBACK-TABLE-MAX-ENTRIES-CAPS">RTP_CALLBACK_TABLE_MAX_ENTRIES</link>.
+Here are name and meaning of supported signals types:
+</para>
+<para>
+"ssrc_changed" : the SSRC of the incoming stream has changed.
+</para>
+<para>
+"payload_type_changed" : the payload type of the incoming stream has changed.
+</para>
+<para>
+"telephone-event_packet" : a telephone-event rtp packet (RFC1833) is received.
+</para>
+<para>
+"telephone-event" : a telephone event has occured. This is a shortcut for "telephone-event_packet".</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> 	a rtp session
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>signal</parameter>&nbsp;:</term>
+<listitem><simpara>		the name of a signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cb</parameter>&nbsp;:</term>
+<listitem><simpara>			a <link linkend="RtpCallback">RtpCallback</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara>	a pointer to any data to be passed when invoking the callback.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> 0 on success, -EOPNOTSUPP if the signal does not exists, -1 if no more callbacks
+can be assigned to the signal type.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-signal-disconnect-by-callback">rtp_session_signal_disconnect_by_callback ()</title>
+<programlisting>int         rtp_session_signal_disconnect_by_callback
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             char *signal,
+                                             <link linkend="RtpCallback">RtpCallback</link> cb);</programlisting>
+<para>
+Removes callback function <parameter>cb</parameter> to the list of callbacks for signal <parameter>signal</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>signal</parameter>&nbsp;:</term>
+<listitem><simpara>	a signal name
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cb</parameter>&nbsp;:</term>
+<listitem><simpara>		a callback function.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> 0 on success, -ENOENT if the callbacks was not found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-send-with-ts">rtp_session_send_with_ts ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_send_with_ts        (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> *buffer,
+                                             <link linkend="gint">gint</link> len,
+                                             <link linkend="guint32">guint32</link> userts);</programlisting>
+<para>
+Send a rtp datagram to the destination set by <link linkend="rtp-session-set-remote-addr">rtp_session_set_remote_addr</link>() containing
+the data from <parameter>buffer</parameter> with timestamp <parameter>userts</parameter>. This is a high level function that uses
+<link linkend="rtp-session-create-packet">rtp_session_create_packet</link>() and <link linkend="rtp-session-sendm-with-ts">rtp_session_sendm_with_ts</link>() to send the data.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&nbsp;:</term>
+<listitem><simpara>	a buffer containing the data to be sent in a rtp packet.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&nbsp;:</term>
+<listitem><simpara>		the length of the data buffer, in bytes.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>userts</parameter>&nbsp;:</term>
+<listitem><simpara>	the timestamp of the data to be sent. Refer to the rfc to know what it is.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the number of bytes sent over the network.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-recv-with-ts">rtp_session_recv_with_ts ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_recv_with_ts        (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> *buffer,
+                                             <link linkend="gint">gint</link> len,
+                                             <link linkend="guint32">guint32</link> time,
+                                             <link linkend="gint">gint</link> *have_more);</programlisting>
+<para>
+Tries to read the bytes of the incoming rtp stream related to timestamp <parameter>time</parameter>. In case 
+where the user supplied buffer <parameter>buffer</parameter> is not large enough to get all the data 
+related to timestamp <parameter>time</parameter>, then *( <parameter>have_more</parameter>) is set to 1 to indicate that the application
+should recall the function with the same timestamp to get more data.
+</para>
+<para>
+ When the rtp session is scheduled (see <link linkend="rtp-session-set-scheduling-mode">rtp_session_set_scheduling_mode</link>() ), and the 
+blocking mode is on (see <link linkend="rtp-session-set-blocking-mode">rtp_session_set_blocking_mode</link>() ), then the calling thread
+is suspended until the timestamp given as argument expires, whatever a received packet 
+fits the query or not.
+</para>
+<para>
+Important note: it is clear that the application cannot know the timestamp of the first
+packet of the incoming stream, because it can be random. The <parameter>time</parameter> timestamp given to the
+function is used relatively to first timestamp of the stream. In simple words, 0 is a good
+value to start calling this function.
+</para>
+<para>
+This function internally calls <link linkend="rtp-session-recvm-with-ts">rtp_session_recvm_with_ts</link>() to get a rtp packet. The content
+of this packet is then copied into the user supplied buffer in an intelligent manner:
+the function takes care of the size of the supplied buffer and the timestamp given in  
+argument. Using this function it is possible to read continous audio data (e.g. pcma,pcmu...)
+with for example a standart buffer of size of 160 with timestamp incrementing by 160 while the incoming
+stream has a different packet size.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&nbsp;:</term>
+<listitem><simpara>	a user supplied buffer to write the data.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>len</parameter>&nbsp;:</term>
+<listitem><simpara>		the length in bytes of the user supplied buffer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>time</parameter>&nbsp;:</term>
+<listitem><simpara>	the timestamp wanted.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>have_more</parameter>&nbsp;:</term>
+<listitem><simpara> the address of an integer to indicate if more data is availlable for the given timestamp.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> if a packet was availlable with the corresponding timestamp supplied in argument 
+then the number of bytes written in the user supplied buffer is returned. If no packets
+are availlable, either because the sender has not started to send the stream, or either
+because silence packet are not transmitted, or either because the packet was lost during
+network transport, then the function returns zero.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-sendm-with-ts">rtp_session_sendm_with_ts ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_sendm_with_ts       (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="mblk-t">mblk_t</link> *mp,
+                                             <link linkend="guint32">guint32</link> userts);</programlisting>
+<para>
+Send the rtp datagram <parameter>mp</parameter> to the destination set by <link linkend="rtp-session-set-remote-addr">rtp_session_set_remote_addr</link>() 
+with timestamp <parameter>timestamp</parameter>. For audio data, the timestamp is the number
+of the first sample resulting of the data transmitted. See rfc1889 for details.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mp</parameter>&nbsp;:</term>
+<listitem><simpara>	a rtp packet presented as a mblk_t.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>userts</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the number of bytes sent over the network.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-recvm-with-ts">rtp_session_recvm_with_ts ()</title>
+<programlisting><link linkend="mblk-t">mblk_t</link>*     rtp_session_recvm_with_ts       (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="guint32">guint32</link> user_ts);</programlisting>
+<para>
+Try to get a rtp packet presented as a mblk_t structure from the rtp session.
+The <parameter>user_ts</parameter> parameter is relative to the first timestamp of the incoming stream. In other
+words, the application does not have to know the first timestamp of the stream, it can
+simply call for the first time this function with <parameter>user_ts</parameter>=0, and then incrementing it
+as it want. The RtpSession takes care of synchronisation between the stream timestamp
+and the user timestamp given here.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_ts</parameter>&nbsp;:</term>
+<listitem><simpara>	a timestamp.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a rtp packet presented as a mblk_t.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-create-packet">rtp_session_create_packet ()</title>
+<programlisting><link linkend="mblk-t">mblk_t</link>*     rtp_session_create_packet       (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gint">gint</link> header_size,
+                                             char *payload,
+                                             <link linkend="gint">gint</link> payload_size);</programlisting>
+<para>
+Allocates a new rtp packet. In the header, ssrc and payload_type according to the session's
+context. Timestamp and seq number are not set, there will be set when the packet is going to be
+sent with <link linkend="rtp-session-sendm-with-ts">rtp_session_sendm_with_ts</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara>		a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>header_size</parameter>&nbsp;:</term>
+<listitem><simpara>	the rtp header size. For standart size (without extensions), it is <link linkend="RTP-FIXED-HEADER-SIZE-CAPS">RTP_FIXED_HEADER_SIZE</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>payload</parameter>&nbsp;:</term>
+<listitem><simpara>data to be copied into the rtp packet.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>payload_size</parameter>&nbsp;:</term>
+<listitem><simpara> size of data carried by the rtp packet.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a rtp packet in a mblk_t (message block) structure.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-get-current-send-ts">rtp_session_get_current_send_ts ()</title>
+<programlisting><link linkend="guint32">guint32</link>     rtp_session_get_current_send_ts (<link linkend="RtpSession">RtpSession</link> *session);</programlisting>
+<para>
+When the rtp session is scheduled and has started to send packets, this function
+computes the timestamp that matches to the present time. Using this function can be 
+usefull when sending discontinuous streams. Some time can be elapsed between the end
+of a stream burst and the begin of a new stream burst, and the application may be not
+not aware of this elapsed time. In order to get a valid (current) timestamp to pass to 
+#<link linkend="rtp-session-send-with-ts">rtp_session_send_with_ts</link>() or #<link linkend="rtp-session-sendm-with-ts">rtp_session_sendm_with_ts</link>(), the application may
+use <link linkend="rtp-session-get-current-send-ts">rtp_session_get_current_send_ts</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the actual send timestamp for the rtp session.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-reset">rtp_session_reset ()</title>
+<programlisting>void        rtp_session_reset               (<link linkend="RtpSession">RtpSession</link> *session);</programlisting>
+<para>
+Reset the session: local and remote addresses are kept unchanged but the internal
+queue for ordering and buffering packets is flushed, the session is ready to be
+re-synchronised to another incoming stream.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

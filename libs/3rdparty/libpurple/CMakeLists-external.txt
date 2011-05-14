@@ -1,0 +1,10 @@
+if (NOT LIBPURPLE_FOUND)
+        find_package(LibPurple REQUIRED)
+endif (NOT LIBPURPLE_FOUND)
+
+ow_create_project(libpurple)
+
+ow_use_public_libraries(
+        LIBPURPLE
+)
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8">
+<dialpad mode="plain" name="default">
+<tones>
+    <tone key="0" local="play" remote="play" format="dtmf"/>
+    <tone key="1" local="play" remote="play" format="dtmf"/>
+    <tone key="2" local="play" remote="play" format="dtmf"/>
+    <tone key="3" local="play" remote="play" format="dtmf"/>
+    <tone key="4" local="play" remote="play" format="dtmf"/>
+    <tone key="5" local="play" remote="play" format="dtmf"/>
+    <tone key="6" local="play" remote="play" format="dtmf"/>
+    <tone key="7" local="play" remote="play" format="dtmf"/>
+    <tone key="8" local="play" remote="play" format="dtmf"/>
+    <tone key="9" local="play" remote="play" format="dtmf"/>
+    <tone key="#" local="play" remote="play" format="dtmf"/>
+    <tone key="*" local="play" remote="play" format="dtmf"/>
+</tones>
+</dialpad>

@@ -1,0 +1,107 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>IMContactManager</class>
+ <widget class="QWidget" name="IMContactManager" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>305</width>
+    <height>171</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item row="2" column="0" >
+    <layout class="QGridLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item row="0" column="2" >
+      <widget class="QPushButton" name="deleteIMContactButton" >
+       <property name="text" >
+        <string>Delete</string>
+       </property>
+       <property name="icon" >
+        <iconset resource="../../../../resources/wengophone.qrc" >:/pics/delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="QPushButton" name="addIMContactButton" >
+       <property name="text" >
+        <string>Add</string>
+       </property>
+       <property name="icon" >
+        <iconset resource="../../../../resources/wengophone.qrc" >:/pics/add.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" >
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>165</width>
+         <height>24</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QTreeWidget" name="treeWidget" >
+     <property name="minimumSize" >
+      <size>
+       <width>0</width>
+       <height>70</height>
+      </size>
+     </property>
+     <property name="rootIsDecorated" >
+      <bool>false</bool>
+     </property>
+     <column>
+      <property name="text" >
+       <string>Contact ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text" >
+       <string>Contact Type (protocol)</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>Click on the add button below to add a new ID</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <tabstops>
+  <tabstop>treeWidget</tabstop>
+  <tabstop>addIMContactButton</tabstop>
+  <tabstop>deleteIMContactButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../resources/wengophone.qrc" />
+ </resources>
+ <connections/>
+</ui>

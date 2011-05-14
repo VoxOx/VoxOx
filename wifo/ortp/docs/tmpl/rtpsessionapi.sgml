@@ -1,0 +1,257 @@
+<!-- ##### SECTION Title ##### -->
+RtpSession API
+
+<!-- ##### SECTION Short_Description ##### -->
+The RtpSession object provides control on a RTP session as defined in RFC 1889.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+The following api provides the application a way to define a RTP session, send or receives
+data through it, and to keep informed of the evolution of the RTP session through a simple
+callback mecanism (see rtp_session_signal_connect() for details).
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT RtpSession ##### -->
+<para>
+Users should not manipulate this structure directly.
+</para>
+
+@next: 
+@profile: 
+@lock: 
+@ssrc: 
+@payload_type: 
+@max_buf_size: 
+@on_payload_type_changed: 
+@on_telephone_event_packet: 
+@on_telephone_event: 
+@on_timestamp_jump: 
+@rtp: 
+@rtcp: 
+@mode: 
+@stats: 
+@mask_pos: 
+@user_data: 
+@telephone_events_pt: 
+@current_tev: 
+
+<!-- ##### ENUM RtpSessionMode ##### -->
+<para>
+
+</para>
+
+@RTP_SESSION_RECVONLY: 
+@RTP_SESSION_SENDONLY: 
+@RTP_SESSION_SENDRECV: 
+
+<!-- ##### MACRO RTP_CALLBACK_TABLE_MAX_ENTRIES ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION rtp_session_new ##### -->
+<para>
+
+</para>
+
+@mode: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@type: 
+
+
+<!-- ##### FUNCTION rtp_session_set_scheduling_mode ##### -->
+<para>
+
+</para>
+
+@session: 
+@yesno: 
+
+
+<!-- ##### FUNCTION rtp_session_set_blocking_mode ##### -->
+<para>
+
+</para>
+
+@session: 
+@yesno: 
+
+
+<!-- ##### FUNCTION rtp_session_set_profile ##### -->
+<para>
+
+</para>
+
+@session: 
+@profile: 
+
+
+<!-- ##### FUNCTION rtp_session_set_local_addr ##### -->
+<para>
+
+</para>
+
+@session: 
+@addr: 
+@port: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_set_remote_addr ##### -->
+<para>
+
+</para>
+
+@session: 
+@dest: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@addr: 
+@port: 
+
+
+<!-- ##### FUNCTION rtp_session_set_jitter_compensation ##### -->
+<para>
+
+</para>
+
+@session: 
+@milisec: 
+
+
+<!-- ##### FUNCTION rtp_session_set_ssrc ##### -->
+<para>
+
+</para>
+
+@session: 
+@ssrc: 
+
+
+<!-- ##### FUNCTION rtp_session_set_seq_number ##### -->
+<para>
+
+</para>
+
+@session: 
+@seq: 
+
+
+<!-- ##### FUNCTION rtp_session_set_payload_type ##### -->
+<para>
+
+</para>
+
+@session: 
+@paytype: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_signal_connect ##### -->
+<para>
+
+</para>
+
+@session: 
+@signal: 
+@cb: 
+@user_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_signal_disconnect_by_callback ##### -->
+<para>
+
+</para>
+
+@session: 
+@signal: 
+@cb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_send_with_ts ##### -->
+<para>
+
+</para>
+
+@session: 
+@buffer: 
+@len: 
+@userts: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@time: 
+
+
+<!-- ##### FUNCTION rtp_session_recv_with_ts ##### -->
+<para>
+
+</para>
+
+@session: 
+@buffer: 
+@len: 
+@time: 
+@have_more: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_sendm_with_ts ##### -->
+<para>
+
+</para>
+
+@session: 
+@mp: 
+@userts: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_recvm_with_ts ##### -->
+<para>
+
+</para>
+
+@session: 
+@user_ts: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_create_packet ##### -->
+<para>
+
+</para>
+
+@session: 
+@header_size: 
+@payload: 
+@payload_size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_get_current_send_ts ##### -->
+<para>
+
+</para>
+
+@session: 
+@Returns: 
+
+
+<!-- ##### FUNCTION rtp_session_reset ##### -->
+<para>
+
+</para>
+
+@session: 
+
+

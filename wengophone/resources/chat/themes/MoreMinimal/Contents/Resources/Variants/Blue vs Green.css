@@ -1,0 +1,9 @@
+.incoming { color: #95CC00; }
+.outgoing { color: #009BD4; }
+.status { color: #EF3800; }
+.greyed { color: #9F9F9F; }
+
+.incoming_link a { color: #95CC00; text-decoration:none; }
+.outgoing_link a { color: #009BD4; text-decoration:none; }
+.status_link a { color: #EF3800; text-decoration:none; }
+.greyed_link a { color: #9F9F9F; text-decoration:none; }

@@ -1,0 +1,14 @@
+ow_create_static_library(samplerate)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+ow_add_sources(
+	src/samplerate.c
+	src/src_linear.c
+	src/src_sinc.c
+	src/src_zoh.c
+)
+
+ow_create_project_binary()

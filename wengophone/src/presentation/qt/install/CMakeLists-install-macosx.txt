@@ -1,0 +1,277 @@
+# vim: filetype=cmake
+
+macro (vox_hdiutil volname src dst)
+
+	if (APPLE)
+		exec_program("hdiutil"
+			ARGS
+				"create -size 200m -fs HFS+ -volname ${volname} -attach ${dst}"
+		)
+	endif (APPLE)
+
+endmacro (vox_hdiutil)
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+set(CMAKE_CURRENT_SOURCE_DIR "${SOURCE_DIR}" CACHE INTERNAL "CMake source dir" FORCE)
+set(CMAKE_SOURCE_DIR "${SOURCE_DIR}" CACHE INTERNAL "CMake source dir" FORCE)
+set(CMAKE_BINARY_DIR "${BINARY_DIR}" CACHE INTERNAL "CMake binary dir" FORCE)
+
+set(CMAKE_MODULE_PATH
+	${CMAKE_SOURCE_DIR}/owbuild
+	${CMAKE_SOURCE_DIR}/owbuild/owbuild
+)
+
+# Add options/default values...
+include(${CMAKE_SOURCE_DIR}/DefineWengoOptions.cmake)
+include(${CMAKE_SOURCE_DIR}/DefineInstallationPaths.cmake)
+
+set(CMAKE_MODULE_PATH
+	${SOURCE_DIR}/owbuild/owbuild
+)
+
+set(FRAMEWORK_INSTALL_DIR
+	${BUILD_DIR}/VoxOx.app/Contents/Frameworks
+)
+
+set(DATA_INSTALL_DIR
+	${BUILD_DIR}/VoxOx.app/Contents/Resources
+)
+
+include(OWChangeIdentificationName)
+include(OWChangeInstallName)
+include(OWCopyDir)
+include(OWCopyFile)
+include(OWHdiUtil)
+
+## Copy and create the locale directories to have the Application translated by Mac OS X
+file(GLOB_RECURSE _qmFiles ${BUILD_DIR}/lang/qtwengophone_*.qm)
+
+if (_qmFiles)
+	foreach (_qm ${_qmFiles})
+		# Extract language from qm file
+		GET_FILENAME_COMPONENT(lang ${_qm} NAME_WE)
+		STRING(REPLACE "qtwengophone_" "" lang ${lang})
+		
+		make_directory(${DATA_INSTALL_DIR}/${lang}.lproj)
+	endforeach (_qm ${_qmFiles})
+endif (_qmFiles)
+ow_copy_dir(${BUILD_DIR}/lang/*.qm ${DATA_INSTALL_DIR}/lang/.)
+####
+
+## Create the Info.plist file
+file(WRITE "${BUILD_DIR}/VoxOx.app/Contents/Info.plist"
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+"<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+"<plist version=\"1.0\">\n"
+"<dict>\n"
+"	<key>CFBundleDevelopmentRegion</key>\n"
+"	<string>English</string>\n"
+"	<key>CFBundleExecutable</key>\n"
+"	<string>VoxOx</string>\n"
+"	<key>CFBundleIconFile</key>\n"
+"	<string>voxoxicon.icns</string>\n"
+"	<key>CFBundleIdentifier</key>\n"
+"	<string>com.mbdsys.VoxOx</string>\n"
+"	<key>CFBundleInfoDictionaryVersion</key>\n"
+"	<string>6.0</string>\n"
+"	<key>CFBundlePackageType</key>\n"
+"	<string>APPL</string>\n"
+"	<key>CFBundleSignature</key>\n"
+"	<string>WNGP</string>\n"
+"	<key>CFBundleURLTypes</key>\n"
+"	<array>\n"
+"		<dict>\n"
+"			<key>CFBundleTypeRole</key>\n"
+"			<string>Viewer</string>\n"
+"			<key>CFBundleURLName</key>\n"
+"			<string>Wengo Me URL</string>\n"
+"			<key>CFBundleURLSchemes</key>\n"
+"			<array>\n"
+"				<string>wengo</string>\n"
+"			</array>\n"
+"		</dict>\n"
+"	</array>\n"
+"	<key>CFBundleVersion</key>\n"
+"	<string>${APPLICATION_VERSION}.${SVN_REVISION}</string>\n"
+"	<key>SmartCrashReports_CompanyName</key>
+"	<string>VoxOx</string>
+"	<key>SmartCrashReports_EmailTicket</key>
+"	<string>SCR-918827DC78</string>
+"</dict>\n"
+"</plist>\n"
+)
+####
+
+## Copying resources
+# WengoPhone icon
+# ow_copy_file(${SOURCE_DIR}/wengophone/src/presentation/qt/macosx/template.app/Contents/Resources/voxoxicon.icns
+# 	${BUILD_DIR}/VoxOx.app/Contents/Resources/voxoxicon.icns
+#)
+ow_copy_file(${SOURCE_DIR}/wengophone/resources/voxoxicon.icns
+	${BUILD_DIR}/VoxOx.app/Contents/Resources/voxoxicon.icns
+)
+
+ow_copy_file(${SOURCE_DIR}/wengophone/resources/qt.conf
+	${BUILD_DIR}/VoxOx.app/Contents/Resources/qt.conf
+)
+####
+
+string(REGEX REPLACE "\\\\" "/" QTDIR "$ENV{QTDIR}")
+
+# Copy Growl Framework
+make_directory(${FRAMEWORK_INSTALL_DIR}/Growl-WithInstaller.framework/)
+# ow_copy_dir(/Library/Frameworks/Growl-WithInstaller.framework/* ${FRAMEWORK_INSTALL_DIR}/Growl-WithInstaller.framework)
+exec_program("/bin/cp"
+	ARGS
+		"-RH /Library/Frameworks/Growl-WithInstaller.framework/ ${FRAMEWORK_INSTALL_DIR}/Growl-WithInstaller.framework/"
+)
+
+# Copy Qt Frameworks
+ow_copy_file(${QT_LIBRARY_DIR}/QtCore.framework/Versions/4/QtCore ${FRAMEWORK_INSTALL_DIR}/QtCore.framework/Versions/4/QtCore)
+ow_copy_file(${QT_LIBRARY_DIR}/QtGui.framework/Versions/4/QtGui	${FRAMEWORK_INSTALL_DIR}/QtGui.framework/Versions/4/QtGui)
+ow_copy_file(${QT_LIBRARY_DIR}/QtXml.framework/Versions/4/QtXml	${FRAMEWORK_INSTALL_DIR}/QtXml.framework/Versions/4/QtXml)
+ow_copy_file(${QT_LIBRARY_DIR}/QtSvg.framework/Versions/4/QtSvg	${FRAMEWORK_INSTALL_DIR}/QtSvg.framework/Versions/4/QtSvg)
+ow_copy_file(${QT_LIBRARY_DIR}/QtWebKit.framework/Versions/4/QtWebKit ${FRAMEWORK_INSTALL_DIR}/QtWebKit.framework/Versions/4/QtWebKit)
+ow_copy_file(${QT_LIBRARY_DIR}/QtNetwork.framework/Versions/4/QtNetwork ${FRAMEWORK_INSTALL_DIR}/QtNetwork.framework/Versions/4/QtNetwork)
+ow_copy_file(${QT_LIBRARY_DIR}/QtDBus.framework/Versions/4/QtDBus ${FRAMEWORK_INSTALL_DIR}/QtDBus.framework/Versions/4/QtDBus)
+#ow_copy_file(${QT_LIBRARY_DIR}/Qt3Support.framework/Versions/4/Qt3Support ${FRAMEWORK_INSTALL_DIR}/Qt3Support.framework/Versions/4/Qt3Support)
+ow_copy_file(${QT_LIBRARY_DIR}/QtSql.framework/Versions/4/QtSql ${FRAMEWORK_INSTALL_DIR}/QtSql.framework/Versions/4/QtSql)
+ow_copy_file(${QT_LIBRARY_DIR}/phonon.framework/Versions/4/phonon ${FRAMEWORK_INSTALL_DIR}/phonon.framework/Versions/4/phonon)
+
+make_directory(${BUILD_DIR}/VoxOx.app/Contents/plugins/)
+make_directory(${BUILD_DIR}/VoxOx.app/Contents/plugins/imageformats)
+make_directory(${BUILD_DIR}/VoxOx.app/Contents/plugins/codecs)
+make_directory(${BUILD_DIR}/VoxOx.app/Contents/plugins/sqldrivers)
+
+ow_copy_file(${QT_PLUGINS_DIR}/imageformats/libqgif.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/imageformats/)
+ow_copy_file(${QT_PLUGINS_DIR}/imageformats/libqico.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/imageformats/)
+ow_copy_file(${QT_PLUGINS_DIR}/imageformats/libqjpeg.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/imageformats/)
+ow_copy_file(${QT_PLUGINS_DIR}/imageformats/libqmng.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/imageformats/)
+ow_copy_file(${QT_PLUGINS_DIR}/imageformats/libqsvg.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/imageformats/)
+ow_copy_file(${QT_PLUGINS_DIR}/imageformats/libqtiff.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/imageformats/)
+
+ow_copy_file(${QT_PLUGINS_DIR}/codecs/libqkrcodecs.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/codecs/)
+ow_copy_file(${QT_PLUGINS_DIR}/codecs/libqcncodecs.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/codecs/)
+ow_copy_file(${QT_PLUGINS_DIR}/codecs/libqjpcodecs.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/codecs/)
+ow_copy_file(${QT_PLUGINS_DIR}/codecs/libqtwcodecs.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/codecs/)
+
+ow_copy_file(${QT_PLUGINS_DIR}/sqldrivers/libqsqlite.dylib ${BUILD_DIR}/VoxOx.app/Contents/plugins/sqldrivers/)
+
+# libpng12
+ow_copy_file(/usr/local/lib/libpng12.0.dylib ${FRAMEWORK_INSTALL_DIR}/libpng12.0.dylib)
+
+# libtiff
+ow_copy_file(/usr/local/lib/libtiff.3.dylib	${FRAMEWORK_INSTALL_DIR}/libtiff.3.dylib)
+
+# curl
+ow_copy_file(${SOURCE_DIR}/build/libs/3rdparty/curl/libcurl.dylib ${FRAMEWORK_INSTALL_DIR}/libowcurl.dylib)
+
+ow_change_identification_name(${FRAMEWORK_INSTALL_DIR}/libowcurl.dylib libowcurl.dylib)
+
+# webcam
+ow_copy_file(${SOURCE_DIR}/build/libs/webcam/libwebcam.dylib ${FRAMEWORK_INSTALL_DIR}/)
+
+# Copy PhApi
+ow_copy_file(${SOURCE_DIR}/build/wifo/phapi/libphapi.dylib ${FRAMEWORK_INSTALL_DIR}/)
+
+ow_copy_file(${SOURCE_DIR}/build/wifo/phapi-util/libphapiutil.dylib ${FRAMEWORK_INSTALL_DIR}/)
+
+# Copy PhApi plugins
+make_directory(${FRAMEWORK_INSTALL_DIR}/phapi-plugins/)
+
+ow_copy_file(${SOURCE_DIR}/build/wifo/phapi/phspeexplugin/libphspeexplugin.so ${FRAMEWORK_INSTALL_DIR}/phapi-plugins/)
+
+ow_copy_file(${SOURCE_DIR}/build/wifo/wifo-plugins/sfp-plugin/libsfp-plugin.so ${FRAMEWORK_INSTALL_DIR}/phapi-plugins/)
+
+ow_copy_file(${SOURCE_DIR}/build/wifo/phapi/philbcplugin/libphilbcplugin.so ${FRAMEWORK_INSTALL_DIR}/phapi-plugins/)
+
+# Copy GnuTLS libs
+ow_copy_file(${SOURCE_DIR}/libs/3rdparty/libgcrypt/libgcrypt-1.4.5/lib/macosx/libgcrypt.dylib ${FRAMEWORK_INSTALL_DIR}/)
+#ow_copy_file(${SOURCE_DIR}/libs/3rdparty/gnutls/gnutls-2.5.5/bin/macosx/libgnutls.26.dylib ${FRAMEWORK_INSTALL_DIR}/)
+
+## Change install names
+set(WENGO_EXE "${BUILD_DIR}VoxOx.app/Contents/MacOS/VoxOx")
+
+set(COPY_PYTHON_SCRIPT
+	${SOURCE_DIR}/scripts/copy_missing_libraries.py
+)
+
+set(UPDATE_LINKS_PYTHON_SCRIPT
+	${SOURCE_DIR}/scripts/update_links.py
+)
+
+# Copy missing dependencies of WengoPhone binary.
+execute_process(
+	COMMAND
+		python ${COPY_PYTHON_SCRIPT} ${BUILD_DIR}/VoxOx.app/Contents/MacOS/VoxOx ${FRAMEWORK_INSTALL_DIR}
+)
+
+execute_process(
+	COMMAND
+		python ${COPY_PYTHON_SCRIPT} ${BUILD_DIR}/VoxOx.app/Contents/MacOS/owcrashreport ${FRAMEWORK_INSTALL_DIR}
+)
+
+# Copy missing dependencies of files in ${FRAMEWORK_INSTALL_DIR}.
+execute_process(
+	COMMAND
+		python ${COPY_PYTHON_SCRIPT} ${FRAMEWORK_INSTALL_DIR}
+)
+
+# Update install names
+execute_process(
+	COMMAND
+		python ${UPDATE_LINKS_PYTHON_SCRIPT} ${BUILD_DIR}/VoxOx.app/Contents/ ${BUILD_DIR}/VoxOx.app/Contents/MacOS/VoxOx
+)
+
+execute_process(
+	COMMAND
+		python ${UPDATE_LINKS_PYTHON_SCRIPT} ${BUILD_DIR}/VoxOx.app/Contents/ ${BUILD_DIR}/VoxOx.app/Contents/MacOS/owcrashreport
+)
+
+####
+
+## Update rights on WengoPhone files
+message("Updating rights on VoxOx.app...")
+execute_process(
+	COMMAND "chmod" -R 755 ${BUILD_DIR}/VoxOx.app
+)
+####
+
+## Creates .dmg of VoxOx
+execute_process(
+	COMMAND "rm" -r ${BUILD_DIR}/VoxOx.dmg
+)
+#vox_hdiutil(VoxOx_${APPLICATION_VERSION} ${BUILD_DIR}/VoxOx.app ${SOURCE_DIR}/build/release/VoxOx.dmg)
+
+execute_process(
+	COMMAND "rm" -r ${BUILD_DIR}/source
+)
+
+exec_program("mkdir"
+	ARGS
+		"${BUILD_DIR}/source"
+)
+
+exec_program("cp"
+	ARGS
+		"-RH ${BUILD_DIR}/VoxOx.app ${BUILD_DIR}/source/"
+)
+
+exec_program("cp"
+	ARGS
+		"${SOURCE_DIR}/wengophone/COPYING ${BUILD_DIR}/source/License.txt"
+)
+
+exec_program("ln"
+	ARGS
+		"-s /Applications ${BUILD_DIR}/source"
+)
+
+exec_program("/usr/local/bin/create-dmg"
+	ARGS
+		"--volname VoxOx_${APPLICATION_VERSION} --background ${SOURCE_DIR}/wengophone/resources/background.png --window-pos 100 100 --window-size 540 340 --icon-size 112 --icon \"VoxOx\" 200 150 --icon \"Applications\" 425 150 --icon \"License.txt\" 20 200 ${BUILD_DIR}/VoxOx.dmg ${BUILD_DIR}/source"
+)
+####

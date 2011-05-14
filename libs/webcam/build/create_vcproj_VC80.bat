@@ -1,0 +1,1 @@
+"%VS80COMNTOOLS%vsvars32.bat" && cmake .. -DCMAKE_VERBOSE_MAKEFILE=1 -DWEBCAM_MODULE=1 -G "Visual Studio 8 2005"

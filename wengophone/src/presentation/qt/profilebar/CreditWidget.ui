@@ -1,0 +1,100 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>CreditWidget</class>
+ <widget class="QWidget" name="CreditWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>243</width>
+    <height>78</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <property name="spacing" >
+    <number>0</number>
+   </property>
+   <item row="0" column="1" >
+    <widget class="QLabel" name="callForwardLabel" >
+     <property name="toolTip" >
+      <string>Call Forward Method</string>
+     </property>
+     <property name="text" >
+      <string>Not Available</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" >
+    <widget class="QToolButton" name="callForwardButton" >
+     <property name="toolTip" >
+      <string>Click here to change your call forward settings</string>
+     </property>
+     <property name="text" >
+      <string>Call forward mode:</string>
+     </property>
+     <property name="icon" >
+      <iconset resource="../../../../resources/wengophone.qrc" >:/pics/profilebar/credit/call_forward.png</iconset>
+     </property>
+     <property name="toolButtonStyle" >
+      <enum>Qt::ToolButtonTextBesideIcon</enum>
+     </property>
+     <property name="autoRaise" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2" >
+    <widget class="QToolButton" name="buyCreditsButton" >
+     <property name="cursor" >
+      <cursor>13</cursor>
+     </property>
+     <property name="toolTip" >
+      <string>Click here to buy @company@'s credits</string>
+     </property>
+     <property name="text" >
+      <string>Purchase call out credits</string>
+     </property>
+     <property name="icon" >
+      <iconset resource="../../../../resources/wengophone.qrc" >:/pics/profilebar/credit/wengos.png</iconset>
+     </property>
+     <property name="toolButtonStyle" >
+      <enum>Qt::ToolButtonTextBesideIcon</enum>
+     </property>
+     <property name="autoRaise" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <widget class="QToolButton" name="voiceMailButton" >
+     <property name="text" >
+      <string>Call Voice Mail</string>
+     </property>
+     <property name="icon" >
+      <iconset resource="../../../../resources/wengophone.qrc" >:/pics/profilebar/event/voicemessage_new.png</iconset>
+     </property>
+     <property name="toolButtonStyle" >
+      <enum>Qt::ToolButtonTextBesideIcon</enum>
+     </property>
+     <property name="autoRaise" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <tabstops>
+  <tabstop>callForwardButton</tabstop>
+  <tabstop>buyCreditsButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../resources/wengophone.qrc" />
+ </resources>
+ <connections/>
+</ui>

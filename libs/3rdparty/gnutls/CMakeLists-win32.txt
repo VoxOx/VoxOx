@@ -1,0 +1,12 @@
+ow_create_project(gnutls)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/gnutls-2.8.3/bin/windows/libgnutls-26.lib
+	${CMAKE_CURRENT_SOURCE_DIR}/gnutls-2.8.3/bin/windows/libgcrypt.lib	#VOXOX - JRT - 2009.09.28 - for encryption.
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/gnutls-2.8.3/include
+)
+
+ow_copy_dir(${CMAKE_CURRENT_SOURCE_DIR}/gnutls-2.8.3/bin/windows/*.dll ${BUILD_DIR})

@@ -1,0 +1,120 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+include /usr/share/dpatch/dpatch.make
+
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+
+CFLAGS = -Wall -g -D_REENTRANT
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O2
+endif
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+	INSTALL_PROGRAM += -s
+endif
+
+DEBVERSION:=$(shell head -n 1 debian/changelog \
+		    | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
+UPVERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e 's/.dfsg$$//')
+UPDATE:=$(shell echo $(UPVERSION) | sed -e 's/^.*\+svn//')
+
+FILENAME := portaudio19_$(UPVERSION).orig.tar.gz
+URL := https://www.portaudio.com/repos/portaudio/branches/v19-devel
+SRCDIR := portaudio19-$(UPVERSION).orig
+
+autoreconf:
+	aclocal
+	autoconf
+	libtoolize -c
+	$(RM) -r autom4te.cache
+
+config: patch config.status
+config.status:
+	dh_testdir
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --with-oss=yes --with-jack=yes --with-alsa=yes --enable-cxx
+
+
+build: config build-stamp
+build-stamp:
+	dh_testdir
+
+	$(MAKE) lib/libportaudio.la
+	$(MAKE) -C bindings/cpp
+	doxygen
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp 
+
+	-$(MAKE) -C bindings/cpp/doc distclean
+	-$(MAKE) -C bindings/cpp distclean
+	-$(MAKE) distclean
+	$(RM) -r lib/.libs
+	$(RM) doc/html/*
+
+	$(MAKE) -f $(CURDIR)/debian/rules unpatch
+
+	dh_clean 
+
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
+	install -d $(CURDIR)/debian/tmp/usr/lib
+	install -d $(CURDIR)/debian/tmp/usr/include
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs --list-missing
+	dh_installexamples
+	dh_install --sourcedir=debian/tmp --list-missing
+	dh_strip
+	dh_compress --exclude=usr/share/doc/portaudio19-doc/docs
+	dh_fixperms
+#	dh_makeshlibs
+	dh_makeshlibs -V 'libportaudio2 (>= 19+cvs20060311-1)'
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+print-version:
+	@@echo "Debian version:          $(DEBVERSION)"
+	@@echo "Upstream version:        $(UPVERSION)"
+
+get-orig-source:
+	@@dh_testdir
+	@@[ -d ../tarballs/. ]||mkdir -p ../tarballs
+	@@echo Downloading $(FILENAME) from $(URL) ...
+	@@svn export -r{$(UPDATE)} $(URL) ../tarballs/$(SRCDIR)
+	@@echo Building snapshot tarball
+	@@GZIP=-9 tar -b1 -czf ../tarballs/$(FILENAME) -C ../tarballs $(SRCDIR)
+	@@echo Cleaning up
+	@@rm -rf ../tarballs/$(SRCDIR)
+
+binary: binary-arch
+.PHONY: build clean binary-arch binary install patch unpatch config autoreconf print-version get-orig-source

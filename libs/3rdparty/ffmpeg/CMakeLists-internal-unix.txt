@@ -1,0 +1,23 @@
+ow_create_project(ffmpeg)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/libavcodec/libavcodec.a
+	${CMAKE_CURRENT_SOURCE_DIR}/libavutil/libavutil.a
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include/ffmpeg
+)
+
+set(configure "./configure")
+set(configureOptions "--extra-cflags=")
+
+if (CMAKE_SIZEOF_VOID_P MATCHES "8")
+	ow_check_cxx_compiler_flag("-fPIC" WITH_FPIC)
+	if (WITH_FPIC)
+		set(configure "./configure")
+		set(configureOptions "--extra-cflags=-fPIC")
+	endif (WITH_FPIC)
+endif (CMAKE_SIZEOF_VOID_P MATCHES "8")
+
+ow_autoconf(${configure} ${configureOptions} "make")

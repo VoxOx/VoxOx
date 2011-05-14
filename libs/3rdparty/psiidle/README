@@ -1,0 +1,7 @@
+The code from this folder has been copied from Psi 0.11 [1]. It was originally
+in the src/tools/idle folder.
+
+It implements a crossplatform idle detection system which works even if the
+application does not have the focus, unlike our own previous implementation.
+
+[1]: http://psi-im.org

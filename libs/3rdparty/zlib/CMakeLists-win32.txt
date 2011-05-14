@@ -1,0 +1,11 @@
+ow_create_project(zlib)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/zlib-1.2.3/lib/zlib.lib
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/zlib-1.2.3/include
+)
+
+ow_copy_dir(${CMAKE_CURRENT_SOURCE_DIR}/zlib-1.2.3/bin/*.dll ${BUILD_DIR})

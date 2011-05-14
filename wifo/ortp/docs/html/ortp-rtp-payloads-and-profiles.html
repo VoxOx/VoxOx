@@ -1,0 +1,803 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>RTP payloads and profiles</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="oRTP Reference Manual"
+HREF="book1.html"><LINK
+REL="UP"
+TITLE="oRTP API"
+HREF="ortpapi.html"><LINK
+REL="PREVIOUS"
+TITLE="RtpSession API"
+HREF="ortp-rtpsession-api.html"><LINK
+REL="NEXT"
+TITLE="Multiplexing sessions (in a one thread design)"
+HREF="ortp-multiplexing-sessions-(in-a-one-thread-design).html"><STYLE
+TYPE="text/css"
+>.synopsis, .classsynopsis {
+    background: #eeeeee;
+    border: solid 1px #aaaaaa;
+    padding: 0.5em;
+}
+.programlisting {
+    background: #eeeeff;
+    border: solid 1px #aaaaff;
+    padding: 0.5em;
+}
+.variablelist {
+    padding: 4px;
+    margin-left: 3em;
+}
+.navigation {
+    background: #ffeeee;
+    border: solid 1px #ffaaaa;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.navigation a {
+    color: #770000;
+}
+.navigation a:visited {
+    color: #550000;
+}
+.navigation .title {
+    font-size: 200%;
+}</STYLE
+></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><TABLE
+WIDTH="100%"
+CLASS="navigation"
+SUMMARY="Navigation header"
+CELLPADDING="2"
+CELLSPACING="2"
+><TR
+VALIGN="middle"
+><TD
+><A
+ACCESSKEY="p"
+HREF="ortp-rtpsession-api.html"
+><IMG
+SRC="left.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Prev"></A
+></TD
+><TD
+><A
+ACCESSKEY="u"
+HREF="ortpapi.html"
+><IMG
+SRC="up.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Up"></A
+></TD
+><TD
+><A
+ACCESSKEY="h"
+HREF="book1.html"
+><IMG
+SRC="home.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Home"></A
+></TD
+><TH
+WIDTH="100%"
+align="center"
+>oRTP Reference Manual</TH
+><TD
+><A
+ACCESSKEY="n"
+HREF="ortp-multiplexing-sessions-(in-a-one-thread-design).html"
+><IMG
+SRC="right.png"
+WIDTH="24"
+HEIGHT="24"
+BORDER="0"
+ALT="Next"></A
+></TD
+></TR
+></TABLE
+><H1
+><A
+NAME="ORTP-RTP-PAYLOADS-AND-PROFILES"
+></A
+>RTP payloads and profiles</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN681"
+></A
+><H2
+>Name</H2
+>RTP payloads and profiles&nbsp;--&nbsp;This section describes the way that the oRTP stack manages RTP profiles and payload types.</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN684"
+></A
+><H2
+>Synopsis</H2
+><PRE
+CLASS="SYNOPSIS"
+>&#13;#include &lt;payloadtype.h&gt;
+
+
+struct      <A
+HREF="ortp-rtp-payloads-and-profiles.html#PAYLOADTYPE"
+>PayloadType</A
+>;
+struct      <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+>;
+extern      RtpProfile <A
+HREF="ortp-rtp-payloads-and-profiles.html#AV-PROFILE"
+>av_profile</A
+>;
+#define     <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTP-PROFILE-CLEAR-ALL"
+>rtp_profile_clear_all</A
+>           (profile)
+#define     <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTP-PROFILE-GET-NAME"
+>rtp_profile_get_name</A
+>            (profile)
+#define     <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTP-PROFILE-SET-NAME"
+>rtp_profile_set_name</A
+>            (profile,nm)
+#define     <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTP-PROFILE-SET-PAYLOAD"
+>rtp_profile_set_payload</A
+>         (profile,index,pt)
+#define     <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTP-PROFILE-GET-PAYLOAD"
+>rtp_profile_get_payload</A
+>         (profile,index)
+#define     <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTP-PROFILE-CLEAR-PAYLOAD"
+>rtp_profile_clear_payload</A
+>       (profile,index)
+#define     <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTP-PROFILE-CLEAR-ALL"
+>rtp_profile_clear_all</A
+>           (profile)</PRE
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN697"
+></A
+><H2
+>Description</H2
+><P
+>A rtp payload type is a number between 0 and 127 that identifies a particular payload 
+(GSM, PCMU, MPEG,...) within a given rtp profile. The <A
+HREF="ortp-rtp-payloads-and-profiles.html#PAYLOADTYPE"
+>PayloadType</A
+> object in oRTP describes
+a payload.
+
+An RTP profile is a table that assigns particular payloads (GSM, MPEG...) to a payload type
+number within the range 0..127. In oRTP, profiles are represented by the <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> object.
+
+For example in the AV profile (Audio Video profile, defined in RFC1890), often used 
+by telephony applications, the payload type number 8 is assigned to PCMA 
+(A-law compressed audio) at sampling frequency 8000 Hz, mono.
+
+By default, all RTP sessions created by oRTP use the AV profile, but you can change the profile
+of an RTP session using <A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-PROFILE"
+>rtp_session_set_profile</A
+>().</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN703"
+></A
+><H2
+>Details</H2
+><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN705"
+></A
+><H3
+><A
+NAME="PAYLOADTYPE"
+></A
+>struct PayloadType</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>struct PayloadType {
+
+	gint type;
+	#define PAYLOAD_AUDIO_CONTINUOUS 0
+	#define PAYLOAD_AUDIO_PACKETIZED 1
+	#define	PAYLOAD_VIDEO 2
+	#define PAYLOAD_OTHER 3  /* ?? */
+	gint clock_rate;
+	double bytes_per_sample;		/* in case of continuous audio data */
+	char *zero_pattern;
+	gint pattern_length;
+	/* other usefull information */
+	gint normal_bitrate;	/*in bit/s */
+	char *mime_type;
+	PayloadTypeFlags flags;
+	void *user_data;
+};</PRE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN710"
+></A
+><H3
+><A
+NAME="RTPPROFILE"
+></A
+>struct RtpProfile</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>struct RtpProfile {
+
+	char *name;
+	PayloadType *payload[127];
+};</PRE
+><P
+></P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN715"
+></A
+><H3
+><A
+NAME="AV-PROFILE"
+></A
+>av_profile</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>extern RtpProfile av_profile;</PRE
+><P
+>This is the Audio Video profile defined in RFC1890.</P
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN720"
+></A
+><H3
+><A
+NAME="RTP-PROFILE-CLEAR-ALL"
+></A
+>rtp_profile_clear_all()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define rtp_profile_clear_all(profile)	memset((void*)(profile),0,sizeof(RtpProfile))</PRE
+><P
+>Initialize the profile to the empty profile (all payload type are unassigned).</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN727"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> an RTP profile (<A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> object)</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN733"
+></A
+><H3
+><A
+NAME="RTP-PROFILE-GET-NAME"
+></A
+>rtp_profile_get_name()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define rtp_profile_get_name(profile) 	(profile)-&gt;name</PRE
+><P
+></P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN740"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		a rtp profile object (<A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+>)</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN746"
+></A
+><H3
+><A
+NAME="RTP-PROFILE-SET-NAME"
+></A
+>rtp_profile_set_name()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define rtp_profile_set_name(profile,nm) 	(profile)-&gt;name=(nm)</PRE
+><P
+>Set a name to the rtp profile. (This is not required)</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN753"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> 	a rtp profile object (<A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+>)</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN759"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>nm</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>			a string</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN764"
+></A
+><H3
+><A
+NAME="RTP-PROFILE-SET-PAYLOAD"
+></A
+>rtp_profile_set_payload()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define rtp_profile_set_payload(profile,index,pt)  (profile)-&gt;payload[(index)]=(pt)</PRE
+><P
+>Assign payload type number <VAR
+CLASS="PARAMETER"
+>index</VAR
+> to payload type desribed in <VAR
+CLASS="PARAMETER"
+>pt</VAR
+> for the RTP profile
+<VAR
+CLASS="PARAMETER"
+>profile</VAR
+>.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN774"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> an RTP profile (a <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> object)</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN780"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>index</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	the payload type number</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN785"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>pt</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		the payload type description (a <A
+HREF="ortp-rtp-payloads-and-profiles.html#PAYLOADTYPE"
+>PayloadType</A
+> object )</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN791"
+></A
+><H3
+><A
+NAME="RTP-PROFILE-GET-PAYLOAD"
+></A
+>rtp_profile_get_payload()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define rtp_profile_get_payload(profile,index)	((profile)-&gt;payload[(index)])</PRE
+><P
+>Gets the payload description of the payload type <VAR
+CLASS="PARAMETER"
+>index</VAR
+> in the profile <VAR
+CLASS="PARAMETER"
+>profile</VAR
+>.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN800"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	an RTP profile (a <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> object)</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN806"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>index</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	the payload type number</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN811"
+></A
+><H3
+><A
+NAME="RTP-PROFILE-CLEAR-PAYLOAD"
+></A
+>rtp_profile_clear_payload()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define rtp_profile_clear_payload(profile,index)	(profile)-&gt;payload[(index)]=NULL</PRE
+><P
+>Set payload type number <VAR
+CLASS="PARAMETER"
+>index</VAR
+> unassigned in profile <VAR
+CLASS="PARAMETER"
+>profile</VAR
+>.</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN820"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	an RTP profile (a <A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> object)</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN826"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>index</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	the payload type number</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><HR><DIV
+CLASS="REFSECT2"
+><A
+NAME="AEN831"
+></A
+><H3
+><A
+NAME="RTP-PROFILE-CLEAR-ALL"
+></A
+>rtp_profile_clear_all()</H3
+><PRE
+CLASS="PROGRAMLISTING"
+>#define rtp_profile_clear_all(profile)	memset((void*)(profile),0,sizeof(RtpProfile))</PRE
+><P
+>Initialize the profile to the empty profile (all payload type are unassigned).</P
+><P
+></P
+><P
+></P
+><TABLE
+CLASS="variablelist"
+BORDER="0"
+CELLSPACING="0"
+CELLPADDING="4"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN838"><SPAN
+STYLE="white-space: nowrap"
+><VAR
+CLASS="PARAMETER"
+>profile</VAR
+>&nbsp;:</SPAN
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+> an RTP profile (<A
+HREF="ortp-rtp-payloads-and-profiles.html#RTPPROFILE"
+>RtpProfile</A
+> object)</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN844"
+></A
+><H2
+>See Also</H2
+><P
+><A
+HREF="ortp-rtpsession-api.html#RTP-SESSION-SET-PROFILE"
+>rtp_session_set_profile</A
+>()</P
+></DIV
+><TABLE
+CLASS="navigation"
+WIDTH="100%"
+SUMMARY="Navigation footer"
+CELLPADDING="2"
+CELLSPACING="2"
+><TR
+VALIGN="middle"
+><TD
+ALIGN="left"
+><A
+ACCESSKEY="p"
+HREF="ortp-rtpsession-api.html"
+><B
+>&lt;&lt;&lt;&nbsp;RtpSession API</B
+></A
+></TD
+><TD
+ALIGN="right"
+><A
+ACCESSKEY="n"
+HREF="ortp-multiplexing-sessions-(in-a-one-thread-design).html"
+><B
+>Multiplexing sessions (in a one thread design)&nbsp;&gt;&gt;&gt;</B
+></A
+></TD
+></TR
+></TABLE
+></BODY
+></HTML
+>

@@ -1,0 +1,472 @@
+QWidget{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+ }
+  
+QMainWindow,
+QDialog, 
+QWidget#centralWidget
+{
+	background-color: black;	
+}
+ 
+QFontDialog > QLabel
+{
+	color: black;
+}
+ 
+  
+ 
+QHeaderView::section {
+     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                       stop:0 #616161, stop: 0.5 #505050,
+                                       stop: 0.6 #434343, stop:1 #656565);
+     color: white;
+     padding-left: 4px;
+     border: 1px solid #6c6c6c;
+ }
+ 
+ 
+/** QMenu **/
+
+QMenuBar {
+	background-color: qlineargradient(x1:1, y1:0, x2:1, y2:1, stop:0 #262626 , stop: 0.45 #262626, stop: 0.5 #000000, stop: 1 #000000);          
+    border: 1px solid #383A3D;
+	font-size: 12px;
+	color: white;
+}
+			
+QMenuBar::item {
+	background-color: transparent;   
+}
+
+
+QTabWidget#tabWidget,
+QTabWidget#QtUniversalMessageTabWidget
+{
+		background-color: black;
+}
+
+QTabWidget#tabWidget::pane,
+QTabWidget#QtUniversalMessageTabWidget::pane 
+{ 
+        border-top: none;
+}
+
+QTabWidget#tabWidget::tab-bar,
+QTabWidget#QtUniversalMessageTabWidget::tab-bar 
+{
+     alignment: left;
+}	
+
+QTabWidget#tabWidget>QTabBar::tab,
+QTabWidget#QtUniversalMessageTabWidget>QTabBar::tab
+{
+		background-color: qlineargradient(x1:1, y1:0, x2:1, y2:1, stop:0 #f0f0f0 , stop: 0.45 #f0f0f0, stop: 0.5 #d4d4d4, stop: 1 #d4d4d4); 
+		border: 1px solid #898c95;
+		min-height: 19px;	
+		padding-left: 9px;
+		padding-right: 9px;
+		color: #000000;
+}		
+
+QTabWidget#tabWidget>QTabBar::tab:selected,
+QTabWidget#QtUniversalMessageTabWidget>QTabBar::tab:selected
+{
+		background-color: #2a2a2a;
+		border-bottom: none;
+		min-height: 19px;	
+		color: #FFFFFF;
+}
+
+QMenu {
+	font-size: 12px;
+	font-family: "Tahoma";
+	font-style: normal;
+}		
+  /** End QMenu **/
+
+
+ QLabel{
+	color: #FFFFFF;	
+}
+
+QCheckBox{
+	color: #FFFFFF;	
+}
+QRadioButton{
+	color: #FFFFFF;	
+}
+
+QComboBox#callBarComboBox {
+    border-radius: 5px;
+}
+
+VoxOxFrame{
+	border: 1px solid #ababab;
+	border-radius: 5px;
+}
+
+QStatusBar{
+	 background-image: url(:/pics/statusbar/bg.png);	
+}
+
+QWidget#AddVoxOxAccount>VoxOxLinkLabel{
+	color: #dce602;	
+	text-decoration: underline;	
+}
+ 
+ VoxoxErrorMessageLabel{
+	color: #fe0505;
+	font-size: 12px;
+ }
+ 
+ QFrame#flagFrame{
+	background-color: #808080;
+	border: 1px solid #666666;
+	border-radius: 2px;
+ }
+ 
+QToolTip {
+    color: #000000;	 
+}
+
+QWidget#WengoConfigDialog {
+	background-color: #ffffff;
+}
+
+QtVoxMessageBox,
+QtVoxEmailMessageBox,
+QtVoxPhoneNumberMessageBox,
+QtVoxTextMessageBox,
+QWidget#IMAccountTemplate,
+QWidget#FastAddIMContact,
+QWidget#RenameGroupDialog,
+QWidget#AboutWindow,
+QWidget#ProfileDetails,
+QWidget#ChatRoomInviteWidget, 
+QWidget#SoftUpdatePromptWindow,
+QDialog#TranslationWidget,
+QFontDialog
+{
+	background-color: #e8e8e8;
+}
+
+QtVoxMessageBox>QLabel,
+QtVoxEmailMessageBox>QLabel,
+QtVoxPhoneNumberMessageBox>QLabel,
+QtVoxTextMessageBox>QLabel,
+QWidget#FastAddIMContact>QLabel,
+QWidget#RenameGroupDialog>QLabel,
+QWidget#ProfileDetails>QLabel,
+QWidget#ChatRoomInviteWidget>QLabel,
+QDialog#TranslationWidget>QLabel#lblTittle,
+QWidget#SoftUpdatePromptWindow>QLabel
+{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	font-weight: bold;
+	color: #343434;
+}
+
+QWidget#tabProfileGeneral>QLabel,
+QWidget#tabProfileGeneral>QCheckBox,
+QDialog#TranslationWidget>QCheckBox,
+QWidget#tabProfilePhones>QLabel,
+QDialog#TranslationWidget>QLabel,
+QWidget#SoftUpdatePromptWindow>QCheckBox
+{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #343434;
+}
+
+QWidget#AboutWindow>QLabel{
+	font-family: "Tahoma";
+	color: #343434;
+}
+
+QWidget#AboutWindow>QLabel#descriptionLabel{
+	font-size: 40px;
+	font-weight: bold;
+}
+
+QWidget#AboutWindow>QLabel#wengoPhoneBuildIdStringLabel{
+	font-size: 10px;
+}
+
+QWidget#AboutWindow>QLabel#wengoPhoneBuildIdStringLabel_2{
+	font-size: 12px;
+}
+
+QWidget#AboutWindow>QLabel#licenseLabel{
+	font-size: 9px;
+}
+
+QWidget#AboutWindow>QLabel#copyrightLabel{
+	font-size: 12px;
+}
+
+
+QWidget#WengoConfigDialog >QListWidget#listWidget{
+	background-color: black;
+	background-image: url(:/pics/config/logo.png);
+    background-repeat: none;
+    background-position: bottom;
+	selection-background-color: #323232;
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #ffffff;
+	border: 1px solid #383a3d;
+}
+
+QWidget#WengoConfigDialog >QLabel#titleLabel{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 16px;
+	color: #ff0000;
+}
+
+QWidget#WengoConfigDialog >QLabel#lblDescription{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #333333;
+}
+
+QWidget#WengoConfigDialog >QListWidget#listWidget::item{
+	min-height: 33px;
+	color: #ffffff;
+}
+
+QWidget#GeneralSettings>QLabel {
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #333333;
+}
+
+QGroupBox {
+	 font-size: 12px;
+     border: none;
+	 border-top: 1px solid #c2c2c2;
+	 margin-top: 10px; /* leave space at the top for the title */
+	 margin-left: 10px;
+ }
+
+QGroupBox::title {
+	subcontrol-origin: margin;
+	color: #333333;
+ }
+ 
+QGroupBox >QLabel,
+QGroupBox >QCheckBox,
+QGroupBox >QRadioButton
+{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #333333;
+}
+
+ QWidget#PhoneSettings>QLabel{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #333333;
+}
+  
+ QWidget#IMAccountManager >QTreeWidget#treeWidget{
+	background-color: white;
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: black;
+	border: 1px solid #2a2a2a;
+}
+
+/* History */
+ QWidget#HistoryWidget >QTreeView#treeView{
+	background-color: #373737;
+	selection-background-color: #929292;
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: white;
+	border: none;
+}
+
+/* Wizard */
+
+QWidget#WizardDialog {
+	background-image: url(:/pics/wizard/bg.png);
+    background-repeat: none;
+}
+
+QWidget#WizardDialog >QLabel#titleLabel{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	color: #ffffff;
+}
+
+QWidget#WizardDialog >QLabel#lblDescription{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 13px;
+	color: #ffffff;
+}
+
+QWidget#WizardDialog >QFrame#lowerFrame{
+	background-image: url(:/pics/wizard/transparent_bg.png);
+}
+
+
+QWidget#WizardVideo >QLabel#webcamPreviewLabel{
+
+ border: 3px solid #484b4e;
+
+}
+
+QLabel#loginLabelAccount,QLabel#passwordLabelAccount{
+
+	font-family: "Tahoma";
+	font-style: normal;
+	font-weight: bold;
+	font-size: 11px;
+
+}
+
+
+QLabel#createAccountLabel{
+
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 10px;
+
+}
+
+QWidget#WizardProgress >QLabel,
+QWidget#WizardAudio >QLabel,
+QWidget#WizardVideo >QLabel,
+QWidget#WizardVideo >QCheckbox,
+QWidget#WizardSelectNetworks >QCheckBox,
+QWidget#WizardSelectNetworks >QLabel
+{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #ffffff;
+}
+
+QLabel#wizardTittleLabel{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-weight: bold;
+	font-size: 11px;
+	color: #ffffff;
+}
+
+QWidget#WizardProfile>QLabel,
+QWidget#WizardProfile>QCheckBox
+{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-weight: bold;
+	font-size: 11px;
+	color: #ffffff;
+}
+
+QWidget#WizardProfile>QLabel#lblChangePicture{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 9px;
+	color: #ed1c24;
+}
+
+QWidget#WizardProfile>QLabel#lblPrivacyPolicy{
+	font-family: "Tahoma";
+	font-style: italic;
+	font-size: 10px;
+	color: #ed1c24;
+}
+
+
+/* Tooltip */
+QWidget#ContactTooltip{
+	background-color: #2a2a2a;
+	border: 1px solid #898c95;
+	
+}
+
+QWidget#ContactTooltip{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+	color: #ffffff;
+}
+
+QWidget#ContactTooltip>QLabel#lblDisplayName{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-weight: bold;
+	font-size: 11px;
+	color: #ffffff;
+}
+
+QWidget#ContactTooltip>lblStatusMessage{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 11px;
+}
+
+QWidget#ContactTooltip>QLabel#lblAvatarPixmap{
+	border: 1px solid #898c95;
+}
+
+
+QWidget#ContactTooltip>VoxOxLinkLabel{
+	font-family: "Tahoma";
+	font-style: normal;
+	font-size: 10px;
+}
+
+ QWidget#ContactTooltip>QWidget#line{
+ 
+   border-top-width: 1px;
+   border-top-color: #898c95;
+   border-top-style: solid;
+   border-bottom: none;
+   border-right: none;
+   border-left: none;
+	
+ }
+
+ QMainWindow::separator {
+     width: 5px; /* when vertical */
+     height: 5px; /* when horizontal */
+ }
+
+ QDockWidget {
+     border: none;
+     titlebar-close-icon: url();
+     titlebar-normal-icon: url();
+ }
+
+ QDockWidget::title {
+	 min-height: 21px;	
+	 max-height: 21px;	
+     text-align: left; /* align the text to the left */
+     background-image: url(:/pics/chat/umtreewidget/dock_background.png);	
+	 background-color: black;
+    background-repeat: none;
+    background-position: right;
+ }
+ 
+
+ 

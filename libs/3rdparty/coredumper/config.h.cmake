@@ -1,0 +1,6 @@
+#ifndef COREDUMPER_CONFIG_H
+#define COREDUMPER_CONFIG_H
+
+
+
+#endif /* COREDUMPER_CONFIG_H */

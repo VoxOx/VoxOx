@@ -1,0 +1,11 @@
+To update the ffmpeg compilation process with this project:
+
+	-> You need an Intel and a PPC Macintosh;
+	-> Have the ffmeg sources on both computer;
+	-> Launch configure on each computer;
+	-> Copy config.h and config.mak files from each computer
+		in the config/mac/$ARCH directory of the project;
+	-> Remove SRC_PATH variables from each config.mak (the correct SRC_PATH is
+		given by the XCode compile scripts);
+
+That's it, you can now compile a Universal Binary version of FFMPEG

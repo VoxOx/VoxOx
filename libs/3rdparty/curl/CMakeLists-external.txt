@@ -1,0 +1,9 @@
+if (NOT CURL_FOUND)
+	find_package(CURL REQUIRED)
+endif (NOT CURL_FOUND)
+
+ow_create_project(curl)
+
+ow_use_public_libraries(
+	CURL
+)

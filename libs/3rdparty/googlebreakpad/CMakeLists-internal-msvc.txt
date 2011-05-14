@@ -1,0 +1,22 @@
+ow_create_static_library(googlebreakpad)
+
+
+ow_add_private_definitions(
+ 	-DUNICODE
+)
+
+	
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${CMAKE_CURRENT_SOURCE_DIR}/src/client/windows/handler
+)	
+
+ow_add_sources(
+	src/common/windows/string_utils.cc
+	src/common/windows/guid_string.cc
+	src/client/windows/crash_generation/crash_generation_client.cc
+	src/client/windows/crash_generation/minidump_generator.cc
+	src/client/windows/handler/exception_handler.cc
+)
+
+ow_create_project_binary()

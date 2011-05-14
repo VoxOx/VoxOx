@@ -1,0 +1,74 @@
+/* Multiwindow CSS Starts Here */
+div.multiwindow {
+	/*
+	position:absolute;
+	left:10px;
+	top:20px;
+	*/
+	width:390px;
+	/*display:none;*/
+	background-color:#FFF;
+}
+div.multiwindow div.multiwindow_top, div.multiwindow div.multiwindow_body, div.multiwindow div.multiwindow_bottom {
+	position:relative;
+	width:390px;
+	float:left;
+}
+div.multiwindow div.multiwindow_top {
+	height:7px;
+	background: transparent url('../../images/settings/img_inner_window_vertical.png') 0px 0px repeat-x;
+}
+	div.multiwindow div.multiwindow_top .corner_tl {
+		background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px 0px no-repeat;
+		float:left;
+	}
+	div.multiwindow div.multiwindow_top .corner_tr {
+		background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -14px no-repeat;
+		float:right;
+	}
+div.multiwindow div.multiwindow_bottom {
+	height:7px;
+	background: transparent url('../../images/settings/img_inner_window_vertical.png') 0px -7px repeat-x;
+}
+	div.multiwindow div.multiwindow_bottom .corner_bl {
+		background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -7px no-repeat;
+		float:left;
+	}
+	div.multiwindow div.multiwindow_bottom .corner_br {
+		background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -21px no-repeat;
+		float:right;
+	}
+.corner_tl, .corner_tr, .corner_bl, .corner_br {
+	width:7px;
+	height:7px;
+}
+div.multiwindow div.multiwindow_body { }
+div.multiwindow div.multiwindow_body div.side_l,
+div.multiwindow div.multiwindow_body div.multiwindow_body_content,
+div.multiwindow div.multiwindow_body div.side_r {
+	float:left;
+	/*height:100%;*/
+	min-height:300px;
+}
+div.multiwindow div.multiwindow_body .side_l {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') 0px 0px repeat-y;
+	width:7px;
+}
+div.multiwindow div.multiwindow_body .side_r {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') -7px 0px repeat-y;
+	width:7px;
+}
+div.multiwindow div.multiwindow_body div.multiwindow_body_content { width:376px; }
+div.multiwindow div.multiwindow_body div.multiwindow_body_content form div.settings_section_hdr {
+	width:350px;
+	height:1px;
+	margin:15px 13px 10px 13px;
+	font-size:12px;
+	line-height:0px;
+	border-bottom:1px solid #c2c2c2;
+	display:block;
+	float:left;
+}
+div.multiwindow_body_content { text-align:left; }
+div.multiwindow_body_content form { padding-top:20px; position:relative; }
+/* Multiwindow CSS Ends Here */

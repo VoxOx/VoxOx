@@ -1,0 +1,44 @@
+ow_create_shared_library(pthread)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+ow_add_private_definitions(
+	-D__CLEANUP_C
+	-D_WIN32_WINNT=0x400
+	-DHAVE_CONFIG_H
+	-DPTW32_RC_MSC
+)
+
+ow_add_private_libraries(
+	ws2_32.lib
+)
+
+ow_add_sources(
+	src/attr.c
+	src/barrier.c
+	src/cancel.c
+	src/cleanup.c
+	src/condvar.c
+	src/create.c
+	src/dll.c
+	src/errno.c
+	src/exit.c
+	src/fork.c
+	src/global.c
+	src/misc.c
+	src/mutex.c
+	src/nonportable.c
+	src/private.c
+	src/rwlock.c
+	src/sched.c
+	src/semaphore.c
+	src/signal.c
+	src/spin.c
+	src/sync.c
+	src/tsd.c
+	src/version.rc
+)
+
+ow_create_project_binary()

@@ -1,0 +1,5 @@
+if (CURL_INTERNAL)
+	include(CMakeLists-internal.txt)
+else (CURL_INTERNAL)
+	include(CMakeLists-external.txt)
+endif (CURL_INTERNAL)

@@ -1,0 +1,91 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>301</width>
+    <height>365</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>MainWindow</string>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>9</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item row="5" column="1" >
+    <widget class="QPushButton" name="commandTerminateButton" >
+     <property name="text" >
+      <string>Command::terminate()</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" >
+    <widget class="QPushButton" name="commandStartButton" >
+     <property name="text" >
+      <string>Command::start()</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2" >
+    <widget class="QListWidget" name="listWidget" />
+   </item>
+   <item row="2" column="0" >
+    <widget class="QPushButton" name="acceptCallButton" >
+     <property name="text" >
+      <string>Accept Call</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2" >
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QLineEdit" name="chatMessage" />
+     </item>
+     <item>
+      <widget class="QPushButton" name="sendChatMessageButton" >
+       <property name="text" >
+        <string>Send Chat Message</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0" colspan="2" >
+    <widget class="QLineEdit" name="phoneNumber" />
+   </item>
+   <item row="1" column="0" >
+    <widget class="QPushButton" name="makeCallButton" >
+     <property name="text" >
+      <string>Make Call</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="hangUpButton" >
+     <property name="text" >
+      <string>Hang Up</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <resources/>
+ <connections/>
+</ui>

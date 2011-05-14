@@ -1,0 +1,9 @@
+if (NOT OSIP2_FOUND)
+	find_package(OSIP2 REQUIRED)
+endif (NOT OSIP2_FOUND)
+
+ow_create_project(osip2)
+
+ow_use_public_libraries(
+	OSIP2
+)

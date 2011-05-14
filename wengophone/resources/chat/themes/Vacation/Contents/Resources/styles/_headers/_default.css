@@ -1,0 +1,108 @@
+/* @group header */
+
+#header {
+	color: #FFF;
+	cursor: default;
+	font-family: helvetica, sans-serif;
+	overflow: hidden;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 5;
+	width: 100%;
+	height: 65px;
+	text-shadow: #1f4971 0px 1px 2px;
+}
+
+#header_bar {
+	background: url("../../images/header_bg.png") repeat;
+	border-bottom: 1px solid white;
+	width: 100%;
+	height: 64px;
+	position: relative;
+}
+
+#header_bar .chattitel {
+	margin: 0px 125px 0px 125px;
+	padding-top: 10px;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#header_bar .uhrzeit {
+	font-size: 15px;
+	color: #dfdfdf;
+	letter-spacing: 0px;
+}
+
+#header_bar .sitzplatz {
+	margin-top: 20px;
+	font-size: 11px;
+	color: #dfdfdf;
+	padding: 6px;
+}
+
+#header_bar .sitzplatz.me {
+	float: left;
+}
+
+#header_bar .sitzplatz.co {
+	float: right;
+}
+
+img.picture {
+	width: 64px;
+	height: 64px;
+	border-right: 1px solid white;
+	float: left;
+}
+
+img.picture.co {
+	border-right: 0px;
+	border-left: 1px solid white;
+	float: right;
+}
+
+/* @group toggle */
+
+#toggle_hide {
+	cursor: pointer;
+	background: url("../../images/_headers/toggle-hide.png") no-repeat top left;
+	position: fixed;
+	top: 3px;
+	left: 3px;
+	width: 14px;
+	height: 10px;
+	visibility: hidden;
+	z-index: 6;
+}
+
+#header:hover #toggle_hide {
+	visibility: visible;
+}
+
+#header #toggle_hide:hover {
+	background-image: url("../../images/_headers/toggle-hide-hover.png");
+}
+
+#toggle_show {
+	cursor: pointer;
+	background: url("../../images/_headers/toggle-show.png") no-repeat top left;
+	position: fixed;
+	top: 3px;
+	left: 3px;
+	width: 14px;
+	height: 10px;
+	z-index: 6;
+}
+
+#header #toggle_show:hover {
+	background-image: url("../../images/_headers/toggle-show-hover.png");
+}
+
+/* @end */
+
+
+/* @end */
+

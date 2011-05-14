@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8">
+<!--
+Note:
+there is a strict color code association to respect in the dialpad_mask.svg
+these color codes are expressed in hexadecimal RGBA
+#000000FF => 0
+#FF0000FF => 1
+#00FF00FF => 2
+#FFFF00FF => 3
+#0000FFFF => 4
+#FF00FFFF => 5
+#00FFFFFF => 6
+#990000FF => 7
+#99FF00FF => 8
+#9900FFFF => 9
+#99FFFFFF => pound
+#999999FF => star
+-->
+<dialpad mode="svg" name="terminator" pixmap="combo_icon.png">
+<tones>
+    <tone key="0" local="play" remote="play" format="wav"/>
+    <tone key="1" local="play" remote="play" format="wav"/>
+    <tone key="2" local="play" remote="play" format="wav"/>
+    <tone key="3" local="play" remote="play" format="wav"/>
+    <tone key="4" local="play" remote="play" format="wav"/>
+    <tone key="5" local="play" remote="play" format="wav"/>
+    <tone key="6" local="play" remote="play" format="wav"/>
+    <tone key="7" local="play" remote="play" format="wav"/>
+    <tone key="8" local="play" remote="play" format="wav"/>
+    <tone key="9" local="play" remote="play" format="wav"/>
+    <tone key="#" local="play" remote="play" format="wav"/>
+    <tone key="*" local="play" remote="play" format="wav"/>
+</tones>
+</dialpad>

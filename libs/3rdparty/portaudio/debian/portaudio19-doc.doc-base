@@ -1,0 +1,14 @@
+Document: portaudio19
+Title: PortAudio - Portable Audio Library - Documentation
+Author: Phil Burk and Ross Bencina
+Abstract:
+   PortAudio is a cross platform, open-source, audio I/O library proposed by
+   Ross Bencina to the music-dsp mailing list. It lets you write simple audio
+   programs in 'C' that will compile and run on Windows, Macintosh, Unix,
+   BeOS. PortAudio is intended to promote the exchange of audio synthesis
+   software between developers on different platforms.
+Section: Apps/Sound
+
+Format: HTML
+Index: /usr/share/doc/portaudio19-doc/index.html
+Files: /usr/share/doc/portaudio19-doc/doc/html/*

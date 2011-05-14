@@ -1,0 +1,611 @@
+<? $start = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : 'groups'; ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<title>VoxOx&#174; - Contact Manager</title>
+<link href="includes/css/styles.css" type="text/css" rel="stylesheet">
+<!--[if IE 7]><![endif]-->
+<!--[if lt IE 8]><![endif]-->
+<script type="text/javascript" src="includes/js/jquery.js"></script>
+<script type="text/javascript" src="includes/js/jquery.ui.all.js"></script>
+<SCRIPT type="text/javascript" src="includes/js/jquery.layout.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/js/jquery.example.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/js/jquery.editable.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/js/jquery.selectboxes.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/js/jquery.json.min.js"></SCRIPT>
+<script type="text/javascript" src="includes/js/contacts.js"></script>
+<script type="text/javascript" src="includes/js/plugins/contacts.layout.js"></script>
+<script type="text/javascript" src="includes/js/plugins/contacts.select.js"></script>
+<script type="text/javascript" src="includes/js/plugins/contacts.contacts.js"></script>
+<script type="text/javascript" src="includes/js/plugins/contacts.groups.js"></script>
+<script type="text/javascript">
+
+	var objDragged, objDropped, objDraggedCount, objDroppedCount, makeNonEditable, clickedid, key;
+	
+	//var jumpcid = 'curtkaffer@im.voxox.comJabberromspacenut@im.voxox.com/VoxOxJabber';
+	var jumpcid = '';
+	
+	function login(username1, key1) {
+		username = username1;
+		key = key1;
+	}
+ 	
+ 	$(function() {
+ 		$(document).ready(function () {
+ 		    jumpcid = qtEventSource.getInitialContact();  //JRT
+			var start = (jumpcid) ? 'contact' : 'groups';
+			var u = '';
+			var p = '';
+			$('#searchinput, #fname, #lname, #company, #title, .address :text').example(function() { return $(this).attr('title'); });
+			contacts.init(start);
+		});
+		
+ 		// Button Save New Contact
+ 		$('#bttn_save_new').click(function() {
+ 			contacts.saveNewContact($('.frm_copied'));
+ 		});
+ 	
+ 		// add new data field
+ 		$('#opt_add_field').change(function() {
+ 			alert('This will add a new "'+$(this).attr('value')+'" data field.');
+ 		});
+ 	
+ 		//
+ 		$('#iscompany').change(function() {
+ 			var iscompany = $('.frm_copied').find('#set_bio_iscompany').find('#iscompany').is(':checked');
+ 			if(iscompany) {
+ 				$('.frm_copied #set_bio_company').after($('.frm_copied #set_bio_name')); 
+ 			} else {
+ 				$('.frm_copied #set_bio_name').after($('.frm_copied #set_bio_company')); 
+ 			}
+ 		});
+		
+ 		// Search Contacts Box Functions
+		$('#searchinput').bind("change keyup",function() {
+	
+		});
+		
+		// Bottom Add Buttons
+		$("#Bttn_Add_Group").click(function() { });
+		
+		$("#Bttn_Add_Contact").click(function() {
+			
+			$('#Edit-Groups').hide();
+			$('#Edit-Contacts').show();
+			$("#Window-Contact-Info").show();
+			$('.frm_copied').remove(); // clear any copies
+			$('#frm_copy').show();
+			$('#bttn_edit').hide();
+			$('#bttn_save').hide();
+			$('#bttn_save_new').show();
+			
+			var cloneForm = $('#frm_copy').clone(true).attr('id','frm_newcontact').addClass('frm_copied').insertBefore($('#frm_copy'));
+			
+			$('.frm_copied fieldset .bttn_add').attr({ style: "display:inline-block;"});
+			
+			$('#frm_copy').hide(); // hide original form
+			
+			$(".list_contacts li").removeClass("selected");
+			$(".list_contacts .mergeable:first").before("<li onclick=\"contacts.loadContact($(this))\" class=\"mergeable selected\" id=\"\"><div class=\"contact_name\"><span class=\"txt_fname\">No Name<\/span> <span class=\"txt_lname\"><\/span><\/div><\/li>");
+		});
+		
+		// Dialog Box Functions
+		$("#dialog_newgroup").dialog({ // Add New Group Function
+			bgiframe: true,
+			resizable: false,
+			autoOpen: false,
+			height:140,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.75
+			},
+			buttons: {
+				'Create Group': function() {
+					if($('#newgroupname').val().length > 0) {
+
+					}
+					$(this).dialog('close');
+				},
+				Cancel: function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+
+		$("#dialog_contactinuse").dialog({ // Alert Contact Already In Use
+			bgiframe: true,
+			resizable: false,
+			autoOpen: false,
+			height:200,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.90
+			},
+			buttons: {
+				'Save Changes': function() {
+					$(this).dialog('close');
+					return true;
+				},
+				'Don\'t Save': function() {
+					$(this).dialog('close');
+					return "skip";
+				},
+				Cancel: function() {
+					$(this).dialog('close');
+					return false;
+				}
+			}
+		});
+		
+		$("#dialog_newphone").dialog({ // Add New Group Function
+			bgiframe: true,
+			resizable: false,
+			autoOpen: false,
+			height:140,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.75
+			},
+			buttons: {
+				'Add Phone Number': function() {
+					$(this).dialog('close');
+					return "hi";
+				},
+				Cancel: function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+		
+		$("#dialog_error").dialog({
+			bgiframe: true,
+			resizable: false,
+			autoOpen: false,
+			height:175,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.75
+			},
+			buttons: {
+				Cancel: function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+		
+		$("#dialog_mergegroup").dialog({
+			bgiframe: true,
+			resizable: false,
+			autoOpen: false,
+			height:175,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.75
+			},
+			buttons: {
+				'Merge Group': function() {
+					//alert(objDragged)
+					objDragged.remove();
+					//alert(objDraggedCount);
+					
+					var total = parseInt(objDraggedCount)+parseInt(objDroppedCount);
+					
+					objDropped.find(".group_totalcontacts").html(total);
+					$(this).dialog('close');
+				},
+				Cancel: function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+		
+		$("#dialog_changegroup").dialog({
+			bgiframe: true,
+			resizable: false,
+			autoOpen: false,
+			height:175,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.75
+			},
+			buttons: {
+				'Change Group': function() {
+					$(this).dialog('close');
+				},
+				Cancel: function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+		
+		$("#dialog_mergecontact").dialog({
+			bgiframe: true,
+			resizable: false,
+			autoOpen: false,
+			height:175,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.75
+			},
+			buttons: {
+				'Merge Contact': function() {
+					objDragged.remove();
+					$(this).dialog('close');
+				},
+				Cancel: function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+		
+		// Edit Contact's Functions
+		$("#bttn_edit_contact").click(function() {
+			$('#Editable-Contact-Details').show();
+			$('#Editable-Contact-Settings').hide();
+			$('.noneditable').each(function() { $(this).remove(); });
+			$('.frm_copied fieldset').each(function() { $(this).attr({ style: "display:;" }); });
+			$('#set_add_fields').show();
+			$('#bttn_edit_contact').hide();
+			$('#bttn_save_contact').show();
+			$('#bttn_edit_contact_settings').show();
+			$('#bttn_save_contact_settings').hide();
+		});
+		
+		// Save Contact Functions
+		$("#bttn_save_contact").click(function() {
+			contacts.saveContact();
+			$('#Editable-Contact-Details').show();
+			$('#Editable-Contact-Settings').hide();
+			contacts.makeNonEditable();
+			$('#set_add_fields').hide();
+			$('#bttn_edit_contact').show();
+			$('#bttn_save_contact').hide();
+			$('#bttn_edit_contact_settings').show();
+			$('#bttn_save_contact_settings').hide();
+			//$('#output').val('').val($('.frm_copied').html());
+		});
+		
+		// Edit Contact Settings Function
+		$("#bttn_edit_contact_settings").click(function() {
+			var url = 'http://dev.hometab.voxox.com/settings/phone.php?username='+username+'&key='+key+'&id='+clickedid;
+			$('#iframe_settings').attr('src',url)
+			$('#Editable-Contact-Details').hide();
+			$('#Editable-Contact-Settings').show();
+			$('#bttn_edit_contact').show();
+			$('#bttn_save_contact').hide();
+			$('#bttn_edit_contact_settings').hide();
+			$('#bttn_save_contact_settings').show();
+			$('#set_add_fields').hide();
+		});
+		
+		// Save Contact Settings Function
+		$("#bttn_save_contact_settings").click(function() {
+			$('#Editable-Contact-Details').show();
+			$('#Editable-Contact-Settings').hide();
+			$('#bttn_edit_contact_settings').show();
+			$('#bttn_save_contact_settings').hide();
+			$('#set_add_fields').hide();
+			$('#bttn_edit_contact').show();
+			$('#bttn_save_contact').hide();
+			//$('#output').val('').val($('.frm_copied').html());
+		});
+		
+		// Delete Contact Function
+		$("#bttn_delete_contact").click(function() {
+			alert('Delete contact function goes here.');
+		});
+		
+		// Delete Group Function
+		$("#bttn_delete_group").click(function() {
+			alert('Delete group function goes here.');
+		});
+		
+		// Edit Group Function
+		$("#bttn_edit_group").click(function() {
+			$('#bttn_edit_group').hide();
+			$('#bttn_save_group').show();
+			//alert('Edit group function goes here.');
+		});
+		
+		// Save Group Function
+		$("#bttn_save_group").click(function() {
+			$('#bttn_edit_group').show();
+			$('#bttn_save_group').hide();
+			//alert('Save group function goes here.');
+		});
+		
+		$('.bttn_add').click(function() {
+			var copy = $(this).parent();
+			var section = copy.attr('class');
+			
+			if(copy.find(':text').val().length > 0) {
+				$('.frm_copied .'+section+':last .bttn_add:last').attr({style: "display:none;"});
+			
+				// clone last clicked
+				var clone = copy.clone(true).insertAfter($('.frm_copied .'+section+':last'));
+					clone.show();
+					clone.find('option:first').attr('selected', 'selected');
+					clone.find('input:text').val('');
+				$('.frm_copied .'+section+':last :select').removeAttr('id'); // 
+				$('.frm_copied .'+section+':last .bttn_add:last').attr({ style: "display:inline-block;"}); // move add button to the newest last row
+			}
+		});
+		
+		$('.bttn_delete').click(function() {
+			var copy = $(this).parent();
+			var section = copy.attr('class');
+			var totalrows = $('.'+section).size()-1;	
+			
+			if(totalrows!=1) { // delete last record
+				$(this).parent().remove();
+			} else { // delete last record and reset select box and clear input box
+				$(this).parent().find('option:first').attr('selected', 'selected').parent('select').parent().parent().find('input:text').val('');
+			}
+			$('.frm_copied .'+section+':last .bttn_add:last').attr({ style: "display:inline-block;"}); // move add button to the newest last row
+		});
+		
+		$("button").mouseup(function() { $(this).removeClass('bttn_pressed'); }).mousedown(function(){ $(this).addClass('bttn_pressed'); });
+		
+		/*
+		$("#country1").change(function() {
+			$('#country1 :selected').each(function(i, selected){
+				countryname = $(selected).text();
+				countrycode = $(selected).val();
+				$("#cc_1").val(countrycode);
+			});
+		});
+		*/
+		
+		$('#opt_countrycodes').change(function() {
+			$('#new_countrycode').val($('#opt_countrycodes').val());
+		});
+ 	});
+
+</script>
+
+</head>
+<body>
+<div id="Contacts" style="width:100%;height:100%;">
+	<div class="ui-layout-north" onmouseover="contactsLayout.allowOverflow('north')" onmouseout="contactsLayout.resetOverflow(this)">** North **</div>
+	<div class="ui-layout-west" id="Contact_List">
+		<div id="Contact_List_Box">
+			<div id="List">
+				<div class="inner-north" id="Box-Search">
+					<div>
+						<form>
+							<fieldset>
+								<input name="searchinput" id="searchinput" type="text" title="Search Contacts">
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<div class="inner-west">
+					<!-- Groups Start Here -->
+					<ul class="list_groups"></ul>
+					<!-- Groups Ends Here -->
+				</div> 
+				<div class="inner-center">
+					<!-- Contacts Start Here -->
+					<ul class="list_contacts"></ul>
+					<!-- Contacts Ends Here -->
+				</div> 
+				<div class="inner-east">Inner East</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui-layout-south" style="padding:0px;margin:0px;">
+		<div class="window_btmbar">
+			<div id="Bttn_Add_Group" class="bttn_btmbar_add"></div>
+			<div id="Bttn_Add_Contact" class="bttn_btmbar_add"></div>
+		</div>
+	</div>
+	<div class="ui-layout-east">** East **</div>
+	<div class="ui-layout-center" style="padding:0px;margin:0px;overflow:hidden;">
+		<div class="editarea" id="Edit-Groups">
+			<!--div class="edit-section-top">
+				<button type="button" id="bttn_save_group">Save Group</button>
+				<button type="button" id="bttn_edit_group">Edit Group</button>
+				<button type="button" id="bttn_delete_group">Delete Group</button>
+			</div-->
+			<div class="edit-section-content">
+				<div id="Editable-Group-Details">
+					<span class="grp_name"></span><br>
+					<span class="grp_count"></span><br>
+					<hr noshade size="1" width="100%">
+					<p>The VoxOx Contact Manager allows you to easily edit all your contacts from one place.
+					<br>You can also set Phone Settings individually for your groups and contacts so that the
+					<br>Personal Assistant treats each one according to your preferences.
+					<hr noshade size="1" width="100%">
+					<span>Group Settings</span>
+				</div>
+			</div>
+		</div>
+		<div class="editarea" id="Edit-Contacts">
+			<div class="edit-section-top">
+				<button type="button" id="bttn_save_contact">Save Contact</button>
+				<button type="button" id="bttn_edit_contact">Edit Contact</button>
+				<button type="button" id="bttn_save_contact_settings">Save Phone Settings</button>
+				<button type="button" id="bttn_edit_contact_settings">Edit Phone Settings</button>
+				<!--<button type="button" id="bttn_delete_contact">Delete Contact</button>-->
+			</div>
+			<div class="edit-section-content">
+				<!-- Contact Form Starts Here -->
+				<div class="editable" id="Editable-Contact-Details">
+					<form class="frmeditinplace" id="frm_copy" method="post">
+						<input name="cid" id="cid" type="hidden">
+						<input name="cid2" id="cid2" type="hidden">
+						<fieldset class="set_bio" id="set_bio_name">
+							<input type="text" name="fname" id="fname" title="First Name">
+							<input type="text" name="lname" id="lname" title="Last Name">
+						</fieldset>
+						<fieldset class="set_bio" id="set_bio_company" style="display:none">
+							<input type="text" name="company" id="company" title="Company">
+							<input type="text" name="title" id="title" title="Job Title">
+						</fieldset>
+						<!--
+						<fieldset class="set_bio" id="set_bio_iscompany">
+							<input type="checkbox" name="iscompany" id="iscompany"> Company
+						</fieldset>
+						-->
+						<div class="settings_section_hdr"><span>Group</span></div>
+						<fieldset class="set_groups">
+							<label>
+								<!--select id="set_groups" name="opt_group">
+									<option value="Group 1" selected>Group 1</option>
+									<option value="Group 2">Group 2</option>
+									<option value="Group 3">Group 3</option>
+								</select-->
+								Group Name
+							</label>
+							<input type="text" name="groupname" id="groupname" readonly>
+						</fieldset>
+						<div class="settings_section_hdr"><span>Phone(s)</span></div>
+						<fieldset class="set_phones">
+							<label>
+								<select class="lbl_phones" name="opt_phones">
+									<option value="VoxOx">VoxOx</option>
+									<option value="Mobile">Mobile</option>
+									<option value="Home">Home</option>
+									<option value="Work">Work</option>
+									<option value="Other">Other</option>
+									<option value="Fax">Fax</option>
+								</select>
+							</label>
+							<input type="text" name="phone" onfocus="contacts.addPhone(this)">
+							<span class="bttn_delete"></span>
+							<span class="bttn_add"></span>
+							<input type="hidden">
+						</fieldset>
+						<div class="settings_section_hdr"><span>IM Screenname(s)</span></div>
+						<fieldset class="set_services_im">
+							<label>
+								<select class="lbl_services_im" name="opt_services_im">
+									<option value="VoxOx">VoxOx</option>
+									<option value="AIM">AIM</option>
+									<option value="Facebook">Facebook</option>
+									<option value="Yahoo">Yahoo</option>
+									<option value="MSN">MSN</option>
+									<option value="GoogleTalk">GoogleTalk</option>
+									<option value="ICQ">ICQ</option>
+									<option value="Skype">Skype</option>
+								</select>
+							</label>
+							<input type="text" name="services_im" readonly>
+							<!--
+							<span class="bttn_delete"></span>
+							<span class="bttn_add"></span>
+							-->
+						</fieldset>
+						<div class="settings_section_hdr"><span>Email(s)</span></div>
+						<fieldset class="set_emails">
+							<label>
+								<select class="lbl_emails" name="lbl_emails">
+									<option value="Personal">Personal</option>
+									<option value="Work">Work</option>
+									<option value="Other">Other</option>
+								</select>
+							</label>
+							<input type="text" name="email">
+							<span class="bttn_delete"></span>
+							<span class="bttn_add"></span>
+						</fieldset>
+						<!--div class="settings_section_hdr"><span>Social Network(s)</span></div>
+						<fieldset class="set_services_social">
+							<label>
+								<select class="lbl_services_social" name="opt_services_social">
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+								</select>
+							</label>
+							<input type="text" name="services_social">
+							<span class="bttn_delete"></span>
+							<span class="bttn_add"></span>
+						</fieldset-->
+						<div class="settings_section_hdr"><span>Address(es)</span></div>
+						<fieldset class="set_addresses">
+							<label>
+								<select class="lbl_addresses" name="lbl_addresses">
+									<option value="Home">Home</option>
+									<option value="Work">Work</option>
+									<option value="main">Main</option>
+								</select>
+							</label>
+							<div class="address">
+								<input type="text" class="address_street1" title="Street">
+								<input type="text" class="address_city" title="City">
+								<input type="text" class="address_state" title="State">
+								<input type="text" class="address_zip" title="Zip">
+								<input type="text" class="address_country" title="Country">
+							</div>
+							<span class="bttn_delete"></span>
+							<span class="bttn_add"></span>
+						</fieldset>
+						<!--
+						<div id="set_add_fields" style="display:none;">
+							<label>
+								<select id="opt_add_field" name="">
+									<option value="-1">Add Field</option>
+									<option value="Birthday">Birthday</option>
+									<option value="Dates">Dates</option>
+								</select>
+							</label>
+						</div>
+						-->
+					</form>
+				</div>
+				<!-- Contact Form Ends Here -->
+				<div class="editable" id="Editable-Contact-Settings" style="display:none;width:100%;height:100%;overflow:hidden;">
+					<div style="padding-top:10px;margin-left:-17px;"><iframe WIDTH="100%" HEIGHT="100%" FRAMEBORDER="0" MARGINWIDTH="0" MARGINHEIGHT="0" SCROLLING="no" id="iframe_settings"></iframe></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--
+<textarea id="output" rows="20" cols="200"></textarea>
+<textarea id="json" rows="20" cols="200"></textarea>
+-->
+<div id="dialog_error" title="Error!" style="display:none;"><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><span class="alertcomment"></span></p></div>
+<div id="dialog_mergegroup" title="Merge Groups?" style="display:none;"><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><span class="alertcomment"></span></p></div>
+<div id="dialog_changegroup" title="Do you want change group for contact?" style="display:none;"><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><span class="alertcomment"></span></p></div>
+<div id="dialog_mergecontact" title="Merge Contact?" style="display:none;"><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><span class="alertcomment"></span></p></div>
+<div id="dialog_newphone" title="Add New Phone Number" style="display:none;">
+	<form>
+		<fieldset>
+			<select id="opt_countrycodes"></select>
+			<input type="text" name="new_countrycode" id="new_countrycode" class="text ui-widget-content ui-corner-all" style="width:60px" readonly>
+			<input type="text" name="new_phone" id="new_phone" class="text ui-widget-content ui-corner-all" style="width:125px"/>
+		</fieldset>
+	</form>
+</div>
+<div id="dialog_newgroup" title="Create New Group" style="display:none;">
+	<form>
+	<fieldset>
+		<label for="name">Group Name</label>
+		<input type="text" name="newgroupname" id="newgroupname" class="text ui-widget-content ui-corner-all" />
+	</fieldset>
+	</form>
+</div>
+<div id="dialog_contactinuse" title="Save contact?" style="display:none;">
+	<div class="dialog_content">
+		<div class="dialog_icon"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span></div>
+		<div class="dialog_text">
+			You are currently editing a contact.<br><br> 
+			Do you want to save the changes you made?<br><br> 
+			Your changes will be lost if you don't save them.
+		</div>
+	</div>
+</div>
+</body>
+</html>

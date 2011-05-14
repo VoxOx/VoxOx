@@ -1,0 +1,5 @@
+if (NOT WIN32)
+	include(CMakeLists-external.txt)
+else (NOT WIN32)
+	include(CMakeLists-internal-win32.txt)	
+endif (NOT WIN32)

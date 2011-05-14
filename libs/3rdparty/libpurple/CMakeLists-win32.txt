@@ -1,0 +1,262 @@
+ow_create_shared_library(libpurple)
+
+ow_use_public_libraries(
+	glib2
+	openssl
+	gnutls
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/pidgin-2.5.8/libpurple
+	${CMAKE_CURRENT_SOURCE_DIR}/pidgin-2.5.8
+)
+
+ow_add_private_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/pidgin-2.5.8/libpurple/protocols/jabber/win32/
+	${CMAKE_CURRENT_SOURCE_DIR}/pidgin-2.5.8/libpurple/win32
+	${CMAKE_CURRENT_SOURCE_DIR}/pidgin-2.5.8/libpurple/protocols/oscar/
+)
+
+ow_use_private_libraries(
+	libxml
+	libintl
+	iconv
+)
+
+ow_add_private_libraries(
+	Ws2_32
+)
+
+ow_add_private_definitions(
+	-DHAVE_CONFIG_H
+	-DHAVE_GLIB
+	-DPURPLE_STATIC_PRPL
+	-DHAVE_SSL
+	-DHAVE_GNUTLS
+	-DHAVE_OPENSSL
+	-D_CRT_SECURE_NO_DEPRECATE
+	-D_CRT_SECURE_NO_WARNINGS
+	-Dssize_t=long
+	-DHAVE_GETADDRINFO
+)
+
+ow_add_public_definitions(
+	-DG_GNUC_NULL_TERMINATED=""
+)
+
+ow_add_sources(
+	pidgin-2.5.8/libpurple/libpurple.def
+		
+	pidgin-2.5.8/libpurple/account.c
+	pidgin-2.5.8/libpurple/accountopt.c
+	pidgin-2.5.8/libpurple/blist.c
+	pidgin-2.5.8/libpurple/buddyicon.c
+	pidgin-2.5.8/libpurple/certificate.c
+	pidgin-2.5.8/libpurple/cipher.c
+	pidgin-2.5.8/libpurple/circbuffer.c
+	pidgin-2.5.8/libpurple/cmds.c
+	pidgin-2.5.8/libpurple/connection.c
+	pidgin-2.5.8/libpurple/conversation.c
+	pidgin-2.5.8/libpurple/core.c
+	pidgin-2.5.8/libpurple/debug.c
+	pidgin-2.5.8/libpurple/desktopitem.c
+	pidgin-2.5.8/libpurple/dnsquery.c
+	pidgin-2.5.8/libpurple/dnssrv.c
+	pidgin-2.5.8/libpurple/eventloop.c
+	pidgin-2.5.8/libpurple/ft.c
+	pidgin-2.5.8/libpurple/win32/giowin32.c
+	pidgin-2.5.8/libpurple/win32/libc_interface.c
+	pidgin-2.5.8/libpurple/idle.c
+	pidgin-2.5.8/libpurple/imgstore.c
+	pidgin-2.5.8/libpurple/log.c
+	pidgin-2.5.8/libpurple/mime.c
+	pidgin-2.5.8/libpurple/nat-pmp.c
+	pidgin-2.5.8/libpurple/network.c
+	pidgin-2.5.8/libpurple/notify.c
+	pidgin-2.5.8/libpurple/ntlm.c
+	pidgin-2.5.8/libpurple/plugin.c
+	pidgin-2.5.8/libpurple/pluginpref.c
+	pidgin-2.5.8/libpurple/pounce.c
+#	libpurple/prefix.c
+	pidgin-2.5.8/libpurple/prefs.c
+	pidgin-2.5.8/libpurple/privacy.c
+	pidgin-2.5.8/libpurple/proxy.c
+	pidgin-2.5.8/libpurple/prpl.c
+	pidgin-2.5.8/libpurple/request.c
+	pidgin-2.5.8/libpurple/roomlist.c
+	pidgin-2.5.8/libpurple/savedstatuses.c
+	pidgin-2.5.8/libpurple/server.c
+	pidgin-2.5.8/libpurple/signals.c
+	pidgin-2.5.8/libpurple/smiley.c
+	pidgin-2.5.8/libpurple/sound.c
+	pidgin-2.5.8/libpurple/sslconn.c
+	pidgin-2.5.8/libpurple/status.c
+	pidgin-2.5.8/libpurple/stringref.c
+	pidgin-2.5.8/libpurple/stun.c
+	pidgin-2.5.8/libpurple/upnp.c
+	pidgin-2.5.8/libpurple/util.c
+	pidgin-2.5.8/libpurple/value.c
+	pidgin-2.5.8/libpurple/version.c
+	pidgin-2.5.8/libpurple/whiteboard.c
+	pidgin-2.5.8/libpurple/win32/win32dep.c
+	pidgin-2.5.8/libpurple/xmlnode.c
+	
+	
+	pidgin-2.5.8/libpurple/plugins/ssl/ssl.c
+#   pidgin-2.5.8/libpurple/plugins/ssl/ssl-openssl.c
+	pidgin-2.5.8/libpurple/plugins/ssl/ssl-gnutls.c
+	
+	
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-array.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-enum-types.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-generator.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-gobject.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-marshal.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-node.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-object.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-parser.c
+	pidgin-2.5.8/libpurple/plugins/facebook/json-glib/json-scanner.c
+	pidgin-2.5.8/libpurple/plugins/facebook/libfacebook.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_blist.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_connection.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_conversation.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_info.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_json.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_managefriends.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_friendlist.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_messages.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_notifications.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_search.c
+	pidgin-2.5.8/libpurple/plugins/facebook/fb_util.c
+	
+	
+	pidgin-2.5.8/libpurple/plugins/twitter/twitter.c
+	pidgin-2.5.8/libpurple/plugins/twitter/twitter_api.c
+	pidgin-2.5.8/libpurple/plugins/twitter/twitter_request.c
+	
+	pidgin-2.5.8/libpurple/plugins/skype/libskype.c
+	
+
+
+
+	
+	pidgin-2.5.8/libpurple/protocols/jabber/adhoccommands.c
+	pidgin-2.5.8/libpurple/protocols/jabber/auth.c
+	pidgin-2.5.8/libpurple/protocols/jabber/buddy.c
+	pidgin-2.5.8/libpurple/protocols/jabber/caps.c
+	pidgin-2.5.8/libpurple/protocols/jabber/chat.c
+	pidgin-2.5.8/libpurple/protocols/jabber/disco.c
+	pidgin-2.5.8/libpurple/protocols/jabber/google.c
+	pidgin-2.5.8/libpurple/protocols/jabber/iq.c
+	pidgin-2.5.8/libpurple/protocols/jabber/jabber.c
+	pidgin-2.5.8/libpurple/protocols/jabber/jutil.c
+	pidgin-2.5.8/libpurple/protocols/jabber/libxmpp.c
+	pidgin-2.5.8/libpurple/protocols/jabber/message.c
+	pidgin-2.5.8/libpurple/protocols/jabber/oob.c
+	pidgin-2.5.8/libpurple/protocols/jabber/parser.c
+	pidgin-2.5.8/libpurple/protocols/jabber/pep.c
+	pidgin-2.5.8/libpurple/protocols/jabber/ping.c
+	pidgin-2.5.8/libpurple/protocols/jabber/win32/posix.uname.c
+	pidgin-2.5.8/libpurple/protocols/jabber/presence.c
+	pidgin-2.5.8/libpurple/protocols/jabber/roster.c
+	pidgin-2.5.8/libpurple/protocols/jabber/si.c
+	pidgin-2.5.8/libpurple/protocols/jabber/usermood.c
+	pidgin-2.5.8/libpurple/protocols/jabber/usernick.c
+	pidgin-2.5.8/libpurple/protocols/jabber/usertune.c
+	pidgin-2.5.8/libpurple/protocols/jabber/xdata.c
+	pidgin-2.5.8/libpurple/protocols/jabber/data.c
+	
+	pidgin-2.5.8/libpurple/protocols/msn/cmdproc.c
+	pidgin-2.5.8/libpurple/protocols/msn/command.c
+	pidgin-2.5.8/libpurple/protocols/msn/contact.c
+	pidgin-2.5.8/libpurple/protocols/msn/dialog.c
+	pidgin-2.5.8/libpurple/protocols/msn/directconn.c
+	pidgin-2.5.8/libpurple/protocols/msn/error.c
+	pidgin-2.5.8/libpurple/protocols/msn/group.c
+	pidgin-2.5.8/libpurple/protocols/msn/history.c
+	pidgin-2.5.8/libpurple/protocols/msn/httpconn.c
+	pidgin-2.5.8/libpurple/protocols/msn/msg.c
+	pidgin-2.5.8/libpurple/protocols/msn/msn.c
+	pidgin-2.5.8/libpurple/protocols/msn/msnutils.c
+	pidgin-2.5.8/libpurple/protocols/msn/nexus.c
+	pidgin-2.5.8/libpurple/protocols/msn/notification.c
+	pidgin-2.5.8/libpurple/protocols/msn/object.c
+	pidgin-2.5.8/libpurple/protocols/msn/oim.c
+	pidgin-2.5.8/libpurple/protocols/msn/page.c
+	pidgin-2.5.8/libpurple/protocols/msn/servconn.c
+	pidgin-2.5.8/libpurple/protocols/msn/session.c
+	pidgin-2.5.8/libpurple/protocols/msn/slp.c
+	pidgin-2.5.8/libpurple/protocols/msn/slpcall.c
+	pidgin-2.5.8/libpurple/protocols/msn/slplink.c
+	pidgin-2.5.8/libpurple/protocols/msn/slpmsg.c
+	pidgin-2.5.8/libpurple/protocols/msn/soap.c
+	pidgin-2.5.8/libpurple/protocols/msn/state.c
+	pidgin-2.5.8/libpurple/protocols/msn/switchboard.c
+	pidgin-2.5.8/libpurple/protocols/msn/sync.c
+	pidgin-2.5.8/libpurple/protocols/msn/table.c
+	pidgin-2.5.8/libpurple/protocols/msn/transaction.c
+	pidgin-2.5.8/libpurple/protocols/msn/user.c
+	pidgin-2.5.8/libpurple/protocols/msn/userlist.c
+	
+	pidgin-2.5.8/libpurple/protocols/myspace/markup.c
+	pidgin-2.5.8/libpurple/protocols/myspace/message.c
+	pidgin-2.5.8/libpurple/protocols/myspace/myspace.c
+	pidgin-2.5.8/libpurple/protocols/myspace/session.c
+	pidgin-2.5.8/libpurple/protocols/myspace/user.c
+	pidgin-2.5.8/libpurple/protocols/myspace/zap.c
+	
+
+	
+	pidgin-2.5.8/libpurple/protocols/oscar/bstream.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_admin.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_advert.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_alert.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_auth.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_bart.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_bos.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_buddy.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_chat.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_chatnav.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_feedbag.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_icbm.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_icq.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_invite.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_locate.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_odir.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_oservice.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_popup.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_stats.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_translate.c
+	pidgin-2.5.8/libpurple/protocols/oscar/family_userlookup.c
+	pidgin-2.5.8/libpurple/protocols/oscar/flap_connection.c
+	pidgin-2.5.8/libpurple/protocols/oscar/libaim.c
+	pidgin-2.5.8/libpurple/protocols/oscar/libicq.c
+	pidgin-2.5.8/libpurple/protocols/oscar/misc.c
+	pidgin-2.5.8/libpurple/protocols/oscar/msgcookie.c
+	pidgin-2.5.8/libpurple/protocols/oscar/odc.c
+	pidgin-2.5.8/libpurple/protocols/oscar/oft.c
+	pidgin-2.5.8/libpurple/protocols/oscar/oscar.c
+	pidgin-2.5.8/libpurple/protocols/oscar/oscar_data.c
+	pidgin-2.5.8/libpurple/protocols/oscar/peer.c
+	pidgin-2.5.8/libpurple/protocols/oscar/peer_proxy.c
+	pidgin-2.5.8/libpurple/protocols/oscar/rxhandlers.c
+	pidgin-2.5.8/libpurple/protocols/oscar/snac.c
+	pidgin-2.5.8/libpurple/protocols/oscar/tlv.c
+	pidgin-2.5.8/libpurple/protocols/oscar/util.c
+	
+	pidgin-2.5.8/libpurple/protocols/yahoo/util.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_aliases.c
+#   pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_auth.c
+#	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_crypt.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_doodle.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_filexfer.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_friend.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_packet.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_picture.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoo_profile.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/yahoochat.c
+	pidgin-2.5.8/libpurple/protocols/yahoo/ycht.c
+)
+
+ow_create_project_binary()

@@ -1,0 +1,28 @@
+
+1 VERSIONINFO
+FILEVERSION 1,62,0,0
+PRODUCTVERSION 1,62,0,0
+FILEOS 0x40004 // VOS_NT_WINDOWS32
+FILETYPE 0x2 // VFT_DLL
+{
+BLOCK "StringFileInfo"
+{
+	BLOCK "040904B0" // U.S. English, Unicode
+	{
+		VALUE "CompanyName", "Eion Robb\0"
+		VALUE "FileDescription",  "Facebook Chat plugin for Pidgin\0"
+		VALUE "ProductName", "pidgin-facebookchat\0"
+		VALUE "FileVersion", "1.62\0"
+		VALUE "ProductVersion", "1.62\0"
+		VALUE "InternalName", "pidgin-facebookchat\0"
+		VALUE "OriginalFilename", "libfacebook.dll\0"
+		VALUE "Comments", "http://pidgin-facebookchat.googlecode.com/\0"
+	}
+}
+
+BLOCK "VarFileInfo"
+{
+	VALUE "Translation", 0x0409, 0x04B0 // U.S. English, Unicode
+}
+}
+

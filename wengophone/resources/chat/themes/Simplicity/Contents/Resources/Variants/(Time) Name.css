@@ -1,0 +1,14 @@
+@import url(../styles/layout.css);
+@import url(../styles/base.css);
+
+.prefix .timestampbefore {
+	display: inline;
+}
+
+.prefix .sender {
+	display: inline;
+}
+
+.prefix .timestampafter {
+	display: none;
+}

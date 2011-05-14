@@ -1,0 +1,70 @@
+@import url("layout_all.css");
+
+.in .nameheader {
+	margin: 0px 77px 6px 25px;
+	}
+.out .nameheader {
+	margin: 0px 24px 6px 78px;
+	}
+.in .name {
+	left: 0px;
+	padding: 4px 0px 0px 12px;
+	margin: 0px 0px 0px -25px;
+	}
+.out .name {
+	float: right;
+	right: 0px;
+	padding: 4px 12px 0px 0px;
+	margin: 0px -25px 0px 0px;
+	}
+.in .protocol {
+	float: right;
+	right: 0px;
+	padding: 5px 12px 1px 66px;
+	margin: 0px -78px -2px 0px;
+	}
+.out .protocol {
+	left: 0px;
+	padding: 5px 66px 1px 12px;
+	margin: 0px 0px -2px -78px;
+	}
+.messagecontainer {
+	padding: 0px 0px 0px 0px;
+	}
+.in .messagecontainer {
+	margin: 0px 0px 0px 48px;
+	}
+.out .messagecontainer {
+	margin: 0px 48px 0px 0px;
+	}
+.buddyicon {
+	position: relative;
+	top: -6px;
+	#background: url("../images/buddy_background.png") top left no-repeat;
+	#height: 40px;
+	#width: 40px;
+	z-index: 4;
+	#padding: 2px 0px 0px 4px;
+	#border: 1px solid #999999;
+	}
+.buddyicon img {
+	height: 32px;
+	width: 32px;
+	#margin-top: 2px;
+	#margin-left: 4px;
+	z-index: 3;
+	}
+.in .buddyicon {
+	float: left;
+	margin-left: 10px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	}
+.out .buddyicon {
+	float: right;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 10px;
+	}

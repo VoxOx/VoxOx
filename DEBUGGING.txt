@@ -1,0 +1,27 @@
+# Adjusting log output
+
+The WengoPhone logs in different components and provides 5 log levels:
+- 0: Debug
+- 1: Info
+- 2: Warn
+- 3: Error
+- 4: Fatal
+
+By default, only messages whose level more or equal to Info will get output. You
+can change this globally or on a component basis through environment variables.
+
+## Changing the global log level
+This is done with the OWLOGGER_DEFAULT variable. Set it to 0 to get all possible
+log output.
+
+## Changing the log level of a component
+This is done by adjusting the OWLOGGER_<COMPONENT_IN_UPPER_CASE> variable.
+For example to get debug output from PhApi, set OWLOGGER_PHAPI to 0.
+
+To get a list of available components, run this command from the base source
+dir.
+
+	grep -h -r --include '*.cpp' LOGGER_COMPONENT . | sort | uniq
+
+For code which does not define a specific component, the default component is
+"Common".

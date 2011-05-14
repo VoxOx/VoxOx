@@ -1,0 +1,206 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>PrivacySettings</class>
+ <widget class="QWidget" name="PrivacySettings" >
+  <property name="enabled" >
+   <bool>false</bool>
+  </property>
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>346</width>
+    <height>327</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <property name="spacing" >
+    <number>0</number>
+   </property>
+   <item row="0" column="0" colspan="2" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Privacy Rules </string>
+     </property>
+     <layout class="QGridLayout" >
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item row="2" column="0" >
+       <widget class="QGroupBox" name="groupBox_3" >
+        <property name="title" >
+         <string>When I sign into @company@</string>
+        </property>
+        <layout class="QGridLayout" >
+         <property name="margin" >
+          <number>9</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label_3" >
+           <property name="sizePolicy" >
+            <sizepolicy>
+             <hsizetype>0</hsizetype>
+             <vsizetype>5</vsizetype>
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="pixmap" >
+            <pixmap resource="../../../../resources/wengophone.qrc" >:/pics/status/invisible.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QCheckBox" name="alwaysSignAsInvisible" >
+           <property name="text" >
+            <string>Always sign in as "Invisible" (appear offline to all users)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QGroupBox" name="groupBox_4" >
+        <property name="title" >
+         <string>Allow chats from</string>
+        </property>
+        <layout class="QGridLayout" >
+         <property name="margin" >
+          <number>9</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item rowspan="2" row="0" column="0" >
+          <widget class="QLabel" name="label_2" >
+           <property name="sizePolicy" >
+            <sizepolicy>
+             <hsizetype>0</hsizetype>
+             <vsizetype>5</vsizetype>
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="pixmap" >
+            <pixmap resource="../../../../resources/wengophone.qrc" >:/pics/contact/chat.png</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QRadioButton" name="allowChatsFromAnyoneRadioButton" >
+           <property name="text" >
+            <string>Anyone</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" >
+          <widget class="QRadioButton" name="allowChatsFromOnlyContactListRadioButton" >
+           <property name="text" >
+            <string>Only people from my contact list</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0" >
+       <widget class="QGroupBox" name="groupBox_2" >
+        <property name="title" >
+         <string>Allow calls from</string>
+        </property>
+        <layout class="QGridLayout" >
+         <property name="margin" >
+          <number>9</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item row="1" column="1" >
+          <widget class="QRadioButton" name="allowCallsOnlyFromContactListRadioButton" >
+           <property name="text" >
+            <string>Only people from my contact list</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QRadioButton" name="allowCallsFromAnyoneRadioButton" >
+           <property name="text" >
+            <string>Anyone</string>
+           </property>
+          </widget>
+         </item>
+         <item rowspan="2" row="0" column="0" >
+          <widget class="QLabel" name="label" >
+           <property name="sizePolicy" >
+            <sizepolicy>
+             <hsizetype>0</hsizetype>
+             <vsizetype>5</vsizetype>
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="pixmap" >
+            <pixmap resource="../../../../resources/wengophone.qrc" >:/pics/contact/call.png</pixmap>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QPushButton" name="manageBlockedUsersButton" >
+     <property name="maximumSize" >
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text" >
+      <string>Manage blocked users</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <tabstops>
+  <tabstop>allowCallsFromAnyoneRadioButton</tabstop>
+  <tabstop>allowCallsOnlyFromContactListRadioButton</tabstop>
+  <tabstop>allowChatsFromAnyoneRadioButton</tabstop>
+  <tabstop>allowChatsFromOnlyContactListRadioButton</tabstop>
+  <tabstop>alwaysSignAsInvisible</tabstop>
+  <tabstop>manageBlockedUsersButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../resources/wengophone.qrc" />
+ </resources>
+ <connections/>
+</ui>

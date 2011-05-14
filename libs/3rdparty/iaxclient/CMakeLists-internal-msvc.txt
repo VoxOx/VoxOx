@@ -1,0 +1,9 @@
+ow_create_project(iaxclient)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/iaxclient1.lib
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}
+)

@@ -1,0 +1,99 @@
+<!-- ##### SECTION Title ##### -->
+Multiplexing sessions (in a one thread design)
+
+<!-- ##### SECTION Short_Description ##### -->
+The SessionSet API allows applications to make I/O on mutilple rtp sessions
+without making blocking I/O, but keeping the main process synchronised.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+The scheduled mode must be enabled for all rtp session that are managed through the 
+SessionSet API. See rtp_session_set_scheduling_mode().
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+See the mrtprecv.c and mrtpsend.c programs included in the library that uses
+the SessionSet API to send or receive multiple RTP streams in one thread design.
+</para>
+
+<!-- ##### STRUCT SessionSet ##### -->
+<para>
+
+</para>
+
+@rtpset: 
+
+<!-- ##### FUNCTION session_set_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### MACRO session_set_init ##### -->
+<para>
+
+</para>
+
+@ss: 
+
+
+<!-- ##### MACRO session_set_set ##### -->
+<para>
+
+</para>
+
+@ss: 
+@rtpsession: 
+<!-- # Unused Parameters # -->
+@_set: 
+@_session: 
+
+
+<!-- ##### MACRO session_set_is_set ##### -->
+<para>
+
+</para>
+
+@ss: 
+@rtpsession: 
+<!-- # Unused Parameters # -->
+@_set: 
+@_session: 
+
+
+<!-- ##### MACRO session_set_clr ##### -->
+<para>
+
+</para>
+
+@ss: 
+@rtpsession: 
+
+
+<!-- ##### FUNCTION session_set_select ##### -->
+<para>
+
+</para>
+
+@recvs: 
+@sends: 
+@errors: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@sendrecvs: 
+@recv: 
+@send: 
+@sendrecv: 
+
+
+<!-- ##### FUNCTION session_set_destroy ##### -->
+<para>
+
+</para>
+
+@set: 
+
+

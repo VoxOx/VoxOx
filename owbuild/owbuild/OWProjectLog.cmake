@@ -1,0 +1,42 @@
+# - ow_project_log()
+# Internal function, shows debug informations about the current project
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_project_log)
+
+	ow_check_project()
+
+	message(STATUS "**")
+	message(STATUS "** PROJECT_NAME=${PROJECT_NAME}")
+
+	message(STATUS "** ${PROJECT_NAME}_PROJECT_TYPE=${${PROJECT_NAME}_PROJECT_TYPE}")
+
+	#message(STATUS "** ${PROJECT_NAME}_SRCS=${${PROJECT_NAME}_SRCS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_INCLUDE_DIRS=${${PROJECT_NAME}_INCLUDE_DIRS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS=${${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_LIBRARIES=${${PROJECT_NAME}_LIBRARIES}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_LIBRARIES=${${PROJECT_NAME}_PRIVATE_LIBRARIES}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_LIBRARY_DIRS=${${PROJECT_NAME}_LIBRARY_DIRS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS=${${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_DEFINITIONS=${${PROJECT_NAME}_DEFINITIONS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_DEFINITIONS=${${PROJECT_NAME}_PRIVATE_DEFINITIONS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS=${${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_LINK_FLAGS=${${PROJECT_NAME}_PUBLIC_LINK_FLAGS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_LINK_FLAGS=${${PROJECT_NAME}_PRIVATE_LINK_FLAGS}")
+
+	message(STATUS "** ${PROJECT_NAME}_BUILD_VERSION=${${PROJECT_NAME}_BUILD_VERSION}")
+	message(STATUS "** ${PROJECT_NAME}_API_VERSION=${${PROJECT_NAME}_API_VERSION}")
+	message(STATUS "**")
+
+endmacro (ow_project_log)

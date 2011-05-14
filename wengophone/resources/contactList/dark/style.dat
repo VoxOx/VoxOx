@@ -1,0 +1,14 @@
+[Style]
+GroupFontColor=#FFFFFF
+GroupBackgroundColorTop=#2a2a2a
+GroupBackgroundColorBottom=#2a2a2a
+GroupBorderColor=#5b5b5b
+GroupPixmapClose=:/pics/group_close
+GroupPixmapOpen=:/pics/group_open
+ContactNonSelectedBackgroundColor=#2a2a2a
+ContactSelectedBackgroundColorTop=#929292
+ContactSelectedBackgroundColorBottom=#929292
+ContactUserNameNonSelectedFontColor=#FFFFFF
+ContactSocialStatusNonSelectedFontColor=#878787
+ContactUserNameSelectedFontColor=#FFFFFF
+ContactSocialStatusSelectedFontColor=#D4D4D4

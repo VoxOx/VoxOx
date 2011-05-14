@@ -1,0 +1,49 @@
+body    { font-size: 10px; font-family: "Lucida Grande", sans-serif; font-style: normal; font-weight: normal; background-color: #deecff; margin: 0; background: url(images/Lime%20Horizon.jpg) fixed no-repeat;}
+
+#Chat     { padding-top: 50px; overflow: hidden }
+
+#menu1   { background: url("images/background.png") repeat-x right top; position: fixed; z-index: 100; top: 0; right: 0; left: 0; height: 135px; border-bottom: 0 none }
+
+.buddyIcon    { margin: 4px 4px 4px 8px; width: 64px; height: 64px; float: right}
+
+.buddyName   { color: #00CC00; font-size: 18px; text-shadow:2px 2px 4px #333; text-align: right; margin: 8px 0 2px }
+
+.time  { color: #00CC00; font-size: 10px; text-shadow:2px 2px 4px #333; text-align: right }
+
+.hide    { visibility: visible; padding: 5px; position: fixed; z-index: 200; top: 0; left: 0 }
+
+a.hide:link     { color: #C0C0C0; text-decoration: none; text-align: center; width: 18px }
+a.hide:visited     { color: #C0C0C0; text-decoration: none; text-align: center; width: 18px }
+a.hide:hover    { color: #000000; text-decoration: none; background-color: #FFFFFF; text-align: center; width: 18px }
+
+.container    { margin-bottom: 15px }
+
+.messageTime      { color: #000000; font-size: 9px; font-weight: normal; text-align: right; position: relative; z-index: 60; top: 3px; right: 12%; float: right }	
+
+p { padding: 0; margin: 0px 0px 2px 3px; overflow: hidden }
+
+.Message      { font-style: normal; font-weight: normal; margin-bottom: - 0px; padding: 4px 6px 3px 5px; position: relative; left: 5%; width: 87%; background: url("images/trans.png") repeat-x;}
+
+.pastMessage   { color: #999; font-style: normal; font-weight: normal; overflow: hidden }
+
+.statusTime   { color: #666; font-size: 10px; font-weight: bold; text-align: right; margin-right: 5px; position: relative; top: 1px; left: -40px; width: 100px; float: left }
+
+.statusMessage    { color: #333; font-size: 11px; font-weight: bold; position: relative; left: -40px }
+
+.statusContainer       { background-color: #eef4ff; margin-bottom: 15px; padding: 3px 10px; position: relative; background: url("images/trans.png") repeat-x;}
+
+.buddy   { font-size: 10px; font-weight: bold; text-align: left; display: block; position: relative; top: -2px; left: 6% }
+
+.user   { font-size: 10px; font-weight: bold; text-align: left; display: block; position: relative; top: -2px; left: 6% }
+
+.nextMessageBuddy      { font-style: normal; font-weight: normal; background-color: white; display: block; margin-bottom: 0px; padding: 4px 6px 3px 5px; position: relative; z-index: 10; top: 0px; left: 5%; width: 87%; overflow: hidden; background: url("images/trans.png") repeat-x; }
+
+.nextMessageUser      { font-style: normal; font-weight: normal; background-color: white; display: block; margin-bottom: 0px; padding: 4px 6px 3px 5px; position: relative; z-index: 10; top: 0px; left: 5%; width: 87%; overflow: hidden; background: url("images/trans.png") repeat-x; }
+
+.pastBuddy    { color: #7ab382; font-size: 11px; font-weight: bold; text-align: left; display: block; position: relative; top: 0px; left: 6% }
+
+.pastUser    { color: #7b95b4; font-size: 11px; font-weight: bold; text-align: left; display: block; position: relative; top: 0px; left: 6% }
+
+.pastNextMessageBuddy      { color: #999; font-style: normal; font-weight: normal; background-color: white; display: block; margin-bottom: 0px; padding: 4px 6px 3px 5px; position: relative; z-index: 10; top: 0px; left: 5%; width: 87%; overflow: hidden }
+
+.pastNextMessageUser      { color: #999; font-style: normal; font-weight: normal; background-color: white; display: block; margin-bottom: 0px; padding: 4px 6px 3px 5px; position: relative; z-index: 10; top: 0px; left: 5%; width: 87%; overflow: hidden }

@@ -1,0 +1,16 @@
+ow_create_project(gaim)
+
+ow_use_public_libraries(
+	glib2
+)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/gaim.lib
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/src/libgaim
+)
+
+ow_copy_dir_recursive(${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/*.dll ${BUILD_DIR})

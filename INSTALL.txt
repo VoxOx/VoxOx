@@ -1,0 +1,204 @@
+# How to build the WengoPhone from source
+
+Other links that should be cleanup:
+
+- OWBuild short introduction: [OWBuildIntro](OWBuildIntro)
+- OWBuild reference documentation: [OWBuild](OWBuild)
+- How to get the source code: [GetTheSourceWengoPhoneNg](GetTheSourceWengoPhoneNg)
+- Previous build system instructions: [HowToBuildFromSourceNg](HowToBuildFromSourceNg)
+- Another deprecated page: [OWBuildWengoPhone](OWBuildWengoPhone)
+
+## Requirements
+
+### Common requirements
+
+In order to build the WengoPhone, you need to install several components:
+
+- A C++ compiler
+- [CMake](http://www.cmake.org/) >= 2.4.4.
+- [Qt](http://www.trolltech.com/download/opensource.html) >= 4.2 with support
+  for STL, exceptions and RTTI.
+- [Boost](http://www.boost.org/) >= 1.33 with support for:
+    - unit tests
+    - threading
+    - serialization
+    - program options
+    - signals
+
+There are also some platform specific requirements listed below.
+
+### Specific requirements for GNU/Linux
+The default compiler is gcc 4.0.
+
+GCC 4.1 and Boost 1.33.x do not play nicely together, so if your version of
+Boost is 1.33.x you **should not use GCC 4.1**. See [this mailing list
+post][notgcc41] for more information. If GCC 4.0 is not available on your
+distro, you can use GCC 3.4.
+
+[notgcc41]: http://dev.openwengo.com/pipermail/wengophone-devel/2006-December/004731.html
+
+Other components:
+
+- [OpenSSL](http://www.openssl.org/) >= 0.9.8a
+- [GLib](http://www.gtk.org/) >= 2.10.3
+- [GNU TLS](http://www.gnu.org/software/gnutls/) >= 1.2.9
+- [uuid](http://e2fsprogs.sourceforge.net/) >= 1.38, from the e2fsprogs project.
+- [libxml2](http://xmlsoft.org/) >= 2.6.24
+- [Speex](http://www.speex.org/) >= 1.1.12 (i)
+- [libavcodec](http://ffmpeg.mplayerhq.hu/) >= cvs20060823, from the FFmpeg
+  project. (i)
+- [PortAudio](http://www.portaudio.com/) >= 19 (i)
+- [ALSA](http://www.alsa-project.org/) >= 1.0.11
+- [libsndfile](http://www.mega-nerd.com/libsndfile/) >= 1.0.12
+- [libsamplerate](http://www.mega-nerd.com/SRC/) >= 0.1.2
+- [libcurl](http://curl.haxx.se/) >= 7.16.1 (i)
+- [libosip](http://www.gnu.org/software/osip/) >= 3.0.1 (i)
+
+(i) We provide internal copies of the source code for these libraries if you
+don't have them on your system.
+
+Note that these version numbers are version we know works correctly. If you
+build and run the WengoPhone successfully with an older version, please let us
+know.
+
+### Specific requirements for MacOS X
+
+- [OpenSSL](http://www.openssl.org/) >= 0.9.8a
+- [GNU TLS](http://www.gnu.org/software/gnutls/) >= 1.2.9
+- [GLib](http://www.gtk.org/) >= 2.10.3
+
+GLib and GNU TLS can be installed using [Fink](http://www.finkproject.org) or
+[MacPorts](http://www.macports.org).
+
+### Specific requirements for Windows
+
+For Windows, dlls for most dependencies are included in Subversion, so you
+don't need to install them manually.
+
+There is a Windows installer for Boost libraries [here](http://www.boost-consulting.com/products/free)
+
+You can use either [Visual C++](http://msdn.microsoft.com/visualc/) or
+[MinGW](http://www.mingw.org/) to build the WengoPhone.
+
+#### Visual C++
+
+The most mature compiler supported is Visual C++ 2003 (7.1).
+Visual C++ 2005 (8.0) is also supported.
+
+Qt 4.x Open Source Edition supports only MinGW. [This patch][qt4mingw],
+contributed by the Qt/Win project, adds support for Visual C++.
+
+[qt4mingw]: http://sourceforge.net/project/showfiles.php?group_id=49109&package_id=165202
+
+#### MinGW
+
+[MinGW](http://www.mingw.org/) 5.2 can now be used to build the whole software.
+Please feel free to raise any issue you may have with MinGW on the
+[wengophone-devel mailing list][wpdevel]. When using MinGW, you must install
+the [Python Win32 extensions][pywin32].
+
+[wpdevel]: http://dev.openwengo.org/mailman/listinfo/wengophone-devel
+[pywin32]: http://starship.python.net/~skippy/win32/Downloads.html
+
+
+## Building
+First, you need to configure the compilation, using CMake. Go inside the
+`build` dir, then make sure the Qt4 version of the `qmake` binary is in
+your path.
+
+Windows with Visual C++:
+
+    cmake -DCMAKE_BUILD_TYPE=Debug -G "NMake Makefiles" ..
+    nmake
+
+Windows with MinGW:
+
+    cmake -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" ..
+    make
+
+GNU/Linux and MacOS X:
+
+    cmake -DCMAKE_BUILD_TYPE=Debug ..
+    make
+
+### CMake standard options
+Here is a list of the most interesting options provided out of the box by CMake.
+
+- CMAKE_BUILD_TYPE: The type of build (can be Debug Release MinSizeRel RelWithDebInfo)
+- CMAKE_INSTALL_PREFIX: The prefix to use when running make install (Default to
+  /usr/local on GNU/Linux and MacOS X)
+- CMAKE_C_COMPILER: The path to the C compiler
+- CMAKE_CXX_COMPILER: The path to the C++ compiler
+
+### CMake options defined for the WengoPhone
+
+WengoPhone CMake options are defined in three files:
+
+- DefineWengoOptions.cmake: WengoPhone options
+- libs/3rdparty/CMakeLists.txt: Whether to use internal or system versions of libraries
+- libs/3rdparty/portaudio/CMakeLists.txt: PortAudio options
+
+Here is a short description of the most useful ones:
+
+- COPY_DATA_FILES_ON_CONFIGURE: Whether you want CMake to copy data files to
+  the build dir when running
+- GNU/Linux options:
+    - ENABLE_CRASHREPORT: If ON (the default), intercept crashes and provide a
+      graphical interface to report information to Wengo on crash. If OFF, just quit
+      and dump core.
+- Windows options:
+    - OWSOUND_PORTAUDIO_SUPPORT: If ON (the default), use PortAudio. If OFF, use
+      WinMM.
+
+### Browsing/editing CMake options
+
+In addition to passing options on the command line, you can browse and edit
+CMake options using `cmakesetup` (Windows) or `ccmake` (GNU/Linux and MacOS X).
+
+- Go to the build dir
+- On Windows: run `cmakesetup`
+- On GNU/Linux and MacOS X: run `ccmake .`
+
+## Running
+
+The WengoPhone binary can be found in the `build/debug` dir.
+
+### GNU/Linux
+If you haven't installed the WengoPhone (using ‛make install'), you need to
+use the ‛--resources‛ option to indicate where resources are located, like
+this:
+
+	cd build/debug
+	./wengophone --resources /path/to/wengophone-2.2/wengophone/resources 
+
+### MacOS X
+
+On MacOS X, the result of the compilation is a MacOS X bundle, named
+`WengoPhone.app`. You can start it with `open debug/WengoPhone.app`.
+
+This is fine, but you won't see any logging information. If you want to see
+logging information you can either:
+
+- Start the WengoPhone with gdb:
+    - `gdb debug/WengoPhone.app`
+    - Type r(return) to start
+- Run this command: `tail -f debug/WengoPhone.app/Content/MacOS/log-main.txt`
+
+## Installation
+
+On GNU/Linux, ‛make install‛ will install the application to the destination
+defined by the CMAKE_INSTALL_PREFIX option.
+
+On Windows, ‛make install' will produce an NSIS based setup program.
+
+On MacOS X, ‛make install‛ will produce a MacOS X bundle.
+
+---------------------------
+
+## About this document
+
+This document is written using [Markdown][] syntax, making it possible to
+provide usable information in both plain text and HTML format. Whenever
+modifying this document please use [Markdown][] syntax.
+
+[markdown]: http://www.daringfireball.net/projects/markdown

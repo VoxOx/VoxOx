@@ -1,0 +1,85 @@
+
+#
+# Author: David Ferlier <david.ferlier@wengo.fr>
+#
+#
+
+def _write_define(file, name, value):
+    file.write("#define %s %s\n" % (name, value))
+
+def ffmpeg_config_h_build(target, source, env):
+    for a_target, a_source in zip(target, source):
+        config_h = file(str(a_target), "w+")
+
+        _write_define(config_h, "FFMPEG_CONFIGURATION",
+            "--enable-memalign-hack")
+
+        if env.WengoGetMachine().endswith("86"):
+            _write_define(config_h, "ARCH_X86", 1)
+            _write_define(config_h, "HAVE_MMX", 1)
+            _write_define(config_h, "__CPU__", "586")
+
+        _write_define(config_h, "TUNECPU", "generic")
+
+        #_write_define(config_h, "HAVE_BUILTIN_VECTOR", 1)
+        _write_define(config_h, "HAVE_LOCALTIME_R", 1)
+        _write_define(config_h, "HAVE_LRINTF", 1)
+        _write_define(config_h, "HAVE_VHOOK", 1)
+        _write_define(config_h, "CONFIG_HAVE_DLOPEN", 1)
+        _write_define(config_h, "CONFIG_HAVE_DLFCN", 1)
+        _write_define(config_h, "CONFIG_NETWORK", 1)
+        _write_define(config_h, "CONFIG_DECODERS", 1)
+        _write_define(config_h, "CONFIG_ENCODERS", 1)
+        _write_define(config_h, "CONFIG_NETWORK", 1)
+        _write_define(config_h, "SIMPLE_IDCT", 1)
+
+        encoders = [
+            "CONFIG_AC3_ENCODER",
+            "CONFIG_MP2_ENCODER",
+            "CONFIG_MP3LAME_ENCODER",
+            "CONFIG_MPEG1VIDEO_ENCODER",
+            "CONFIG_MPEG2VIDEO_ENCODER",
+            "CONFIG_H263_ENCODER",
+            "CONFIG_H263P_ENCODER",
+            "CONFIG_MPEG4_ENCODER",
+            "CONFIG_MSMPEG4V1_ENCODER",
+            "CONFIG_MSMPEG4V2_ENCODER",
+            "CONFIG_MSMPEG4V3_ENCODER",
+        ]
+
+        decoders = [
+            "CONFIG_AC3_DECODER",
+            "CONFIG_MP2_DECODER",
+            "CONFIG_MP3LAME_DECODER",
+            "CONFIG_MPEG1VIDEO_DECODER",
+            "CONFIG_MPEG2VIDEO_DECODER",
+            "CONFIG_H263_DECODER",
+            "CONFIG_H263P_DECODER",
+            "CONFIG_MPEG4_DECODER",
+            "CONFIG_MSMPEG4V1_DECODER",
+            "CONFIG_MSMPEG4V2_DECODER",
+            "CONFIG_MSMPEG4V3_DECODER",
+        ]
+
+        if env.WengoOsIsLinux():
+            _write_define(config_h, "HAVE_MALLOC_H", 1)
+
+        for e in encoders + decoders:
+            _write_define(config_h, e, 1)
+
+        _write_define(config_h, "SIMPLE_IDCT", 1)
+        _write_define(config_h, "restrict", "__restrict__")
+
+        _write_define(config_h, "CONFIG_H263_ENCODER", 1)
+        _write_define(config_h, "CONFIG_H263P_ENCODER", 1)
+        _write_define(config_h, "CONFIG_MPEG4_ENCODER", 1)
+
+        if env.WengoOsIsWindows():
+            _write_define(config_h, "MEMALIGN_HACK", 1)
+        else:
+            _write_define(config_h, "CONFIG_AUDIO_OSS", 1)
+
+        config_h.close()
+
+ffmpeg_env = WengoEnvironment("ffmpeg")
+ffmpeg_env.Command('config.h', 'config.h.in', ffmpeg_config_h_build)

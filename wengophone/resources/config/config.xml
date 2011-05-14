@@ -1,0 +1,355 @@
+<settings>
+
+<config.version><int>45</int></config.version>
+
+<audio.aec><bool>1</bool></audio.aec>
+<audio.callclosed.file><string>sounds/alerts/4.wav</string></audio.callclosed.file>
+<audio.codec.list>
+	<stringlist>  
+    <elt>iLBC/8000</elt>
+   	<elt>GSM/8000</elt>
+	<elt>G722/8000</elt>
+	<elt>SPEEX/8000</elt>
+	<elt>SPEEX/16000</elt>
+<!--  <elt>AMR-WB/16000</elt> -->
+	<elt>PCMU/8000</elt>
+	<elt>PCMA/8000</elt>
+<!--  <elt>AMR/8000</elt> -->
+	</stringlist>
+</audio.codec.list>
+<audio.contactonline.file><string></string></audio.contactonline.file>
+<audio.doublecall.file><string>sounds/doublecall.wav</string></audio.doublecall.file>
+<audio.halfduplex><bool>0</bool></audio.halfduplex>
+<audio.imaccountconnected.file><string></string></audio.imaccountconnected.file>
+<audio.imaccountdisconnected.file><string></string></audio.imaccountdisconnected.file>
+<audio.incomingcall.file><string>sounds/ringtones/3.wav</string></audio.incomingcall.file>
+<audio.incomingchat.file><string>sounds/alerts/3.wav</string></audio.incomingchat.file>
+<audio.input.deviceid>
+	<stringlist>
+	<elt>ALSA: default</elt>
+	<elt>default</elt>
+	<elt>DeviceTypeWaveIn</elt>
+	</stringlist>
+</audio.input.deviceid>
+<audio.output.deviceid>
+	<stringlist>
+	<elt>ALSA: default</elt>
+	<elt>default</elt>
+	<elt>DeviceTypeWaveOut</elt>
+	</stringlist>
+</audio.output.deviceid>
+<audio.ringer.deviceid>
+	<stringlist>
+	<elt>ALSA: default</elt>
+	<elt>default</elt>
+	<elt>DeviceTypeWaveOut</elt>
+	</stringlist>
+</audio.ringer.deviceid>
+
+<keypad.background><string>keypad/voxox_keypad_background.jpg</string></keypad.background>
+<audio.ringing.enable><bool>1</bool></audio.ringing.enable>
+<audio.smileys.dir><string>sounds/tones/</string></audio.smileys.dir>
+
+<call.encryption.mode><bool>0</bool></call.encryption.mode>
+<call.forward.mode><string>unauthorized</string></call.forward.mode>
+<call.forward.phonenumber1><string></string></call.forward.phonenumber1>
+<call.forward.phonenumber2><string></string></call.forward.phonenumber2>
+<call.forward.phonenumber3><string></string></call.forward.phonenumber3>
+
+<cmdserver.authorizeddomains>
+	<stringlist>
+	<elt>button.voxox.com</elt>
+	<elt>button.voxox.com</elt>
+	</stringlist>
+</cmdserver.authorizeddomains>
+
+<codec.plugin.path><string>phapi-plugins</string></codec.plugin.path>
+
+<contact.list.style><string>dark</string></contact.list.style>
+
+<filetransfer.downloadfolder><string></string></filetransfer.downloadfolder>
+<filetransfer.lastuploadedfilefolder><string></string></filetransfer.lastuploadedfilefolder>
+
+<general.autostart><bool>1</bool></general.autostart>
+
+<wizard.autostart><bool>1</bool></wizard.autostart>
+<wizard.step.complete><int>0</int></wizard.step.complete>
+<wizard.assistant.ismale><bool>0</bool></wizard.assistant.ismale>
+
+<general.away.timer><int>2</int></general.away.timer>
+<general.click.call.cellphone><bool>1</bool></general.click.call.cellphone>
+<general.click.start.chat><bool>0</bool></general.click.start.chat>
+<general.click.start.freecall><bool>1</bool></general.click.start.freecall>
+<general.show.groups><bool>1</bool></general.show.groups>
+<general.show.offline.contacts><bool>1</bool></general.show.offline.contacts>
+  <general.contact.sort>
+    <int>0</int>
+  </general.contact.sort>
+  <general.contact.grouping>
+    <int>20</int>
+  </general.contact.grouping>
+  <general.group.sort>
+    <int>0</int>
+  </general.group.sort>
+<show.profile.bar><bool>1</bool></show.profile.bar>
+<show.call.bar><bool>1</bool></show.call.bar>
+<current.flag><string>us.png</string></current.flag>
+<current.country.default><string>United States</string></current.country.default>
+<last.status.message.account.key><string></string></last.status.message.account.key>
+<last.status.message.displayed><string></string></last.status.message.displayed>
+<general.hyperlinkprotocol><string>voxox</string></general.hyperlinkprotocol>
+
+<!-- Can be one of Hidden, IconsOnly, TextUnderIcons -->
+<general.toolbarmode><string>Hidden</string></general.toolbarmode>
+
+<ieactivex.enable><bool>1</bool></ieactivex.enable>
+
+<language><string>detect</string></language>
+
+<last.chat.history.save.dir><string></string></last.chat.history.save.dir>
+<chat.theme><string>VoxOx</string></chat.theme>
+<chat.variant><string>Default</string></chat.variant>
+<emoticon.pack><string>Facies</string></emoticon.pack>
+
+<selected.dictionary><string>en_US.dic</string></selected.dictionary>
+
+<linux.prefered.browser><string></string></linux.prefered.browser>
+
+<network.nat.type><string>NatTypeSymmetric</string></network.nat.type>
+<network.proxy.detected><bool>0</bool></network.proxy.detected>
+<network.proxy.login><string></string></network.proxy.login>
+<network.proxy.password><string></string></network.proxy.password>
+<network.proxy.port><int>0</int></network.proxy.port>
+<network.proxy.server><string></string></network.proxy.server>
+<network.sip.localport><int></int></network.sip.localport>
+<network.stun.server><string></string></network.stun.server>
+<network.sso.ssl><bool>1</bool></network.sso.ssl>
+<network.tunnel.needed><bool>0</bool></network.tunnel.needed>
+<network.tunnel.port><int></int></network.tunnel.port>
+<network.tunnel.server><string></string></network.tunnel.server>
+<network.tunnel.ssl><bool>0</bool></network.tunnel.ssl>
+
+<notification.away.noaudio><bool>0</bool></notification.away.noaudio>
+<notification.away.nowindow><bool>0</bool></notification.away.nowindow>
+<notification.donotdisturb.noaudio><bool>0</bool></notification.donotdisturb.noaudio>
+<notification.donotdisturb.nowindow><bool>0</bool></notification.donotdisturb.nowindow>
+<notification.show.toaster.on.contact><bool>1</bool></notification.show.toaster.on.contact>
+<notification.show.toaster.on.incoming.call><bool>1</bool></notification.show.toaster.on.incoming.call>
+
+<notification.play.sound.on.incoming.call><bool>1</bool></notification.play.sound.on.incoming.call>
+
+<notification.play.sound.on.incoming.chat><bool>1</bool></notification.play.sound.on.incoming.chat>
+
+<notification.play.sound.on.call.closed><bool>1</bool></notification.play.sound.on.call.closed>
+
+<notification.show.toaster.on.incoming.chat><bool>1</bool></notification.show.toaster.on.incoming.chat>
+
+<phapi.plugin.path><string></string></phapi.plugin.path>
+
+<privacy.allow.call.from.anyone><bool>0</bool></privacy.allow.call.from.anyone>
+<privacy.allow.call.only.from.contact.list><bool>0</bool></privacy.allow.call.only.from.contact.list>
+<privacy.allow.chat.from.anyone><bool>0</bool></privacy.allow.chat.from.anyone>
+<privacy.allow.chat.only.from.contact.list><bool>0</bool></privacy.allow.chat.only.from.contact.list>
+<privacy.sign.as.invisible><bool>0</bool></privacy.sign.as.invisible>
+
+<profile.height><int>500</int></profile.height>
+<profile.last_used_name><string></string></profile.last_used_name>
+<profile.last_logged_account><string></string></profile.last_logged_account>
+<last.dialed.number><string></string></last.dialed.number>
+<profile.posx><int>100</int></profile.posx>
+<profile.posy><int>100</int></profile.posy>
+
+<chat.window.posx><int>0</int></chat.window.posx>
+<chat.window.posy><int>0</int></chat.window.posy>
+
+<profile.width><int>300</int></profile.width>
+<last.open.tab><int>2</int></last.open.tab>
+
+
+<video.enable><bool>1</bool></video.enable>
+<video.flip.enable><bool>0</bool></video.flip.enable>
+<video.quality><string>VideoQualityNormal</string></video.quality>
+<video.webcam.device><string></string></video.webcam.device>
+<video.xvideo.enable><bool>0</bool></video.xvideo.enable>
+
+<voicemail.active><bool>0</bool></voicemail.active>
+
+<wenbox.audio.input.deviceid>
+	<stringlist>
+	<elt>ALSA: default</elt>
+	<elt>default</elt>
+	<elt>DeviceTypeWaveIn</elt>
+	</stringlist>
+</wenbox.audio.input.deviceid>
+<wenbox.audio.output.deviceid>
+	<stringlist>
+	<elt>ALSA: default</elt>
+	<elt>default</elt>
+	<elt>DeviceTypeWaveOut</elt>
+	</stringlist>
+</wenbox.audio.output.deviceid>
+<wenbox.audio.ringer.deviceid>
+	<stringlist>
+	<elt>ALSA: default</elt>
+	<elt>default</elt>
+	<elt>DeviceTypeWaveOut</elt>
+	</stringlist>
+</wenbox.audio.ringer.deviceid>
+<wenbox.enable><string>WenboxStatusNotConnected</string></wenbox.enable>
+
+<voxox.cirpack.path><string></string></voxox.cirpack.path>
+<voxox.directory.path><string></string></voxox.directory.path>
+<voxox.info.path><string></string></voxox.info.path>
+<voxox.server.hostname><string></string></voxox.server.hostname>
+<voxox.sms.path><string></string></voxox.sms.path>
+<voxox.softupdate.path><string></string></voxox.softupdate.path>
+<voxox.sso.path><string></string></voxox.sso.path>
+<voxox.subscribe.path><string></string></voxox.subscribe.path>
+<voxox.realm><string></string></voxox.realm>
+<voxox.testcall.audio><string></string></voxox.testcall.audio>
+<voxox.testcall.video><string></string></voxox.testcall.video>
+
+<api.hostname><string></string></api.hostname> 
+<translation.api.hostname><string></string></translation.api.hostname> 
+
+<voxox.jabber.server><string></string></voxox.jabber.server>
+<voxox.ask.server><string></string></voxox.ask.server>
+<voxox.contactnumber.path><string></string></voxox.contactnumber.path>
+<voxox.accountws.path><string></string></voxox.accountws.path>
+<voxox.syncws.path><string></string></voxox.syncws.path>
+<voxox.paws.path><string></string></voxox.paws.path>
+<voxox.translationws.path><string></string></voxox.translationws.path>
+
+  <!--
+The sip.* keys are default settings for sip accounts
+-->
+<sip.register.server><string></string></sip.register.server>
+<sip.register.port><int>5060</int></sip.register.port>
+<sip.proxy.server><string></string></sip.proxy.server>
+<sip.proxy.port><int>5060</int></sip.proxy.port>
+<sip.realm><string></string></sip.realm>
+<sip.simplesupport><bool>0</bool></sip.simplesupport>
+<sip.testcall.audio><string></string></sip.testcall.audio>
+<sip.testcall.video><string></string></sip.testcall.video>
+
+<sip.register.timeout><int>2940</int></sip.register.timeout>
+<sip.publish.timeout><int>300</int></sip.publish.timeout>
+<sip.use.options><bool>true</bool></sip.use.options>
+<sip.p2p.presence><bool>false</bool></sip.p2p.presence>
+<sip.use.typing_state><bool>false</bool></sip.use.typing_state>
+<sip.chat.without.presence><bool>true</bool></sip.chat.without.presence>
+
+
+<!-- You can use @lang@ in this url -->
+<url.accountcreation><string></string></url.accountcreation>
+
+<!-- You can use @lang@ in this url -->
+<url.forum><string></string></url.forum>
+
+<!-- You can use @lang@ in this url -->
+<url.callout><string></string></url.callout>
+
+<!-- You can use @lang@ in this url -->
+<url.sms><string></string></url.sms>
+
+<!-- You can use @lang@ in this url -->
+<url.voicemail><string></string></url.voicemail>
+
+<!-- You can use @lang@ in this url -->
+<url.externaldirectory><string></string></url.externaldirectory>
+
+<!-- You can use @lang@ in this url -->
+<url.internaldirectory><string></string></url.internaldirectory>
+
+<!-- You can use @lang@ in this url -->
+<url.faq><string></string></url.faq>
+
+<!-- You can use @login@, @password@ and @lang@ in this url -->
+<url.account><string></string></url.account>
+
+<!-- You can use @login@, @password@ and @lang@ in this url -->
+<url.buyvoxox><string></string></url.buyvoxox>
+
+<!-- You can use @login@, @password@ and @lang@ in this url -->
+<url.download><string></string></url.download>
+
+<!-- You can use @login@, @password@ and @lang@ in this url -->
+<url.phonenumber><string></string></url.phonenumber>
+
+<!-- You can use @lang@ in this url -->
+<url.wiki><string></string></url.wiki>
+
+<url.bug><string></string></url.bug>
+
+<url.suggestions><string></string></url.suggestions>
+
+<url.billing><string></string></url.billing>
+
+<!-- You can use @lang@ in this url -->
+<url.rates><string></string></url.rates>
+
+<url.developer.platform><string></string></url.developer.platform>
+
+<!-- You can use @lang@ in this url -->
+<url.lostpassword><string></string></url.lostpassword>
+
+<url.launchpad><string></string></url.launchpad>
+
+<url.home.http><string></string></url.home.http>
+
+<url.home.https><string></string></url.home.https>
+
+<url.config.phone.settings><string></string></url.config.phone.settings>
+
+<url.config.text.settings><string></string></url.config.text.settings>
+
+<url.config.notification.settings><string></string></url.config.notification.settings>
+
+<url.sendfile><string></string></url.sendfile>
+
+<url.sendfax><string></string></url.sendfax>
+
+<url.contact.profile><string></string></url.contact.profile>
+
+<url.companywebsite><string></string></url.companywebsite>
+
+<url.myaccount><string></string></url.myaccount>
+
+<url.change.password><string></string></url.change.password>
+
+  <!-- 
+  //We want to use this LOCAL string in production, but have a URL string for dev/testing.
+  <url.contactmanager><string>html/contactmanager/contacts.html</string></url.contactmanager>
+  -->
+  
+<url.contactmanager><string></string></url.contactmanager>
+
+<askImVoxOxCom.address><string></string></askImVoxOxCom.address>
+
+<feature.sms><bool>1</bool></feature.sms>
+<feature.audioconference><bool>1</bool></feature.audioconference>
+
+<!-- The user has the ability to decide whether to have recommended updates or not. -->
+<softupdate.showrecommended><bool>true</bool></softupdate.showrecommended>
+
+  <!-- Debugging options which allow QA to alter behavior without having to rebuild the app -->
+  <!-- debug.enabled must == true for any other debug options to work.-->
+  <debug.enabled><bool>false</bool></debug.enabled>
+  
+  <!-- These are related to SoftUpdate debugging -->
+  <!-- This controls whether or not an update is done.  True == Update, false == no update. -->
+  <debug.softupdate.update><bool>false</bool></debug.softupdate.update>
+  <!-- Acceptable values are 'recommended', 'mandatory' -->
+  <debug.softupdate.type><string>recommended</string></debug.softupdate.type>
+  <!-- This file should exist on server (or somewhere it is downloadable) or error will occur. -->
+  <debug.softupdate.download_url><string></string></debug.softupdate.download_url>
+  <!-- VoxOx will handle HTML.  Is you use it, then you must properly encode it.  Use &gt; vs. >, &lt; vs. <, etc.-->
+  <debug.softupdate.description><string>&lt;b&gt;&lt;u&gt;update NOW!!! to (%1)&lt;/u&gt;&lt;b&gt;</string></debug.softupdate.description>
+  <!--I recommend you use a bogus string here so if you forget to turn off debugging, at least the UI will display a bogus value and you'll catch it! -->
+  <debug.softupdate.version><string>2.0.xx</string></debug.softupdate.version>
+  <!--This MUST ALWAYS contain at least /S which has the installer run in silent mode.  Without, you get full installer UI.-->
+  <debug.softupdate.cmdline_parms><string>/S</string></debug.softupdate.cmdline_parms>
+  <!-- Not used right now (2009.11.04).  WIP -->
+  <debug.softupdate.download_now><bool>true</bool></debug.softupdate.download_now>
+
+</settings>

@@ -1,0 +1,474 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<emoticondef>
+	<emoticons>
+		<emoticon>
+			<name>Angel</name>
+			<text>O:)</text>
+			<text>O:-)</text>
+			<text>o:-)</text>
+			<text>o:)</text>
+			<text>(A)</text>
+			<text>(a)</text>
+			<text>:angel</text>
+			<object>angel.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Angry</name>
+			<text>&gt;:o</text>
+				<text>&gt;:-o</text>
+				<text>&gt;:O</text>
+				<text>&gt;:-O</text>
+				<text>:-@</text>
+				<text>:@</text>
+				<text>:angry</text>
+			<object>angry.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Beer</name>
+			<text>(B)</text>
+			<text>(b)</text>
+			<text>*DRINK*</text>
+			<text>:beer</text>
+			<object>beer.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Blush</name>
+			<text>:$</text>
+			<text>:-$</text>
+			<text>:blush</text>
+			<object>blush.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Bomb</name>
+			<text>@=</text>
+				<text>:bomb</text>
+			<object>bomb.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Boy</name>
+			<text>(Z)</text>
+				<text>(z)</text>
+				<text>:boy</text>
+			<object>boy.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Boy</name>
+			<text>(Z)</text>
+			<text>(z)</text>
+			<text>:boy</text>
+			<object>boy.png</object>
+		</emoticon>
+		<emoticon>
+			<name>brb</name>
+			<text>brb</text>
+				<text>(brb)</text>
+				<text>:brb</text>
+			<object>brb.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Cigarette</name>
+			<text>(ci)</text>
+			<text>:cigarette</text>
+			<object>cigarette.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Coffee</name>
+			<text>(C)</text>
+				<text>(c)</text>
+				<text>:coffee</text>
+			<object>coffee.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Confused</name>
+			<text>(C)</text>
+				<text>:S</text>
+				<text>:s</text>
+				<text>:-S</text>
+				<text>:-s</text>
+				<text>:?</text>
+				<text>:-?</text>
+				<text>:confused</text>
+			<object>confused.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Cool</name>
+			<text>8)</text>
+				<text>8-)</text>
+				<text>B-)</text>
+				<text>B)</text>
+				<text>b-)</text>
+				<text>b)</text>
+				<text>(H)</text>
+				<text>(h)</text>
+				<text>:cool</text>
+			<object>cool.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Cry</name>
+			<text>:'(</text>
+				<text>:'((</text>
+				<text>:((</text>
+				<text>:'-(</text>
+				<text>:'-((</text>
+				<text>:-((</text>
+				<text>:cry</text>
+			<object>cry.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Devil</name>
+				<text>]:&lt;</text>
+				<text>]:-&lt;</text>
+				<text>(6)</text>
+				<text>>:devil</text>
+			<object>devil.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>I don't know</name>
+				<text>:^)</text>
+				<text>^)</text>
+				<text>???</text>
+				<text>:dunno</text>
+			<object>dont_know.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Eat</name>
+				<text>(pl)</text>
+				<text>:eat</text>
+			<object>eat.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Erm</name>
+				<text>:-\</text>
+				<text>:-/</text>
+			<object>erm.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Evil</name>
+				<text>&gt;:D</text>
+				<text>&gt;:-D</text>
+				<text>:evil</text>
+			<object>evil.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Girl</name>
+				<text>(X)</text>
+				<text>(x)</text>
+				<text>:girl</text>
+			<object>girl.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Headphones</name>
+				<text>[:}</text>
+				<text>[:-)</text>
+				<text>[:-}</text>
+				<text>[:)</text>
+				<text>:headphones</text>
+			<object>headphones.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>iMac</name>
+				<text>:imac</text>
+			<object>imac.png</object>
+		</emoticon>
+		
+		
+		<emoticon>
+			<name>iPhone</name>
+				<text>(mp)</text>
+				<text>:iphone</text>
+			<object>iphone.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Joking</name>
+				<text>:))</text>
+				<text>:-))</text>
+				<text>*JOKINGLY*</text>
+				<text>:joking</text>
+			<object>joking.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Kiss</name>
+				<text>:*</text>
+				<text>:-*</text>
+				<text>(K)</text>
+				<text>(k)</text>
+				<text>:kiss</text>
+			<object>kiss.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Kissed</name>
+				<text>(K)</text>
+				<text>(k)</text>
+				<text>*KISSED*</text>
+				<text>:kissed</text>
+			<object>kissed.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Kissing</name>
+				<text>:**:</text>
+				<text>*KISSING*</text>
+				<text>(})</text>
+				<text>({)</text>
+				<text>:kissing</text>
+			<object>kissing.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>lol</name>
+				<text>:-D</text>
+				<text>:D</text>
+				<text>:-d</text>
+				<text>:d</text>
+				<text>:lol</text>
+			<object>lol.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Love</name>
+				<text>(L)</text>
+				<text>(l)</text>
+				<text>*IN LOVE*</text>
+				<text>:love</text>
+			<object>love.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>MacBook Pro</name>
+				<text>:mbp</text>
+				<text>(co)</text>
+			<object>macbook_pro.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Martini</name>
+				<text>(D)</text>
+				<text>(d)</text>
+				<text>:martini</text>
+			<object>martini.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Money</name>
+				<text>$)</text>
+				<text>$-)</text>
+				<text>(mo)</text>
+				<text>:money</text>
+			<object>money.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Nerd</name>
+				<text>8-|</text>
+				<text>8|</text>
+				<text>:-|</text>
+				<text>.|</text>
+				<text>:nerd</text>
+			<object>nerd.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Party</name>
+				<text>&lt;:o)</text>
+				<text>:party</text>
+			<object>party.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Pirate</name>
+				<text>P-[</text>
+				<text>p-[</text>
+				<text>P-|</text>
+				<text>p-|</text>
+				<text>P[</text>
+				<text>p[</text>
+				<text>P|</text>
+				<text>p|</text>
+				<text>:pirate</text>
+				<text>:aye</text>
+				<text>:arr</text>
+			<object>pirate.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Pizza</name>
+				<text>(pi)</text>
+				<text>:pizza</text>
+			<object>pizza.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Rose</name>
+			<text>@}->-</text>
+				<text>@}->--</text>
+				<text>@>->--</text>
+				<text>@>->-</text>
+				<text>:rose</text>
+			<object>rose.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Wilted</name>
+				<text>(W)</text>
+				<text>(w)</text>
+				<text>:wiltedrose</text>
+			<object>rose_wilted.png</object>
+		</emoticon>
+		<emoticon>
+			<name>Sad</name>
+				<text>:(</text>
+				<text>:-(</text>
+				<text>:sad</text>
+			<object>sad.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Scared</name>
+				<text>=:O</text>
+				<text>=:o</text>
+				<text>=:-O</text>
+				<text>=:-o</text>
+				<text>:scared</text>
+			<object>scared.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Sick</name>
+				<text>:!</text>
+				<text>:-!</text>
+				<text>+o(</text>
+				<text>:sick</text>
+			<object>sick.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Silent</name>
+				<text>:X</text>
+				<text>:-X</text>
+				<text>:-x</text>
+				<text>:x</text>
+				<text>:-#</text>
+				<text>:#</text>
+				<text>:silent</text>
+			<object>silent.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Sleep</name>
+				<text>|)</text>
+				<text>|-)</text>
+				<text>*TIRED*</text>
+				<text>:sleep</text>
+			<object>sleep.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Smile</name>
+				<text>:)</text>
+				<text>:-)</text>
+				<text>=)</text>
+				<text>:smile</text>
+			<object>smile.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Stop</name>
+				<text>*STOP*</text>
+				<text>:stop</text>
+			<object>stop.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Surprized</name>
+				<text>:O</text>
+				<text>:-O</text>
+				<text>:-o</text>
+				<text>:o</text>
+				<text>:-0</text>
+				<text>:0</text>
+				<text>:surprized</text>
+			<object>surprized.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Thinking</name>
+				<text>*)</text>
+				<text>*-)</text>
+				<text>:thinking</text>
+			<object>thinking.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Thumb</name>
+				<text>(Y)</text>
+				<text>(y)</text>
+				<text>*THUMBS UP*</text>
+				<text>:thumbup</text>
+				<text>:y</text>
+			<object>thumb.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Thumb Down</name>
+				<text>(N)</text>
+				<text>(n)</text>
+				<text>*THUMBS UP*</text>
+				<text>:thumbdown</text>
+				<text>:n</text>
+			<object>thumb_down.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Tongue</name>
+				<text>:P</text>
+				<text>:-P</text>
+				<text>:-p</text>
+				<text>:p</text>
+				<text>:tongue</text>
+			<object>tongue.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Vampire</name>
+				<text>:[</text>
+				<text>:-[</text>
+				<text>:vampire</text>
+			<object>vampire.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Vicious</name>
+				<text>&gt;:)</text>
+				<text>&gt;:-)</text>
+				<text>:vicious</text>
+			<object>vicious.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Wine</name>
+				<text>(wn)</text>
+				<text>:wine</text>
+			<object>wine.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Wink</name>
+				<text>;)</text>
+				<text>;-)</text>
+				<text>:wink</text>
+			<object>wink.png</object>
+		</emoticon>
+			
+	</emoticons>
+</emoticondef>

@@ -1,0 +1,15 @@
+ow_create_project(ffmpeg)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/avcodec-51.lib
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/avformat-51.lib
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/avutil-49.lib
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include/ffmpeg
+)
+
+ow_copy_file(${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/avcodec-51.dll ${BUILD_DIR})
+ow_copy_file(${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/avformat-51.dll ${BUILD_DIR})
+ow_copy_file(${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/msvc/avutil-49.dll ${BUILD_DIR})

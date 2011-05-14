@@ -1,0 +1,5 @@
+1) Eliminate the call to fork() if we are writing the corefile
+   synchronously.
+
+---
+2 May 2005

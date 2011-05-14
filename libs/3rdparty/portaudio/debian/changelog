@@ -1,0 +1,77 @@
+portaudio19 (19+svn20061121-1) unstable; urgency=low
+
+  * SVN snapshot tagged as stable by upsream
+
+ -- Ludovico Cavedon <cavedon@sssup.it>  Fri, 15 Dec 2006 15:06:24 +0100
+
+portaudio19 (19+svn20060825-1) unstable; urgency=low
+
+  * Initial release. (Closes: #328873: portaudio: please package v19)
+  * Disable V18 compatibility and bump shlib dependency
+  * Change SONAME to libportaudio2.so
+  * Updated debian/copyright with more copyright holders and added the
+    licence interpretation from the PortAudio web site.
+  * Updated package descriptions and added homepage url:s.
+  * Removed unused patches: 20_compat and 30_alsa.
+  * Removed patches applied by upstream: 40_vpath_libtool and
+    41_vpath_libtool_gen.
+  * Fixed path to low_latency_tip.txt, moved by upstream.
+  * Add print-version and get-orig-source targets to rules.
+  * Include C++ bindings.
+  * Rename libportaudio2-dev to portaudio19-dev, since it contains the
+    developer files for both the libportaudio2 and libportaudiocpp0
+    packages. Also rename libportaudio2-doc to portaudio19-doc.
+  * Include C++ examples.
+  * Bump Standards-Version to 3.7.2. No changes required.
+  * Removed old documents and added doxygen generated documentation.
+  * Updated copyright, license modified by upstream.
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Thu, 24 Aug 2006 14:23:41 +0200
+
+portaudio19 (19+20041112-3) experimental; urgency=low
+
+  * Enabled OSS and JACK
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Tue,  1 Mar 2005 20:08:03 +0100
+
+portaudio19 (19+20041112-2) experimental; urgency=low
+
+  * Added missing depends to libportaudio19-dev: libasound2-dev, libjack-dev
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Fri, 19 Nov 2004 00:15:00 +0100
+
+portaudio19 (19+20041112-1) experimental; urgency=low
+
+  * New upstream release
+  * VPATH support in Makefile.in
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Sat, 13 Nov 2004 12:16:47 +0100
+
+portaudio19 (19+20041104-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Thu,  4 Nov 2004 16:46:48 +0100
+
+portaudio19 (19+20040729-2) experimental; urgency=low
+
+  * Added V18 compatibility.
+  * ALSA: Support of multiple devices for each card.
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Wed,  3 Nov 2004 15:56:49 +0100
+
+portaudio19 (19+20040729-1) experimental; urgency=low
+
+  * -D_REENTRANT must be specified when building libraries.
+  * Enforce symbol resolution at build time with -Wl,-z,defs.
+  * Fixed CFLAGS in configure.
+  * Link with libm and libpthread.
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Wed, 29 Sep 2004 20:24:20 +0200
+
+portaudio19 (19+20040729-0) experimental; urgency=low
+
+  * Initial Release.
+
+ -- Mikael Magnusson <mikma@users.sourceforge.net>  Tue, 28 Sep 2004 14:40:10 +0200
+

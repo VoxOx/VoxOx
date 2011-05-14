@@ -1,0 +1,7 @@
+if (PHAPI_SAMPLERATE_SUPPORT)
+	if (SAMPLERATE_INTERNAL)
+		include(CMakeLists-internal.txt)
+	else (SAMPLERATE_INTERNAL)
+		include(CMakeLists-external.txt)
+	endif (SAMPLERATE_INTERNAL)
+endif (PHAPI_SAMPLERATE_SUPPORT)

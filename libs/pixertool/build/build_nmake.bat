@@ -1,0 +1,1 @@
+cmake .. -DCMAKE_VERBOSE_MAKEFILE=1 -DPIXERTOOL_MODULE=1 -G "NMake Makefiles"

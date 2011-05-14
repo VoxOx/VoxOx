@@ -1,0 +1,307 @@
+/*
+ * WengoPhone, a voice over Internet phone
+ * Copyright (C) 2004-2007  Wengo
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+#include "stdafx.h"		//VOXOX - JRT - 2009.04.01
+#include "UserProfileFileStorage.h"
+
+#include <model/config/Config.h>
+#include <model/config/ConfigManager.h>
+#include <model/contactlist/ContactListFileStorage.h>
+#include <model/contactlist/ContactList.h>		//VOXOX - JRT - 2009.04.21 - for setInitialLoad event
+#include <model/profile/UserProfileXMLSerializer.h>
+#include <model/profile/UserProfile.h>
+#include <imwrapper/IMAccountListFileStorage.h>
+
+#include <util/File.h>
+#include <util/Logger.h>
+
+using namespace std;
+
+static const std::string USERPROFILE_FILENAME = "userprofile.xml";
+static const std::string PROFILES_DIR		  = "profiles/";
+static const std::string BACKUPS_DIR		  = "backups/";
+
+static const std::string IMACCOUNTPARAMETERS_FILENAME = "imaccountparameters.xml";
+
+UserProfileFileStorage::UserProfileFileStorage(UserProfile & userProfile)
+	: UserProfileStorage(userProfile) 
+{
+	Config & config = ConfigManager::getInstance().getCurrentConfig();
+	File::createPath(File::convertPathSeparators(config.getConfigDir() + BACKUPS_DIR));
+}
+
+UserProfileFileStorage::~UserProfileFileStorage() 
+{
+}
+
+std::string UserProfileFileStorage::getProfilePath(const std::string & profileName) 
+{
+	Config & config = ConfigManager::getInstance().getCurrentConfig();
+	return File::convertPathSeparators(config.getConfigDir() + PROFILES_DIR + profileName + "/");
+}
+
+std::string UserProfileFileStorage::getTempProfilePath(const std::string & profileName) 
+{
+	Config & config = ConfigManager::getInstance().getCurrentConfig();
+	return File::convertPathSeparators(config.getConfigDir() + PROFILES_DIR + profileName + ".new/");
+}
+
+std::string UserProfileFileStorage::getOldProfilePath(const std::string & profileName) 
+{
+	Config & config = ConfigManager::getInstance().getCurrentConfig();
+	return File::convertPathSeparators(config.getConfigDir() + PROFILES_DIR + profileName + ".old/");
+}
+
+std::string UserProfileFileStorage::getBackupProfilePath(const std::string & profileName) 
+{
+	Config & config = ConfigManager::getInstance().getCurrentConfig();
+	return File::convertPathSeparators(config.getConfigDir() + BACKUPS_DIR + profileName + "/");
+}
+
+bool UserProfileFileStorage::load(const std::string & profileName) 
+{
+	RecursiveMutex::ScopedLock lock(_mutex);
+
+	if (profileName.empty()) 
+	{
+		LOG_DEBUG("empty profileName given");
+		return false;
+	}
+
+	bool result = false;
+
+	if (!loadFromProfiles(profileName)) 
+	{
+		LOG_ERROR("cannot load profile " + profileName + " from 'profiles'."
+			" Trying from 'backups'.");
+		File profileDir(getProfilePath(profileName));
+		profileDir.remove();
+
+		if (!loadFromBackups(profileName)) 
+		{
+			LOG_ERROR("cannot load profile " + profileName + " from 'backups'.");
+			profileCannotBeLoadedEvent(*this, profileName);
+			File backupDir(getBackupProfilePath(profileName));
+			backupDir.remove();
+		} 
+		else 
+		{
+			LOG_INFO("backup recovery successful");
+			save(profileName);
+			profileLoadedFromBackupsEvent(*this, profileName);
+			result = true;
+		}
+	} 
+	else 
+	{
+		LOG_DEBUG("profile " + profileName + " loaded successfully");
+		result = true;
+	}
+	
+	return result;
+}
+
+std::string UserProfileFileStorage::loadSystemIMAccountParametersData() 
+{
+	Config & config = ConfigManager::getInstance().getCurrentConfig();
+	std::string configDir = config.getResourcesDir() + "/config/";
+	std::string imAccountParametersFileName = configDir + "/" + IMACCOUNTPARAMETERS_FILENAME;
+	FileReader imAccountParametersFile(imAccountParametersFileName);
+
+	if (!imAccountParametersFile.open()) 
+	{
+		LOG_ERROR("Couldn't open " + imAccountParametersFileName);
+		return std::string();
+	}
+
+	return imAccountParametersFile.read();
+}
+
+bool UserProfileFileStorage::loadFromProfiles(const std::string & profileName) 
+{
+	return loadFromDir(getProfilePath(profileName));
+}
+
+bool UserProfileFileStorage::loadFromBackups(const std::string & profileName) 
+{
+	return loadFromDir(getBackupProfilePath(profileName));
+}
+
+bool UserProfileFileStorage::loadFromDir(const std::string & path) 
+{
+	bool bSuccess = true;
+
+	if ( bSuccess )
+	{
+		if (!loadProfile(path)) 
+		{
+			LOG_ERROR("cannot loadProfile: " + path);
+			bSuccess = false;
+		}
+	}
+
+	if ( bSuccess )
+	{
+		IMAccountListFileStorage imAccountListFileStorage(_userProfile.getIMAccountManager()._imAccountList);
+		imAccountListFileStorage.setIMAccountParametersData(loadSystemIMAccountParametersData());
+		if (!imAccountListFileStorage.load(path)) 
+		{
+			LOG_ERROR("cannot load IMAccountList: " + path);
+			bSuccess = false;
+		}
+	}
+
+	return bSuccess;
+}
+
+bool UserProfileFileStorage::loadCachedData( const std::string& path )
+{
+	bool success = true;	//Assume it worked.
+
+//	if (_userProfile.isConnected() )	//VOXOX - JRT - 2009.04.20 - Let's avoid loading this BEFORE we login.
+	{
+		_userProfile.getContactList().setInitialLoad( true );	//VOXOX - JRT - 2009.04.21 
+
+		IMAccountList			imAccountList = _userProfile.getIMAccountManager().getIMAccountListCopy();
+		ContactListFileStorage	contactListFileStorage(*_userProfile._contactList, imAccountList);
+
+		if (!contactListFileStorage.load(path)) 
+		{
+			LOG_ERROR("cannot load ContactList: " + path);
+			success = false;		//VOXOX - JRT - 2009.04.23 - let not stop because of one failure.
+		}
+
+		if (!_userProfile.loadHistory(path)) 
+		{
+			success = false;		//VOXOX - JRT - 2009.04.23 - let not stop because of one failure.
+		}
+
+		_userProfile.getContactList().setInitialLoad( false );
+	}
+
+	return success;
+}
+
+bool UserProfileFileStorage::save(const std::string & profileName) 
+{
+	RecursiveMutex::ScopedLock lock(_mutex);
+
+	if (profileName.empty()) 
+	{
+		LOG_DEBUG("empty profileName given");
+		return false;
+	}
+
+	LOG_INFO( "Saving profile: " + profileName );	//VOXOX - JRT - 2009.12.11 
+
+	std::string path    = getProfilePath    (profileName);
+	std::string newPath = getTempProfilePath(profileName);
+	std::string oldPath = getOldProfilePath (profileName);
+
+	// Backup the last saved profile
+	if (File::exists(path)) 
+	{
+		// Copying the profile in a .old folder
+		File curProfDir(path);
+		curProfDir.copy(oldPath);
+
+		// Moving the copy in backups/
+		File oldProfFile(oldPath);
+		oldProfFile.move(getBackupProfilePath(profileName), true);
+	}
+
+	// Removing a possible .new dir in profiles/
+	if (File::exists(newPath)) 
+	{
+		File newProfDir(newPath);
+		newProfDir.remove();
+	}
+
+	// Saving profile to .new dir
+	File::createPath(newPath);
+
+	if (!saveProfile(newPath)) 
+	{
+		return false;
+	}
+
+	IMAccountList imAccountList = _userProfile.getIMAccountManager().getIMAccountListCopy();
+
+	IMAccountListFileStorage imAccountListFileStorage(imAccountList);
+	if (!imAccountListFileStorage.save(newPath)) 
+	{
+		return false;	
+	}
+
+	ContactListFileStorage contactListFileStorage(*_userProfile._contactList, imAccountList);
+	if (!contactListFileStorage.save(newPath)) 
+	{
+		return false;
+	}
+
+	if (!_userProfile.saveHistory(newPath)) 
+	{
+		return false;
+	}
+
+	// If successful, move the 'dir.new' to 'dir' (overwrite it if exists) 
+	File newProfDir(newPath);
+	newProfDir.move(path, true);
+	
+	return true;
+}
+
+
+bool UserProfileFileStorage::saveIMAccountList( const std::string & path ) 
+{
+	bool result = true;
+
+	IMAccountList imAccountList = _userProfile.getIMAccountManager().getIMAccountListCopy();
+
+	IMAccountListFileStorage imAccountListFileStorage(imAccountList);
+	
+	result = imAccountListFileStorage.save( path );
+
+	return result;
+}
+
+bool UserProfileFileStorage::loadProfile(const std::string & url) 
+{
+	bool result = false;
+
+	FileReader file(url + USERPROFILE_FILENAME);
+	if (file.open()) 
+	{
+		string data = file.read();
+
+		UserProfileXMLSerializer serializer(_userProfile);
+		result = serializer.unserialize(data);
+	}
+
+	return result;
+}
+
+bool UserProfileFileStorage::saveProfile(const std::string & url) 
+{
+	FileWriter file(url + USERPROFILE_FILENAME);
+	UserProfileXMLSerializer serializer(_userProfile);
+
+	file.write(serializer.serialize());
+	return true;
+}

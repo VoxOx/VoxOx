@@ -1,0 +1,1 @@
+#define BINARY_NAME "${BINARY_NAME}"

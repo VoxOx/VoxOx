@@ -1,0 +1,15 @@
+Fri Feb 11 12:51:37 2005  Google Inc. <opensource@google.com>
+
+	* coredumper: initial release:
+	  The coredumper utility allows a running program to generate a
+	  core file without actually crashing.  This serves to allow the
+	  programmer to generate a snapshot of a running program's state
+	  at any time.
+
+Mon May  2 07:04:46 2005  Google Inc. <opensource@google.com>
+
+	* coredumper: version 0.2 release
+	* fixed compilation on icc (simonb)
+	* added a new WriteCoreDumpLimited() function that allows the
+	  caller to specify the maximum core file size. This is needed to
+	  emulate "ulimit -c". (markus)

@@ -1,0 +1,113 @@
+/* import default header style sheet */
+@import url("styles/_headers/_default.css");
+
+
+body {
+	background: url(images/_backgroundimages/SchattigerLaubbaum.jpg) no-repeat fixed;
+	
+}
+
+.sender .name {
+	color: #ddffee;
+	font-family: "Trebuchet MS", TrebuchetMS;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: -4px;
+	margin-left: 10px;
+	margin-right: 20px;
+	text-shadow: #000000 0px 0px 4px;
+}
+
+.sender .name.co {
+	text-align: right;
+}
+
+/*message content*/
+.content {
+	background: url(images/MessageDarkBG.png);
+	border: 0px black solid;
+	color: #ffffff;
+	font-family: "Trebuchet MS", TrebuchetMS;
+	font-size: 11px;
+	line-height: 1.3em;
+	word-wrap: break-word;
+}
+
+.contentText {
+	color: #ffffff;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: 20px;
+	margin-left: 20px;
+	font-family: Skia, sans-serif;
+	font-size: 11px;
+	text-align: justify;
+}
+
+.contentSpacer {
+	padding-top: 5px;
+	padding-bottom: 4px;
+}
+
+.message {
+}
+
+.message a {
+	color: #ffffff;
+}
+
+.message a:hover {
+	color: #ffffff;
+}
+
+.shadow {
+	background: url(images/MessageShadow.png) repeat-x  top;
+	height: 9px;
+}
+
+.date {
+	color: #ffffff;
+	float: right;
+	font-family: Arial;
+	font-size: 10px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 5px;
+	opacity: 1;
+	padding-top: 5px;
+	text-shadow: #000 0px 0px 2px;
+}
+
+.status {
+	color: #ddffee;
+	font-family: "Trebuchet MS", TrebuchetMS;
+	font-size: 11px;
+	font-weight: bold;
+	margin-bottom: .5em;
+	opacity: 1;
+	text-align: center;
+	text-shadow: #000000 0px 0px 2px;
+}
+
+.status a {
+	color: #ddffee;
+}
+
+.status a:hover {
+	color: #ddffee;
+}
+
+#Chat {
+	overflow: visible;
+	padding-top: 50px;
+	padding-bottom: 6px;
+	margin-bottom: 0px;
+}
+
+.context {
+	opacity: .6;
+}
+
+img.scaledToFitImage{ 
+	width: auto; 
+}

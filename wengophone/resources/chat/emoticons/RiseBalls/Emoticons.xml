@@ -1,0 +1,233 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<emoticondef>
+	<emoticons>
+		<emoticon>
+			<name>Angry Face</name>
+			<text>&gt;:o</text>
+			<text>(¬_¬")</text>
+			<object>AngryFace.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Angry Scary</name>
+			<text>&gt;:-O</text>
+			<text>:@</text>
+			<text>:-@</text>
+			<text>(ò_ó)</text>
+			<object>VeryAngry.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Wings</name>
+			<text>"(^_^)"</text>
+			<object>Angel.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Blush</name>
+			<text>:-[</text>
+			<text>:[</text>
+			<text>(n///n)</text>
+			<object>Blush.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Confused</name>
+			<text>:S</text>
+			<text>:-S</text>
+			<text>:s</text>
+			<text>:-s</text>
+			<text>(.O.')</text>
+			<object>Confused.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Crying</name>
+			<text>:'(</text>
+			<text>(T_T)</text>
+			<object>Crying.png</object>
+		</emoticon>
+
+		<emoticon>
+			<name>Worried</name>
+			<text>:!</text>
+			<text>:|</text>
+			<text>:-!</text>
+			<text>:-|</text>
+			<object>FootInMouth.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Frown</name>
+			<text>:-(</text>
+			<text>:(</text>
+			<text>(._.)</text>
+			<text>(u_u)</text>
+			<object>Frown.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Gasp</name>
+			<text>:o</text>
+			<text>=-o</text>
+			<object>Gasp.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Gasp Big</name>
+			<text>:O</text>
+			<text>=O</text>
+			<text>=-O</text>
+			<text>:-O</text>
+			<text>(OwO)</text>
+			<text>(O_O)</text>
+			<object>LargeGasp.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Grin</name>
+			<text>:-D</text>
+			<text>:D</text>
+			<text>(^O^)</text>
+			<object>Grin.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Halo</name>
+			<text>O:-)</text>
+			<text>O:)</text>
+			<text>o:-)</text>
+			<text>(*_*)</text>
+			<text>(A)</text>
+			<object>Halo.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Heart</name>
+			<text>(L)</text>
+			<text>&lt;3</text>
+			<text>(♥_♥)</text>
+			<object>Heart.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Hot</name>
+			<text>8-)</text>
+			<text>8)</text>
+			<text>(H)</text>
+			<object>Hot.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Kiss</name>
+			<text>:-*</text>
+			<text>:*</text>
+			<text>(K)</text>
+			<text>)^o^(</text>
+			<object>Kiss.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Lips are Sealed</name>
+			<text>:X</text>
+			<text>:-x</text>
+			<text>:-X</text>
+			<text>:x</text>
+			<object>LipsareSealed.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Money-mouth</name>
+			<text>:$</text>
+			<text>$)</text>
+			<text>:-$</text>
+			<text>$-)</text>
+			<text>($_$)</text>
+			<object>Moneymouth.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Sarcastic</name>
+			<text>(sarc)</text>
+			<text>&lt;/sarcasm&gt;</text>
+			<text>^)</text>
+			<text>(o_O)</text>
+			<object>Sarcastic.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Oh Noes!</name>
+			<text>D:</text>
+			<text>&lt;/sarcasm&gt;</text>
+			<text>^)</text>
+			<text>(o_O)</text>
+			<object>ohnoes.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Sick</name>
+			<text>:[[</text>
+			<text>(sick)</text>
+			<text>(-__-)</text>
+			<object>Sick.png</object>
+		</emoticon>
+
+		<emoticon>
+			<name>Smile</name>
+			<text>:-)</text>
+			<text>:)</text>
+			<text>(^_^)</text>
+			<text>^_^</text>
+			<object>Smile.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Sticking Out Tongue</name>
+			<text>:P</text>
+			<text>:-p</text>
+			<text>:-P</text>
+			<text>:p</text>
+			<object>StickingOutTongue.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Pirate</name>
+			<text>P-[</text>
+			<object>Pirate.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Undecided</name>
+			<text>:\</text>
+			<text>:-\</text>
+			<text>:-/</text>
+			<text>(=_=)</text>
+			<object>Undecided.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Thumbs Down</name>
+			<text>(N)</text>
+			<text>(n)</text>
+			<text>(-_-)p</text>
+			<object>ThumbsDown.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Thumbs Up</name>
+			<text>(Y)</text>
+			<text>(y)</text>
+			<text>(^_^)d</text>
+			<object>ThumbsUp.png</object>
+		</emoticon>
+		
+		<emoticon>
+			<name>Wink</name>
+			<text>;-)</text>
+			<text>;)</text>
+			<text>(^_-)</text>
+			<object>Wink.png</object>
+		</emoticon>
+		
+	</emoticons>
+</emoticondef>

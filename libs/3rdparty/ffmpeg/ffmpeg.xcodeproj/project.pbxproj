@@ -1,0 +1,332 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		82D40AC30ADFEA210016E4E8 /* avutil - avcodec - PPC */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 82D40AC80ADFEA4E0016E4E8 /* Build configuration list for PBXAggregateTarget "avutil - avcodec - PPC" */;
+			buildPhases = (
+				82D40AC60ADFEA300016E4E8 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "avutil - avcodec - PPC";
+			productName = "avutil-ppc";
+		};
+		82D40AEB0ADFEFCE0016E4E8 /* avutil - avcodec - i386 */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 82D40AF00ADFEFF90016E4E8 /* Build configuration list for PBXAggregateTarget "avutil - avcodec - i386" */;
+			buildPhases = (
+				82D40AEE0ADFEFDB0016E4E8 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "avutil - avcodec - i386";
+			productName = "avutil - x86";
+		};
+		82D40AF80ADFF0230016E4E8 /* Universal Binary */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 82D40AF90ADFF0270016E4E8 /* Build configuration list for PBXAggregateTarget "Universal Binary" */;
+			buildPhases = (
+				82D40B090ADFF0C10016E4E8 /* ShellScript */,
+			);
+			dependencies = (
+				82D40EE70AE00F000016E4E8 /* PBXTargetDependency */,
+				82D40EE90AE00F020016E4E8 /* PBXTargetDependency */,
+			);
+			name = "Universal Binary";
+			productName = "avutil - UB";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXContainerItemProxy section */
+		82D40EE60AE00F000016E4E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82D408DF0ADFD8030016E4E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82D40AC30ADFEA210016E4E8;
+			remoteInfo = "avutil - avcodec - PPC";
+		};
+		82D40EE80AE00F020016E4E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82D408DF0ADFD8030016E4E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82D40AEB0ADFEFCE0016E4E8;
+			remoteInfo = "avutil - avcodec - i386";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		820899C20B248B49005CE85B /* COMPILE_UB_FFMPEG_FOR_MACOSX */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMPILE_UB_FFMPEG_FOR_MACOSX; sourceTree = "<group>"; };
+		82D40AAD0ADFE3860016E4E8 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		82D40B190AE002000016E4E8 /* config.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = config.mak; sourceTree = "<group>"; };
+		82D40B610AE005670016E4E8 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		82D40B620AE005670016E4E8 /* config.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = config.mak; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		82D408DD0ADFD8020016E4E8 = {
+			isa = PBXGroup;
+			children = (
+				820899C20B248B49005CE85B /* COMPILE_UB_FFMPEG_FOR_MACOSX */,
+				82D40A4C0ADFDB090016E4E8 /* config */,
+				82D40A140ADFD8ED0016E4E8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		82D40A140ADFD8ED0016E4E8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		82D40A4C0ADFDB090016E4E8 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				82D40A4D0ADFDB090016E4E8 /* mac */,
+			);
+			path = config;
+			sourceTree = "<group>";
+		};
+		82D40A4D0ADFDB090016E4E8 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				82D40B600AE005670016E4E8 /* i386 */,
+				82D40AAC0ADFE3860016E4E8 /* ppc */,
+			);
+			path = mac;
+			sourceTree = "<group>";
+		};
+		82D40AAC0ADFE3860016E4E8 /* ppc */ = {
+			isa = PBXGroup;
+			children = (
+				82D40AAD0ADFE3860016E4E8 /* config.h */,
+				82D40B190AE002000016E4E8 /* config.mak */,
+			);
+			path = ppc;
+			sourceTree = "<group>";
+		};
+		82D40B600AE005670016E4E8 /* i386 */ = {
+			isa = PBXGroup;
+			children = (
+				82D40B610AE005670016E4E8 /* config.h */,
+				82D40B620AE005670016E4E8 /* config.mak */,
+			);
+			path = i386;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		82D408DF0ADFD8030016E4E8 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 82D408E00ADFD8030016E4E8 /* Build configuration list for PBXProject "ffmpeg" */;
+			hasScannedForEncodings = 0;
+			mainGroup = 82D408DD0ADFD8020016E4E8;
+			productRefGroup = 82D40A140ADFD8ED0016E4E8 /* Products */;
+			projectDirPath = "";
+			targets = (
+				82D40AC30ADFEA210016E4E8 /* avutil - avcodec - PPC */,
+				82D40AEB0ADFEFCE0016E4E8 /* avutil - avcodec - i386 */,
+				82D40AF80ADFF0230016E4E8 /* Universal Binary */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		82D40AC60ADFEA300016E4E8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ARCH=ppc\nBUILD_ARCH=build/$ARCH\n\nmake clean\n\ncp $PROJECT_DIR/config/mac/$ARCH/config.{h,mak} $PROJECT_DIR/\n\nmake -C $PROJECT_DIR/libavutil \"SRC_PATH=$PROJECT_DIR\" \"CC=cc -arch $ARCH\"\nmake -C $PROJECT_DIR/libavcodec \"SRC_PATH=$PROJECT_DIR\" \"CC=cc -arch $ARCH\"\n\nmkdir -p $BUILD_ARCH\n\nmv $PROJECT_DIR/libavutil/libavutil.a $BUILD_ARCH\nmv $PROJECT_DIR/libavcodec/libavcodec.a $BUILD_ARCH\n\necho \"Done\"\nexit 0\n";
+		};
+		82D40AEE0ADFEFDB0016E4E8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ARCH=i386\nBUILD_ARCH=build/$ARCH\n\nmake clean\n\ncp $PROJECT_DIR/config/mac/$ARCH/config.{h,mak} $PROJECT_DIR/\n\nmake -C $PROJECT_DIR/libavutil \"SRC_PATH=$PROJECT_DIR\" \"CC=cc -arch $ARCH\"\nmake -C $PROJECT_DIR/libavcodec \"SRC_PATH=$PROJECT_DIR\" \"CC=cc -arch $ARCH\"\n\nmkdir -p $BUILD_ARCH\n\nmv $PROJECT_DIR/libavutil/libavutil.a $BUILD_ARCH\nmv $PROJECT_DIR/libavcodec/libavcodec.a $BUILD_ARCH\n\necho libavutil.a > $PROJECT_DIR/libnames.tmp\necho libavcodec.a >> $PROJECT_DIR/libnames.tmp\n\necho \"Done\"\nexit 0\n";
+		};
+		82D40B090ADFF0C10016E4E8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "for lib in `cat libnames.tmp`; do\n\tlipo -create build/*/$lib -output $lib\ndone\nexit 0\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		82D40EE70AE00F000016E4E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82D40AC30ADFEA210016E4E8 /* avutil - avcodec - PPC */;
+			targetProxy = 82D40EE60AE00F000016E4E8 /* PBXContainerItemProxy */;
+		};
+		82D40EE90AE00F020016E4E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82D40AEB0ADFEFCE0016E4E8 /* avutil - avcodec - i386 */;
+			targetProxy = 82D40EE80AE00F020016E4E8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		82D408E10ADFD8030016E4E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_GNU_SOURCE,
+					_LARGEFILE_SOURCE,
+					"_FILE_OFFSET_BITS=64",
+					HAVE_AV_CONFIG_H,
+				);
+			};
+			name = Debug;
+		};
+		82D408E20ADFD8030016E4E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_GNU_SOURCE,
+					_LARGEFILE_SOURCE,
+					"_FILE_OFFSET_BITS=64",
+					HAVE_AV_CONFIG_H,
+				);
+			};
+			name = Release;
+		};
+		82D40AC90ADFEA4E0016E4E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "avutil-ppc";
+			};
+			name = Debug;
+		};
+		82D40ACA0ADFEA4E0016E4E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = "avutil-ppc";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		82D40AF10ADFEFF90016E4E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "avutil - x86";
+			};
+			name = Debug;
+		};
+		82D40AF20ADFEFF90016E4E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = "avutil - x86";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		82D40AFA0ADFF0270016E4E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "avutil - UB";
+			};
+			name = Debug;
+		};
+		82D40AFB0ADFF0270016E4E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = "avutil - UB";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		82D408E00ADFD8030016E4E8 /* Build configuration list for PBXProject "ffmpeg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82D408E10ADFD8030016E4E8 /* Debug */,
+				82D408E20ADFD8030016E4E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82D40AC80ADFEA4E0016E4E8 /* Build configuration list for PBXAggregateTarget "avutil - avcodec - PPC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82D40AC90ADFEA4E0016E4E8 /* Debug */,
+				82D40ACA0ADFEA4E0016E4E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82D40AF00ADFEFF90016E4E8 /* Build configuration list for PBXAggregateTarget "avutil - avcodec - i386" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82D40AF10ADFEFF90016E4E8 /* Debug */,
+				82D40AF20ADFEFF90016E4E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82D40AF90ADFF0270016E4E8 /* Build configuration list for PBXAggregateTarget "Universal Binary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82D40AFA0ADFF0270016E4E8 /* Debug */,
+				82D40AFB0ADFF0270016E4E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 82D408DF0ADFD8030016E4E8 /* Project object */;
+}

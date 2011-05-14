@@ -1,0 +1,9 @@
+subdirs(
+	glib-2.18.1/glib
+	glib-2.18.1/gthread
+	glib-2.18.1/gmodule
+	glib-2.18.1/gobject
+	glib-2.18.1/
+)
+
+

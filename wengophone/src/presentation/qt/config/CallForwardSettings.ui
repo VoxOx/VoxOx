@@ -1,0 +1,215 @@
+<ui version="4.0" >
+ <class>CallForwardSettings</class>
+ <widget class="QWidget" name="CallForwardSettings" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>462</width>
+    <height>403</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>9</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>Call forwarding is active if you're not connected to @company@, when your line is busy or 20 seconds after you did not answer a call. You can configure up to three call forwards to landlines, mobile phones or voice mail (if applicable)</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="disableRadioButton" >
+     <property name="text" >
+      <string>Disable call forwarding</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="forwardToVoiceMailRadioButton" >
+     <property name="text" >
+      <string>Forward all unanswered calls to message box</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="forwardToNumberRadioButton" >
+     <property name="text" >
+      <string>Forward all unanswered calls to following phone numbers:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item row="2" column="0" >
+      <widget class="QLabel" name="label_2" >
+       <property name="text" >
+        <string>3rd:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" >
+      <widget class="QLabel" name="label_3" >
+       <property name="text" >
+        <string>1st:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" >
+      <widget class="QLabel" name="label_4" >
+       <property name="text" >
+        <string>2nd:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2" >
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="1" >
+      <widget class="ToolTipLineEdit" name="phoneNumber1Edit" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string>(+ country code) phone number</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" >
+      <widget class="ToolTipLineEdit" name="phoneNumber2Edit" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string>(+ country code) phone number</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" >
+      <widget class="ToolTipLineEdit" name="phoneNumber3Edit" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string>(+ country code) phone number</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_5" >
+     <property name="text" >
+      <string>For example +3314500XXXX (+33 is the country code and 14500XXXX is the phone number)</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>400</width>
+       <height>16</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ToolTipLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>ToolTipLineEditProxy.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>disableRadioButton</tabstop>
+  <tabstop>forwardToVoiceMailRadioButton</tabstop>
+  <tabstop>forwardToNumberRadioButton</tabstop>
+  <tabstop>phoneNumber1Edit</tabstop>
+  <tabstop>phoneNumber2Edit</tabstop>
+  <tabstop>phoneNumber3Edit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>forwardToNumberRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>phoneNumber1Edit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>287</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>187</x>
+     <y>223</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forwardToNumberRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>phoneNumber2Edit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>287</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>187</x>
+     <y>254</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forwardToNumberRadioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>phoneNumber3Edit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>287</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>187</x>
+     <y>285</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

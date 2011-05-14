@@ -1,0 +1,83 @@
+
+
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.incoming {
+    margin-left:-23px;
+    }
+
+.outgoing {
+    margin-left:-23px;
+    }
+
+.prefix
+{
+	font: bold 11px "Lucida Grande";
+}
+
+/*<group=Incoming>*/
+
+.incoming .prefix {
+	color: rgb(0,32,127);
+}
+
+.incoming .messagebody
+{
+	background: #E5F2FF;
+	border-top: 1px solid #6B8FB3;
+}
+
+.incoming .nextmessagebody {
+	background: #E5F2FF;
+}
+
+.incoming .nextmessagetext {
+	border-top: 1px solid #B6CFEB;
+}
+
+/*</group>*/
+
+/*<group=Outgoing>*/
+
+.outgoing .prefix
+{
+	color: rgb(0,127,0);
+}
+
+.outgoing .messagebody
+{
+	background: #E6FFEA;
+	border-top: 1px solid #6BB377;
+}
+
+.outgoing .nextmessagebody {
+	background: #E6FFEA;
+}
+
+.outgoing .nextmessagetext {
+	border-top: 1px solid #B8E6BF;
+}
+
+/*</group>*/
+
+.incoming.context .prefix {
+	color: #516cbb;
+}
+
+.outgoing.context .prefix {
+	color: #28cb28;
+}
+
+.context .messagebody, .context .nextmessagebody {
+	color: gray;
+	background-color: #FFF;
+}
+
+.status_message {
+	text-align: center;
+	font: 11px Helvetica, sans-serif;
+	color: gray;
+}

@@ -1,0 +1,23 @@
+<script type="text/javascript" charset="utf-8">
+	function show_header () {
+		document.getElementById('header_bar').style.display = '';
+		document.getElementById('toggle_show').style.display = 'none';
+		document.getElementById('toggle_hide').style.display = '';
+	}
+	function hide_header () {
+		document.getElementById('header_bar').style.display = 'none';
+		document.getElementById('toggle_hide').style.display = 'none';
+		document.getElementById('toggle_show').style.display = '';
+	}
+</script>
+<div id="header">
+	<div id="toggle_hide" onClick="hide_header();"></div>
+	<div id="toggle_show" onClick="show_header();" style="display: none"></div>
+	<div id="header_bar">
+		<img class="picture" src="%outgoingIconPath%" />
+		<img class="picture co" src="%incomingIconPath%" />
+		<div class="sitzplatz me">Ich</div>
+		<div class="sitzplatz co">%chatName%</div>
+		<div class="chattitel">%chatName%<div class="uhrzeit">%timeOpened{%H:%M}%</div></div>
+	</div>
+</div>

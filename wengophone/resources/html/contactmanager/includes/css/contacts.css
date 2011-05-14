@@ -1,0 +1,154 @@
+#Contacts {
+	width: 756px;
+	height: 452px;
+}
+
+#Contact_List {
+	text-align:left;
+	background-color: #f3f0f0;
+	padding:0px;
+	margin:0px;
+}
+
+#Contact_List div#Contact_List_Search, #Contact_List div#Contact_List_Box {
+	padding:0px;
+	margin:0px;
+	display:block;
+	float:left;
+	width:100%;
+}
+
+#Contact_List div#Contact_List_Box {
+	color:#383a3d;
+	background-color:#FFF;
+}
+
+#Contact_List div#Contact_List_Box #List {
+	height:100%;
+}
+
+#Box-Search {
+	color:#FFF;
+	background-color:#000;
+}
+
+#Box-Search div{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+}
+
+#Box-Search div form {
+	padding:4px 0px 0px 5px;
+}
+
+ul.list_groups, ul.list_contacts {
+	position:absolute;
+	left:0px;
+	top:0px;
+	margin:0px;
+	padding:0px;
+	list-style: none;
+}
+
+ul.list_groups li, ul.list_contacts li {
+	margin:0px;
+	padding:0px;
+	width:100%;
+	height:20px;
+	display:block;
+	float:left;
+	line-height:20px;
+	cursor:pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+ul.list_groups li.selected, ul.list_contacts li.selected {
+	background-color:#78aeff;
+}
+
+ul.list_groups li:hover, ul.list_contacts li:hover {
+	/*background-color:#dddee0;*/
+}	
+	li.selected, {
+		background-color:#c7e4ff;
+	}
+	li.topentry {
+		border-bottom: 1px solid #383a3d;
+	}
+	li.letter {
+		background-color:#c7e4ff;
+	}
+
+div.group_name, div.contact_name, li.letter div{
+	padding:0px 10px 0px 10px;
+	float:left;
+}
+li.letter div{
+	font-weight:bold;
+}
+div.group_totalcontacts {
+	font-weight:bold;
+	padding:0px 10px 0px 10px;
+	float:right;
+}
+
+span.txt_fname { }
+span.txt_lname, span.txt_company { font-weight:bold; }
+
+span.firstname {
+	padding:0px 0px 0px 12px;
+	font-size:13px;
+	font-weight:bold;
+}
+span.lastname {
+	font-size:13px;
+	font-weight:bold;
+}
+span.company {
+	padding:0px 0px 0px 12px;
+	font-size:13px;
+	font-weight:bold;
+}
+span.jobtitle {
+	font-size:13px;
+	font-weight:none;
+}
+
+/* Group Edit CSS Starts Here */
+#Editable-Group-Details {
+	padding:10px;
+}
+#Editable-Group-Details hr {
+	border:0px;
+	border-bottom:1px solid #d6d6d6;
+}
+.grp_name {
+	font-weight:bold;
+	font-size:12px;
+}
+.grp_count {
+
+}
+/* Group Edit CSS Ends Here */
+
+/* Dialog Box CSS Starts Here */
+.dialog_content {
+	text-align:left;
+}
+div.dialog_content  div.dialog_icon, div.dialog_content div.dialog_text {
+	display:block;
+	position:absolute;
+	top:45px;
+}
+div.dialog_content  div.dialog_icon {
+	width:30px;
+	left:10px;
+}
+div.dialog_content div.dialog_text {
+	width:265px;
+	left:35px;
+}
+/* Dialog Box CSS Ends Here */

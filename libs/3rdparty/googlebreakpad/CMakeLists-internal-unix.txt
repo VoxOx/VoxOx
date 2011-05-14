@@ -1,0 +1,25 @@
+ow_create_static_library(googlebreakpad)
+
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${CMAKE_CURRENT_SOURCE_DIR}/src/client/linux/handler
+)	
+
+ow_add_sources(
+    src/common/convert_UTF.c
+	src/common/string_conversion.cc
+	
+	src/common/linux/dump_symbols.cc	
+    src/common/linux/file_id.cc
+    src/common/linux/guid_creator.cc
+    src/common/linux/http_upload.cc
+	
+ 	src/client/minidump_file_writer.cc
+ 	src/client/linux/handler/exception_handler.cc
+ 	src/client/linux/handler/linux_thread.cc
+	src/client/linux/handler/minidump_generator.cc	
+)
+
+ow_create_project_binary()
+

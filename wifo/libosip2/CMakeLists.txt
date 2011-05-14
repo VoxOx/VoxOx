@@ -1,0 +1,5 @@
+if (OSIP2_INTERNAL)
+	include(CMakeLists-internal.txt)
+else (OSIP2_INTERNAL)
+	include(CMakeLists-external.txt)
+endif (OSIP2_INTERNAL)

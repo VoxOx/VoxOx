@@ -1,0 +1,10 @@
+ow_create_project(ffmpeg)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/macosx/libavutil.a
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/macosx/libavcodec.a
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include/ffmpeg
+)

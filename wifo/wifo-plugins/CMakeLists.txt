@@ -1,0 +1,3 @@
+subdirs(
+	sfp-plugin
+)

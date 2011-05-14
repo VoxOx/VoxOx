@@ -1,0 +1,5 @@
+if(APPLE AND NOT "${CMAKE_SYSTEM_PROCESSOR}" MATCHES "i[3456]86")
+	include(CMakeLists-ppc.txt)
+else(APPLE AND NOT "${CMAKE_SYSTEM_PROCESSOR}" MATCHES "i[3456]86")
+	include(CMakeLists-other.txt)
+endif(APPLE AND NOT "${CMAKE_SYSTEM_PROCESSOR}" MATCHES "i[3456]86")

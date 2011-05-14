@@ -1,0 +1,1 @@
+"%VS80COMNTOOLS%vsvars32.bat" && cmake .. -G "Visual Studio 8 2005"

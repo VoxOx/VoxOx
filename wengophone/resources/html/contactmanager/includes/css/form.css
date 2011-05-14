@@ -1,0 +1,64 @@
+/* Form & Button Styles Start Here */
+form, fieldset, fieldset {
+	padding:0px;
+	margin:0px;
+	border:0px;
+}
+input[type=text], input[type=password] {
+	width:200px;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+}
+input.file {
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+}
+button {
+	height:21px;
+	line-height:15px;
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px 0px repeat-x;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+	cursor:pointer;
+}
+button.bttn_pressed {
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px -21px repeat-x;
+	border:1px solid #556bb2;
+}
+button.bttn_fakefilebrowes {
+	height:21px;
+	line-height:15px;
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px 0px repeat-x;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+	cursor:pointer;
+	z-index: 2;
+}
+
+div.opt_file {
+	display:block;
+	position:relative;
+}
+div.opt_file div{
+	float:left;
+}
+	#opt_file_myname{
+		float:right;
+		padding-right:120px;
+	}
+
+div.filebrowser {
+	position:relative;
+	overflow:hidden;
+}
+div.filebrowser input.file {
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+/* Form & Button Styles Ends Here */

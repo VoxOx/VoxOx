@@ -1,0 +1,9 @@
+if (NOT OPENSSL_FOUND)
+	find_package(OpenSSL REQUIRED)
+endif (NOT OPENSSL_FOUND)
+
+ow_create_project(openssl)
+
+ow_use_public_libraries(
+	OPENSSL
+)

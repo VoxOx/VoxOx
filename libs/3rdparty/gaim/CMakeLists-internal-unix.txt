@@ -1,0 +1,178 @@
+ow_create_static_library(gaim)
+
+ow_use_public_libraries(
+	glib2
+	gnutls
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/src/libgaim
+)
+
+ow_add_private_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${CMAKE_CURRENT_SOURCE_DIR}/src/libgaim/protocols/oscar
+)
+
+ow_use_private_libraries(
+	libxml
+)
+
+ow_add_private_libraries(
+	resolv
+	gnutls
+)
+
+ow_add_private_definitions(
+	-DHAVE_CONFIG_H
+	-DHAVE_GLIB
+	-DGAIM_STATIC_PRPL
+	-DHAVE_SSL
+	-DHAVE_GNUTLS
+)
+
+ow_add_sources(
+	src/libgaim/account.c
+	src/libgaim/accountopt.c
+	src/libgaim/blist.c
+	src/libgaim/buddyicon.c
+	src/libgaim/cipher.c
+	src/libgaim/circbuffer.c
+	src/libgaim/cmds.c
+	src/libgaim/connection.c
+	src/libgaim/conversation.c
+	src/libgaim/core.c
+	src/libgaim/debug.c
+	src/libgaim/desktopitem.c
+	src/libgaim/dnsquery.c
+	src/libgaim/dnssrv.c
+	src/libgaim/eventloop.c
+	src/libgaim/ft.c
+	src/libgaim/idle.c
+	src/libgaim/imgstore.c
+	src/libgaim/log.c
+	src/libgaim/mime.c
+	src/libgaim/network.c
+	src/libgaim/notify.c
+	src/libgaim/ntlm.c
+	src/libgaim/plugin.c
+	src/libgaim/pluginpref.c
+	src/libgaim/pounce.c
+	src/libgaim/prefix.c
+	src/libgaim/prefs.c
+	src/libgaim/privacy.c
+	src/libgaim/proxy.c
+	src/libgaim/prpl.c
+	src/libgaim/request.c
+	src/libgaim/roomlist.c
+	src/libgaim/savedstatuses.c
+	src/libgaim/server.c
+	src/libgaim/signals.c
+	src/libgaim/sound.c
+	src/libgaim/sslconn.c
+	src/libgaim/status.c
+	src/libgaim/stringref.c
+	src/libgaim/stun.c
+	src/libgaim/upnp.c
+	src/libgaim/util.c
+	src/libgaim/value.c
+	src/libgaim/whiteboard.c
+	src/libgaim/xmlnode.c
+	src/libgaim/plugins/ssl/ssl.c
+	src/libgaim/plugins/ssl/ssl-gnutls.c
+	src/libgaim/protocols/jabber/auth.c
+	src/libgaim/protocols/jabber/buddy.c
+	src/libgaim/protocols/jabber/chat.c
+	src/libgaim/protocols/jabber/disco.c
+	src/libgaim/protocols/jabber/google.c
+	src/libgaim/protocols/jabber/iq.c
+	src/libgaim/protocols/jabber/jabber.c
+	src/libgaim/protocols/jabber/jutil.c
+	src/libgaim/protocols/jabber/message.c
+	src/libgaim/protocols/jabber/oob.c
+	src/libgaim/protocols/jabber/parser.c
+	src/libgaim/protocols/jabber/presence.c
+	src/libgaim/protocols/jabber/roster.c
+	src/libgaim/protocols/jabber/si.c
+	src/libgaim/protocols/jabber/xdata.c
+	src/libgaim/protocols/msn/cmdproc.c
+	src/libgaim/protocols/msn/command.c
+	src/libgaim/protocols/msn/dialog.c
+	src/libgaim/protocols/msn/directconn.c
+	src/libgaim/protocols/msn/error.c
+	src/libgaim/protocols/msn/group.c
+	src/libgaim/protocols/msn/history.c
+	src/libgaim/protocols/msn/httpconn.c
+	src/libgaim/protocols/msn/msg.c
+	src/libgaim/protocols/msn/msn.c
+	src/libgaim/protocols/msn/nexus.c
+	src/libgaim/protocols/msn/notification.c
+	src/libgaim/protocols/msn/object.c
+	src/libgaim/protocols/msn/page.c
+	src/libgaim/protocols/msn/servconn.c
+	src/libgaim/protocols/msn/session.c
+	src/libgaim/protocols/msn/slp.c
+	src/libgaim/protocols/msn/slpcall.c
+	src/libgaim/protocols/msn/slplink.c
+	src/libgaim/protocols/msn/slpmsg.c
+	src/libgaim/protocols/msn/slpsession.c
+	src/libgaim/protocols/msn/state.c
+	src/libgaim/protocols/msn/switchboard.c
+	src/libgaim/protocols/msn/sync.c
+	src/libgaim/protocols/msn/table.c
+	src/libgaim/protocols/msn/transaction.c
+	src/libgaim/protocols/msn/user.c
+	src/libgaim/protocols/msn/userlist.c
+	src/libgaim/protocols/msn/msn-utils.c
+	src/libgaim/protocols/oscar/bstream.c
+	src/libgaim/protocols/oscar/family_admin.c
+	src/libgaim/protocols/oscar/family_advert.c
+	src/libgaim/protocols/oscar/family_alert.c
+	src/libgaim/protocols/oscar/family_auth.c
+	src/libgaim/protocols/oscar/family_bart.c
+	src/libgaim/protocols/oscar/family_bos.c
+	src/libgaim/protocols/oscar/family_buddy.c
+	src/libgaim/protocols/oscar/family_chat.c
+	src/libgaim/protocols/oscar/family_chatnav.c
+	src/libgaim/protocols/oscar/family_feedbag.c
+	src/libgaim/protocols/oscar/family_icbm.c
+	src/libgaim/protocols/oscar/family_icq.c
+	src/libgaim/protocols/oscar/family_invite.c
+	src/libgaim/protocols/oscar/family_locate.c
+	src/libgaim/protocols/oscar/family_odir.c
+	src/libgaim/protocols/oscar/family_oservice.c
+	src/libgaim/protocols/oscar/family_popup.c
+	src/libgaim/protocols/oscar/family_stats.c
+	src/libgaim/protocols/oscar/family_translate.c
+	src/libgaim/protocols/oscar/family_userlookup.c
+	src/libgaim/protocols/oscar/flap_connection.c
+	src/libgaim/protocols/oscar/libaim.c
+	src/libgaim/protocols/oscar/libicq.c
+	src/libgaim/protocols/oscar/misc.c
+	src/libgaim/protocols/oscar/msgcookie.c
+	src/libgaim/protocols/oscar/odc.c
+	src/libgaim/protocols/oscar/oft.c
+	src/libgaim/protocols/oscar/oscar.c
+	src/libgaim/protocols/oscar/oscar_data.c
+	src/libgaim/protocols/oscar/peer.c
+	src/libgaim/protocols/oscar/peer_proxy.c
+	src/libgaim/protocols/oscar/rxhandlers.c
+	src/libgaim/protocols/oscar/snac.c
+	src/libgaim/protocols/oscar/tlv.c
+	src/libgaim/protocols/oscar/util.c
+	src/libgaim/protocols/yahoo/util.c
+	src/libgaim/protocols/yahoo/yahoo.c
+	src/libgaim/protocols/yahoo/yahoo_auth.c
+	src/libgaim/protocols/yahoo/yahoo_crypt.c
+	src/libgaim/protocols/yahoo/yahoo_doodle.c
+	src/libgaim/protocols/yahoo/yahoo_filexfer.c
+	src/libgaim/protocols/yahoo/yahoo_friend.c
+	src/libgaim/protocols/yahoo/yahoo_packet.c
+	src/libgaim/protocols/yahoo/yahoo_picture.c
+	src/libgaim/protocols/yahoo/yahoo_profile.c
+	src/libgaim/protocols/yahoo/yahoochat.c
+	src/libgaim/protocols/yahoo/ycht.c
+)
+
+ow_create_project_binary()

@@ -1,0 +1,88 @@
+**Developers**
+Bryan Hertz
+Jorge Guntanis
+Christopher Jiménez
+Rolando Quesada
+Sergio Marín
+Adrian González
+Jose Mendoza
+Alexander Solís
+Jose Pablo Baltodano
+
+**Designers**
+José Pablo Rojas
+Robert Abad
+
+**Based on the following softwares**
+- phApi
+Copyright (C) Vadim Lebedev
+published under GNU GPL
+
+- eXosip
+Copyright (C) Aymeric Moizard
+published under GNU GPL
+
+- oSIP
+Copyright (C) Aymeric Moizard
+published under GNU LGPL
+
+- oRTP
+Copyright (C) Simon Morlat
+published under GNU LGPL
+
+- trayicon
+Copyright (C) Justin Karneges
+published under GNU LGPL
+
+- Boost
+published under Boost Software License
+
+- cURL
+Copyright (C) Daniel Stenberg
+published under MIT/X-style license
+
+- FFmpeg
+published under GNU LGPL
+
+- TinyXML
+Copyright (C) Lee Thomason
+published under zlib license
+
+- Qt Toolkit
+Copyright (C) Trolltech AS
+published under GNU GPL
+
+- sipX
+Copyright (C) Pingtel Corp
+published under GNU LGPL
+
+- PortAudio
+Copyright (C) Ross Bencina and Phil Burk
+published under BSD-style license
+
+- OpenSSL
+published under Apache-style license
+
+- Speex
+Copyright (C) Xiph.org Foundation
+published under BSD-style license
+
+- Gaim
+published under GNU GPL
+
+- OpenWengo
+published under GNU GPL
+
+- SkinWidget
+Markus Kuenkler
+published under GNU GPL
+
+- GLib
+published under GNU LGPL
+
+- NSIS
+Copyright (C) Nullsoft, Inc.
+published under zlib-style license
+
+Flags icons from Mark James, http://www.famfamfam.com/
+

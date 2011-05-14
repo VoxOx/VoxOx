@@ -1,0 +1,9 @@
+ow_create_project(json)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/binary-lib/macosx/ppc/libjson_spirit.a
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)

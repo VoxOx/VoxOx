@@ -1,0 +1,1 @@
+@import url(../styles/fff.css);body {	background: url(../images/paper.png);}.container.message.you {	background: rgba(153,153,153,.5);}.container.message.me {	background: rgba(255,255,255,.5);}.container.context {	background: rgba(204,204,204,.5);}.container.status {	background: rgba(204,204,204,.5);}

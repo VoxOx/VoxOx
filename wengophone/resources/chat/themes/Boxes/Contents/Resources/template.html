@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<base href="%@">
+	<!-- <script type="text/ecmascript" defer="defer"> -->
+<script type="text/javascript" defer="defer">
+		var statusSet = false;
+
+		//Appending new content to the message view
+		function appendMessage(html) {
+			shouldScroll = nearBottom();
+
+			//Remove any existing insertion point
+			insert = document.getElementById("insert");
+			if(insert) insert.parentNode.removeChild(insert);
+
+			//Append the new message to the bottom of our chat block
+			chat = document.getElementById("Chat");
+			range = document.createRange();
+			range.selectNode(chat);
+			documentFragment = range.createContextualFragment(html);
+			chat.appendChild(documentFragment);
+
+			alignChat(shouldScroll);
+		}
+		function appendNextMessage(html){
+			shouldScroll = nearBottom();
+
+			//Locate the insertion point
+			insert = document.getElementById("insert");
+
+			//make new node
+			range = document.createRange();
+			range.selectNode(insert.parentNode);
+			newNode = range.createContextualFragment(html);
+
+			//swap
+			insert.parentNode.replaceChild(newNode,insert);
+
+			alignChat(shouldScroll);
+		}
+
+		//Auto-scroll to bottom.  Use nearBottom to determine if a scrollToBottom is desired.
+		function nearBottom() {
+			return ( document.body.scrollTop >= ( document.body.offsetHeight - ( window.innerHeight * 1.2 ) ) );
+		}
+		function scrollToBottom() {
+			document.body.scrollTop = document.body.offsetHeight;
+		}
+
+		//Dynamically exchange the active stylesheet
+		function setStylesheet( id, url ) {
+			code = "<style id=\"" + id + "\" type=\"text/css\" media=\"screen,print\">";
+			if( url.length ) code += "@import url( \"" + url + "\" );";
+			code += "</style>";
+			range = document.createRange();
+			head = document.getElementsByTagName( "head" ).item(0);
+			range.selectNode( head );
+			documentFragment = range.createContextualFragment( code );
+			head.removeChild( document.getElementById( id ) );
+			head.appendChild( documentFragment );
+		}
+
+		//Swap an image with its alt-tag text on click
+		document.onclick = imageCheck;
+		function imageCheck() {
+			node = event.target;
+			if(node.tagName == 'IMG' && node.alt) {
+				a = document.createElement('a');
+				a.setAttribute('onclick', 'imageSwap(this)');
+				a.setAttribute('src', node.src);
+				text = document.createTextNode(node.alt);
+				a.appendChild(text);
+				node.parentNode.replaceChild(a, node);
+			}
+		}
+		function imageSwap(node) {
+			shouldScroll = nearBottom();
+
+			//Swap the image/text
+			img = document.createElement('img');
+			img.setAttribute('src', node.src);
+			img.setAttribute('alt', node.firstChild.nodeValue);
+			node.parentNode.replaceChild(img, node);
+
+			alignChat(shouldScroll);
+		}
+
+		//Align our chat to the bottom of the window.  If true is passed, view will also be scrolled down
+		function alignChat(shouldScroll) {
+			var windowHeight = window.innerHeight;
+//appendMessage('window: ' + windowHeight + '<br>content: ' + document.getElementById('Chat').offsetHeight);
+			if (windowHeight > 0) {
+				var contentElement = document.getElementById('Chat');
+				var contentHeight = contentElement.offsetHeight;
+				if (windowHeight - contentHeight > 0) {
+					contentElement.style.position = 'relative';
+					contentElement.style.top = (windowHeight - contentHeight) + 'px';
+				} else {
+					contentElement.style.position = 'static';
+				}
+			}
+
+			if (shouldScroll) scrollToBottom();
+		}
+		function windowDidResize(){
+			alignChat(true/*nearBottom()*/); //nearBottom buggy with inavtive tabs
+		}
+
+		window.onresize = windowDidResize;
+
+		function contactStartedTyping(inVal) {
+			appendMessage(inVal);
+		}
+
+		function contactStoppedTyping() {
+			var elem = document.getElementById("incomingTyping");
+			document.body.removeChild(elem);
+
+			if (elem) {
+				document.body.removeChild(elem.parentElement);
+			}
+		}
+
+		function talkTo(talkingTo, contactImage){
+			if (talkingTo != remoteUser) {
+				document.getElementById('talkingto').innerHTML = talkingTo;
+				document.getElementById('nameOnlyText').innerHTML = talkingTo;
+			}
+
+			if (contactImage != remoteIcon) {
+				document.getElementById('contactImage').innerHTML = '<img src="' + contactImage + '" alt="talkingTo"/>';
+				document.getElementById('header').style.visibility = 'visible';
+			}
+
+			remoteUser = talkingTo;
+			remoteIcon = contactImage;
+		}
+
+		function setStatusBg(status){
+			var status = getState(status);
+
+			if (! status) return;
+
+			document.balloonBody.src = "balloons/" + status + ".png";
+			header = document.getElementById('status-img');
+			header.style.background = "transparent url('balloons/" + status + ".png') no-repeat right top";
+
+			document.getElementById('nameOnlyStatus').innerHTML = " (" + status + ")";
+		}
+
+		function setStatusMsg(statusMsg, status) {
+			if (status == 'date_separator') {
+				return;
+			}
+
+			if (statusMsg != '') {
+				// strip off extra text added by Adium
+				statusMsg = statusMsg.replace('Away Message: ', '');
+				statusMsg = statusMsg.replace(/(^"|"$)|;$/g, '');
+
+				document.getElementById('statusText').innerHTML = statusMsg;
+			} else {
+				document.getElementById('statusText').innerHTML = "No Away Message Available";
+			}
+		}
+
+		function getState(status) {
+			if (status.toLowerCase().indexOf('back') != -1 || status.toLowerCase().indexOf('online') != -1 || status.toLowerCase().indexOf('return') != -1) {
+				status = 'Online';
+			} else if (status.toLowerCase().indexOf('away') != -1) {
+				status = 'Away';
+			} else if (status.toLowerCase().indexOf('idle') != -1) {
+				status = 'Idle';
+			} else if (status.toLowerCase().indexOf('offline') != -1) {
+				status = 'Offline';
+			} else {
+				return;
+			}
+
+			return status;
+		}
+
+		function switchHeader() {
+			shouldScroll = nearBottom();
+			if (headerHidden) {
+				headerHidden = false;
+				document.getElementById("header").style.height = "73px";
+				document.getElementById("status-img").style.height = "73px";
+				document.getElementById("headerControl").style.color = "white";
+				document.getElementById("headerControl").style.textShadow = "2px 2px 2px #000000";
+				document.getElementById("headerControl").innerHTML = "Hide";
+				document.getElementById("contactImage").style.display = "block";
+				document.getElementById("headerText").style.display = "block";
+				document.getElementById("nameOnly").style.display = "none";
+				document.getElementById("typingIndicator").style.top = "50px";
+				document.getElementById("typingIndicator").style.right = "8px";
+				document.getElementById("spacer").style.height = "65px";
+			} else {
+				headerHidden = true;
+				document.getElementById("header").style.height = "23px";
+				document.getElementById("status-img").style.height = "23px";
+				document.getElementById("headerControl").innerHTML = "Show";
+				document.getElementById("headerControl").style.color = "black";
+				document.getElementById("headerControl").style.textShadow = "2px 2px 2px #ffffff";
+				document.getElementById("headerControl").innerHTML = "Show";
+				document.getElementById("contactImage").style.display = "none";
+				document.getElementById("headerText").style.display = "none";
+				document.getElementById("nameOnly").style.display = "block";
+				document.getElementById("typingIndicator").style.top = "4px";
+				document.getElementById("typingIndicator").style.right = "42px";
+				document.getElementById("spacer").style.height = "15px";
+			}
+			alignChat(shouldScroll);
+		}
+	</script>
+
+	<style id="mainStyle" type="text/css" media="screen,print">	@import url( "%@" ); </style>
+</head>
+<body onload="alignchat(true);" style="==bodyBackground==">
+
+%@
+<div id="Chat">
+</div>
+%@
+</body>
+</html>

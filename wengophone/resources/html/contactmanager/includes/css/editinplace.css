@@ -1,0 +1,189 @@
+/* Edit In Place CSS Starts Here */
+form.frmeditinplace {
+	padding:10px 0px 50px 0px;
+	width:99%;
+	font-size:11px;
+}
+form.frmeditinplace fieldset {
+	padding-left:30px;
+	width:370px;
+	float:left;
+}
+	
+form.frmeditinplace input[type=text], form.frmeditinplace input[type=password] {
+	width:165px;
+}
+form.frmeditinplace fieldset label {
+	text-align:right;
+	display:inline-block;
+	width:120px;
+}
+	/*
+	form.frmeditinplace fieldset.set_phones label{
+		width:100px;
+		height:40px;
+	}
+	*/
+form.frmeditinplace fieldset div.filebrowser {	
+	display:block;
+	float:left;
+	height:21px;	
+}
+	.set_bio #fname, .set_bio #lname, .set_bio #company, .set_bio #title {
+		width:165px;
+		margin-right:5px;
+		float:left;
+	}
+	form.frmeditinplace fieldset .input_countrycode {
+		width:35px;
+	}
+	form.frmeditinplace fieldset .input_phone {
+		width:110px;
+	}
+div.multiwindow_buttons {
+	position:absolute;
+	left:50px;
+	top:500px;
+	width:501px;
+	text-align:right;
+}
+
+form div.settings_section_hdr {
+	/*width:350px;*/
+	width:95%;
+	height:1px;
+	margin:15px 13px 10px 13px;
+	font-size:12px;
+	line-height:0px;
+	border-bottom:1px solid #c2c2c2;
+	display:block;
+	float:left;
+}
+
+div.settings_section_hdr span{
+	background-color:#FFF;
+	padding-right:5px;
+}
+div.settings_section_hdr input[type=checkbox]{
+	padding:0px;
+	margin:-5px 0px 0px 0px;
+}
+
+#list_settings {
+	width:117px;
+	text-align:left;
+	list-style-type:none;
+	color:#FFF;
+	margin:0px;
+	padding:0px;
+}
+#list_settings li{
+	display:block;
+	float:left;
+	width:117px;
+	height:33px;
+	cursor:pointer;
+}
+#list_settings li:hover, #list_settings li.selected{
+	background-color:#333333;
+}
+#list_settings li div {
+	margin-top:7px;
+	padding:0px 0px 0px 35px;
+	height:20px;
+	line-height:18px;
+}
+
+div.frm_error {
+	width:100%;
+	text-align:center;
+	color:#FF0000;
+	padding:20px 0px 10px 0px;
+	display:none;
+}
+
+.multiwindow_btm_bttns {
+	padding:10px 0px 10px 0px;
+	border:0px solid red;
+}
+
+.multiwindow_btm_bttns input {
+	float:right;
+}
+
+.bttn_add, .bttn_delete {
+	cursor:pointer;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}
+
+.bttn_add { background: #FFF url('../../images/settings/bttns_add_delete.png') 0px 0px no-repeat; display:none; }
+.bttn_delete { background: #FFF url('../../images/settings/bttns_add_delete.png') 0px -16px no-repeat; }
+
+/* Addresses CSS Start Here */
+.set_addresses {
+	padding:0px 0px 10px 0px;
+}
+.set_addresses div.address {
+	position:relative;
+	display:inline-block;
+	width:200px;
+}
+	div.address input[type=text].address_street1 {
+		width:186px;
+	}
+	div.address input[type=text].address_city {
+		width:100px;
+	}
+	div.address input[type=text].address_state {
+		width:35px;
+	}
+	div.address input[type=text].address_zip {
+		width:45px;
+	}
+	div.address input[type=text].address_country {
+		width:186px;
+	}
+/* Addresses CSS Ends Here */
+
+div.noneditable {
+	position:relative;
+	display:block;
+	float:left;
+	width:99%;
+	min-height:20px;
+	border:0px solid blue;
+	line-height:20px;
+}
+	
+	span.label {
+		display:inline-block;
+		width:125px;
+		text-align:right;
+		color:#909090;
+		padding-right:5px;
+	}
+	span.value {
+		display:inline-block;
+		color:#383a3d;
+		font-weight:bold;
+	}
+	
+	div.label {
+		float:left;
+		width:125px;
+		height:65px;
+		text-align:right;
+		color:#909090;
+		padding-right:5px;
+	}
+	div.value {
+		float:left;
+		height:65px;
+		color:#383a3d;
+		font-weight:bold;
+	}
+
+
+/* Edit In Place CSS Ends Here */

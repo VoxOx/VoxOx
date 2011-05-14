@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WengoPhoneWindow</class>
+ <widget class="QMainWindow" name="WengoPhoneWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>298</width>
+    <height>528</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>@product@</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <layout class="QVBoxLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="mainPage">
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QtProfileBar" name="profileBar"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QFrame" name="frame">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="_2">
+           <property name="margin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="1" column="0">
+            <widget class="QTabWidget" name="tabWidget">
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="tabContactList">
+              <attribute name="title">
+               <string>Contacts</string>
+              </attribute>
+             </widget>
+             <widget class="QWidget" name="tabDialpad">
+              <attribute name="title">
+               <string>Keypad</string>
+              </attribute>
+             </widget>
+             <widget class="QWidget" name="tabHistory">
+              <attribute name="title">
+               <string>History</string>
+              </attribute>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QtCallBar" name="callBar" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>298</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionWengoFAQ"/>
+    <addaction name="actionShowWengoForum"/>
+    <addaction name="actionReportBug"/>
+    <addaction name="actionSuggetsFeature"/>
+    <addaction name="actionBillingQuestion"/>
+     <addaction name="separator"/>
+     <addaction name="actionCheckForUpdate"/>
+    <addaction name="separator"/>
+     <addaction name="actionShowAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuContacts">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <widget class="QMenu" name="menuSortContactsBy">
+     <property name="title">
+      <string>Sort Contacts By</string>
+     </property>
+     <addaction name="actionAlphabetically"/>
+     <addaction name="actionPresence"/>
+     <addaction name="actionRandom"/>
+    </widget>
+    <widget class="QMenu" name="menuGroupContactsBy">
+     <property name="title">
+      <string>Group Contacts By</string>
+     </property>
+     <addaction name="actionGroups"/>
+     <addaction name="actionNetworks"/>
+     <addaction name="actionNone"/>
+    </widget>
+    <addaction name="actionEditMyProfile"/>
+    <addaction name="separator"/>
+    <addaction name="menuSortContactsBy"/>
+    <addaction name="menuGroupContactsBy"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowOnlineContacts"/>
+    <addaction name="actionShowProfileBar"/>
+    <addaction name="actionShowCallBar"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowAppearance"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <widget class="QMenu" name="menuClearHistory">
+     <property name="title">
+      <string>Clear &amp;History</string>
+     </property>
+     <addaction name="actionClearOutgoingCalls"/>
+     <addaction name="actionClearIncomingCalls"/>
+     <addaction name="actionClearMissedCalls"/>
+     <addaction name="actionClearRejectedCalls"/>
+     <addaction name="actionClearChatSessions"/>
+     <addaction name="actionClearSms"/>
+     <addaction name="separator"/>
+     <addaction name="actionClearAll"/>
+    </widget>
+    <addaction name="actionShowSetupWizard"/>
+    <addaction name="actionShowStore"/>
+    <addaction name="separator"/>
+    <addaction name="actionToggleVideo"/>
+    <addaction name="separator"/>
+    <addaction name="menuClearHistory"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowConfig"/>
+   </widget>
+   <widget class="QMenu" name="menuWengo">
+    <property name="title">
+     <string>@company@</string>
+    </property>
+    <addaction name="actionCloseWindow"/>
+    <addaction name="separator"/>
+    <addaction name="actionLogOff"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>&amp;Actions</string>
+    </property>
+    <widget class="QMenu" name="menuAddNetwork">
+     <property name="title">
+      <string>Add Network</string>
+     </property>
+    </widget>
+    <addaction name="actionAddContact"/>
+    <addaction name="actionAddGroup"/>
+    <addaction name="menuAddNetwork"/>
+    <addaction name="actionManageNetworks"/>
+    <addaction name="separator"/>
+    <addaction name="actionPlaceCall"/>
+    <addaction name="actionCreateConferenceCall"/>
+    <addaction name="separator"/>
+    <addaction name="actionSendInstantMessage"/>
+    <addaction name="actionGroupChat"/>
+    <addaction name="actionSendSms"/>
+    <addaction name="actionSendGroupTextMessage"/>
+    <addaction name="actionSendEmail"/>
+    <addaction name="actionSendGroupEmail"/>
+    <addaction name="actionSendFile"/>
+    <addaction name="actionSendFax"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="actionSelect_All"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionMinimize"/>
+    <addaction name="actionZoom"/>
+    <addaction name="separator"/>
+    <addaction name="actionContact_Manager"/>
+    <addaction name="separator"/>
+    <addaction name="actionVoxOx"/>
+   </widget>
+   <addaction name="menuWengo"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuContacts"/>
+   <addaction name="menuActions"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionShowWengoAccount">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>View My @company@ Account...</string>
+   </property>
+  </action>
+  <action name="actionCloseWindow">
+   <property name="text">
+    <string notr="true">Close &amp;Window</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionShowWengoForum">
+   <property name="text">
+    <string>Forum...</string>
+   </property>
+  </action>
+   <action name="actionShowAbout">
+     <property name="text">
+       <string>&amp;About...</string>
+     </property>
+   </action>
+   <action name="actionCheckForUpdate">
+     <property name="text">
+       <string>&amp;Check For Updates...</string>
+     </property>
+   </action>
+   <action name="actionAddContact">
+   <property name="text">
+    <string>Add &amp;Contact...</string>
+   </property>
+   <property name="iconText">
+    <string>Add</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Contact</string>
+   </property>
+  </action>
+  <action name="actionShowConfig">
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+,</string>
+   </property>
+  </action>
+  <action name="actionSendSms">
+   <property name="text">
+    <string>Send Text Message...</string>
+   </property>
+   <property name="iconText">
+    <string>SMS</string>
+   </property>
+   <property name="toolTip">
+    <string>Send SMS</string>
+   </property>
+  </action>
+  <action name="actionEditMyProfile">
+   <property name="text">
+    <string>My &amp;Profile...</string>
+   </property>
+   <property name="iconText">
+    <string>View My Profile</string>
+   </property>
+   <property name="toolTip">
+    <string>View My Profile</string>
+   </property>
+  </action>
+  <action name="actionCreateConferenceCall">
+   <property name="text">
+    <string>Conference Call...</string>
+   </property>
+   <property name="iconText">
+    <string>Conference</string>
+   </property>
+   <property name="toolTip">
+    <string>Start Conference</string>
+   </property>
+  </action>
+  <action name="actionWengoFAQ">
+   <property name="text">
+    <string>FAQ...</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionWengoServices">
+   <property name="text">
+    <string>Learn more about @company@ Services...</string>
+   </property>
+  </action>
+  <action name="actionShowHideOfflineContacts">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</iconset>
+   </property>
+   <property name="text">
+    <string>Show/Hide Unavailable &amp;Contacts</string>
+   </property>
+  </action>
+  <action name="actionClearChatSessions">
+   <property name="text">
+    <string>&amp;Chat Sessions</string>
+   </property>
+  </action>
+  <action name="actionClearAll">
+   <property name="text">
+    <string>&amp;All</string>
+   </property>
+  </action>
+  <action name="actionSearchWengoContact">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/pics/iconbar/search_contact.png</normaloff>:/pics/iconbar/search_contact.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Find Contact...</string>
+   </property>
+   <property name="iconText">
+    <string>Search</string>
+   </property>
+   <property name="toolTip">
+    <string>Find @company@ Contacts</string>
+   </property>
+  </action>
+  <action name="actionAcceptCall">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Accept</string>
+   </property>
+  </action>
+  <action name="actionHangUpCall">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;HangUp</string>
+   </property>
+  </action>
+  <action name="actionHoldResumeCall">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Hold/Resume</string>
+   </property>
+  </action>
+  <action name="actionShowHideContactGroups">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</normaloff>../../../../../../Documents and Settings/Administrator/.designer/backup</iconset>
+   </property>
+   <property name="text">
+    <string>Show/Hide &amp;Groups</string>
+   </property>
+  </action>
+  <action name="actionLogOff">
+   <property name="text">
+    <string>Sign &amp;Out</string>
+   </property>
+   <property name="iconText">
+    <string>Log Off</string>
+   </property>
+   <property name="toolTip">
+    <string>Log Off</string>
+   </property>
+  </action>
+  <action name="actionShowSetupWizard">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Setup Wizard...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens the setup wizard</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionClearOutgoingCalls">
+   <property name="text">
+    <string>&amp;Outgoing Calls</string>
+   </property>
+  </action>
+  <action name="actionClearIncomingCalls">
+   <property name="text">
+    <string>&amp;Incoming Calls</string>
+   </property>
+  </action>
+  <action name="actionClearMissedCalls">
+   <property name="text">
+    <string>&amp;Missed Calls</string>
+   </property>
+  </action>
+  <action name="actionToggleVideo">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Enable/Disable &amp;Video Calls</string>
+   </property>
+  </action>
+  <action name="actionClearSms">
+   <property name="text">
+    <string>Short Text &amp;Messages (SMS)</string>
+   </property>
+  </action>
+  <action name="actionShowStore">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Store</string>
+   </property>
+   <property name="toolTip">
+    <string>Store</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+  </action>
+  <action name="actionClearRejectedCalls">
+   <property name="text">
+    <string>Rejected Calls</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionToolBarTextUnderIcons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Text Under Icons</string>
+   </property>
+  </action>
+  <action name="actionToolBarIconsOnly">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Icons Only</string>
+   </property>
+  </action>
+  <action name="actionToolBarHidden">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Hidden</string>
+   </property>
+  </action>
+  <action name="actionProfileBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Profile Bar</string>
+   </property>
+   <property name="toolTip">
+    <string>Shows or hides Status Bar</string>
+   </property>
+  </action>
+  <action name="actionCallBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Call Bar</string>
+   </property>
+   <property name="toolTip">
+    <string>Show or hide Call Bar</string>
+   </property>
+  </action>
+  <action name="actionAddGroup">
+   <property name="text">
+    <string>Add Group...</string>
+   </property>
+  </action>
+  <action name="actionMSN">
+   <property name="icon">
+    <iconset resource="../../../resources/wengophone.qrc">
+     <normaloff>:/pics/protocols/msn.png</normaloff>:/pics/protocols/msn.png</iconset>
+   </property>
+   <property name="text">
+    <string>MSN</string>
+   </property>
+  </action>
+  <action name="actionMySpaceIM">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/pics/protocols/myspace_off.png</normaloff>:/pics/protocols/myspace_off.png</iconset>
+   </property>
+   <property name="text">
+    <string>MySpaceIM</string>
+   </property>
+  </action>
+  <action name="actionCloseTab">
+   <property name="text">
+    <string>Close &amp;Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+W</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionManageNetworks">
+   <property name="text">
+    <string>Manage Networks...</string>
+   </property>
+  </action>
+  <action name="actionPlaceCall">
+   <property name="text">
+    <string>Place Call...</string>
+   </property>
+  </action>
+  <action name="actionSendInstantMessage">
+   <property name="text">
+    <string>Send Instant Message...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionGroupChat">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Group Chat...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSendGroupTextMessage">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Send Group Text Message...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSendEmail">
+   <property name="text">
+    <string>Send Email...</string>
+   </property>
+  </action>
+  <action name="actionSendGroupEmail">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Send Group Email...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSendFile">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Send File...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSendFax">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Send Fax...</string>
+   </property>
+  </action>
+  <action name="actionReportBug">
+   <property name="text">
+    <string>Report Bug...</string>
+   </property>
+  </action>
+  <action name="actionSuggetsFeature">
+   <property name="text">
+    <string>Suggest Feature...</string>
+   </property>
+  </action>
+  <action name="actionBillingQuestion">
+   <property name="text">
+    <string>Contact Support...</string>
+   </property>
+  </action>
+  <action name="actionAppearance">
+   <property name="text">
+    <string>Appearance...</string>
+   </property>
+  </action>
+  <action name="actionShowOnlineContacts">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Offline Contacts</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="actionShowAppearance">
+   <property name="text">
+    <string>Appearance...</string>
+   </property>
+  </action>
+  <action name="actionShowCallBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Call Bar</string>
+   </property>
+  </action>
+  <action name="actionShowProfileBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Profile Bar</string>
+   </property>
+  </action>
+  <action name="actionAlphabetically">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Alphabetically</string>
+   </property>
+  </action>
+  <action name="actionPresence">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Presence</string>
+   </property>
+  </action>
+  <action name="actionRandom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Random</string>
+   </property>
+  </action>
+  <action name="actionGroups">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Groups</string>
+   </property>
+  </action>
+  <action name="actionNetworks">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Networks</string>
+   </property>
+  </action>
+  <action name="actionNone">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>None</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+  </action>
+  <action name="actionSelect_All">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+  </action>
+  <action name="actionMinimize">
+   <property name="text">
+    <string>Minimize</string>
+   </property>
+  </action>
+  <action name="actionZoom">
+   <property name="text">
+    <string>Zoom</string>
+   </property>
+  </action>
+  <action name="actionContact_Manager">
+   <property name="text">
+    <string>Contact Manager</string>
+   </property>
+  </action>
+  <action name="actionClose_WIndow">
+   <property name="text">
+    <string>Close Window</string>
+   </property>
+  </action>
+  <action name="actionVoxOx">
+   <property name="text">
+    <string>VoxOx</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtProfileBar</class>
+   <extends>QFrame</extends>
+   <header>profilebar/QtProfileBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QtCallBar</class>
+   <extends>QWidget</extends>
+   <header>callbar/QtCallBar.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../../resources/wengophone.qrc"/>
+  <include location="../../../resources/wengophone.qrc"/>
+ </resources>
+ <connections/>
+</ui>

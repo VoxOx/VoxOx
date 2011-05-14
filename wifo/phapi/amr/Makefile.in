@@ -1,0 +1,615 @@
+# Makefile.in generated automatically by automake 1.4-p6 from Makefile.am
+
+# Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+DESTDIR =
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ../..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AS = @AS@
+CC = @CC@
+CFLAGS = @CFLAGS@
+CPP = @CPP@
+CXX = @CXX@
+DLLTOOL = @DLLTOOL@
+ECHO = @ECHO@
+EXEEXT = @EXEEXT@
+EXOSIP_FLAGS = @EXOSIP_FLAGS@
+EXOSIP_LIB = @EXOSIP_LIB@
+EXOSIP_VERSION = @EXOSIP_VERSION@
+HAVE_LIB = @HAVE_LIB@
+JOSUA_FLAGS = @JOSUA_FLAGS@
+JOSUA_LIB = @JOSUA_LIB@
+LIB = @LIB@
+LIBEXOSIP_SO_VERSION = @LIBEXOSIP_SO_VERSION@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+LTLIB = @LTLIB@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+PTHREAD_CC = @PTHREAD_CC@
+PTHREAD_CFLAGS = @PTHREAD_CFLAGS@
+PTHREAD_LIBS = @PTHREAD_LIBS@
+RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
+ac_aux_dir = @ac_aux_dir@
+
+@COMPILE_PHAPI_TRUE@lib_LIBRARIES = libamr.a
+
+TABFILES = bitno.tab c2_11pf.tab c2_9pf.tab corrwght.tab d_homing.tab gains.tab gray.tab grid.tab inter_36.tab inv_sqrt.tab lag_wind.tab log2.tab lsp_lsf.tab lsp.tab ph_disp.tab pow2.tab qgain475.tab q_plsf_3.tab q_plsf_5.tab qua_gain.tab sqrt_l.tab window.tab
+
+EXTRA_DIST = agc.h amr.h a_refl.h autocorr.h az_lsp.h basic_op.h b_cn_cod.h bgnscd.h bits2prm.h c1035pf.h   c2_11pf.h c2_9pf.h c3_14pf.h c4_17pf.h c8_31pf.h calc_cor.h calc_en.h cbsearch.h c_g_aver.h  cl_ltp.h cnst.h  cnst_vad.h cod_amr.h convolve.h copy.h cor_h.h count.h  d1035pf.h d2_11pf.h d2_9pf.h d3_14pf.h d4_17pf.h d8_31pf.h dec_amr.h  dec_gain.h dec_lag3.h dec_lag6.h d_gain_c.h d_gain_p.h d_homing.h d_plsf.h  dtx_dec.h dtx_enc.h ec_gains.h e_homing.h enc_lag3.h enc_lag6.h ex_ctrl.h   frame.h g_adapt.h gain_q.h g_code.h gc_pred.h gmed_n.h g_pitch.h hp_max.h inter_36.h int_lpc.h int_lsf.h inv_sqrt.h lag_wind.h  levinson.h log2.h lpc.h lsfwt.h lsp_avg.h lsp_az.h lsp.h lsp_lsf.h mac_32.h mode.h n_proc.h  ol_ltp.h oper_32b.h ph_disp.h pitch_fr.h pitch_ol.h p_ol_wgh.h post_pro.h pow2.h pre_big.h pred_lt.h preemph.h  pre_proc.h prm2bits.h pstfilt.h qgain475.h qgain795.h q_gain_c.h q_gain_p.h q_plsf.h  qua_gain.h reorder.h residu.h s10_8pf.h set_sign.h set_zero.h sid_sync.h sp_dec.h sp_enc.h spreproc.h spstproc.h  sqrt_l.h strfunc.h syn_filt.h ton_stab.h typedef.h typedefs.h vad1.h vad2.h vad.h vadname.h weight_a.h $(TABFILES)
+
+
+libamr_a_SOURCES = agc.c autocorr.c az_lsp.c bits2prm.c        cl_ltp.c convolve.c c1035pf.c d_plsf.c d_plsf_5.c        d_gain_c.c d_gain_p.c dec_lag6.c d1035pf.c cor_h.c        enc_lag3.c enc_lag6.c g_code.c g_pitch.c int_lpc.c        inter_36.c inv_sqrt.c        lag_wind.c levinson.c lsp_az.c lsp_lsf.c ol_ltp.c        pitch_fr.c pitch_ol.c pow2.c pre_big.c pre_proc.c pred_lt.c preemph.c        prm2bits.c        pstfilt.c q_gain_c.c q_gain_p.c q_plsf.c q_plsf_5.c lsfwt.c reorder.c        residu.c lsp.c lpc.c ec_gains.c spreproc.c syn_filt.c        weight_a.c qua_gain.c gc_pred.c q_plsf_3.c post_pro.c        dec_lag3.c dec_gain.c d_plsf_3.c d4_17pf.c c4_17pf.c d3_14pf.c        c3_14pf.c        d2_11pf.c c2_11pf.c d2_9pf.c c2_9pf.c cbsearch.c spstproc.c gain_q.c        cod_amr.c dec_amr.c sp_enc.c sp_dec.c ph_disp.c        g_adapt.c calc_en.c qgain795.c qgain475.c sqrt_l.c set_sign.c s10_8pf.c        bgnscd.c gmed_n.c        mac_32.c ex_ctrl.c c_g_aver.c lsp_avg.c int_lsf.c c8_31pf.c d8_31pf.c        p_ol_wgh.c ton_stab.c vad1.c dtx_enc.c dtx_dec.c a_refl.c        b_cn_cod.c calc_cor.c hp_max.c vadname.c        vad2.c r_fft.c lflg_upd.c        e_homing.c d_homing.c 	basicop2.c count.c oper_32b.c copy.c log2.c set_zero.c            strfunc.c n_proc.c sid_sync.c
+
+mkinstalldirs = $(SHELL) $(top_srcdir)/scripts/mkinstalldirs
+CONFIG_HEADER = ../../config.h
+CONFIG_CLEAN_FILES = 
+LIBRARIES =  $(lib_LIBRARIES)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) -I../..
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+libamr_a_LIBADD = 
+libamr_a_OBJECTS =  agc.$(OBJEXT) autocorr.$(OBJEXT) az_lsp.$(OBJEXT) \
+bits2prm.$(OBJEXT) cl_ltp.$(OBJEXT) convolve.$(OBJEXT) \
+c1035pf.$(OBJEXT) d_plsf.$(OBJEXT) d_plsf_5.$(OBJEXT) \
+d_gain_c.$(OBJEXT) d_gain_p.$(OBJEXT) dec_lag6.$(OBJEXT) \
+d1035pf.$(OBJEXT) cor_h.$(OBJEXT) enc_lag3.$(OBJEXT) enc_lag6.$(OBJEXT) \
+g_code.$(OBJEXT) g_pitch.$(OBJEXT) int_lpc.$(OBJEXT) inter_36.$(OBJEXT) \
+inv_sqrt.$(OBJEXT) lag_wind.$(OBJEXT) levinson.$(OBJEXT) \
+lsp_az.$(OBJEXT) lsp_lsf.$(OBJEXT) ol_ltp.$(OBJEXT) pitch_fr.$(OBJEXT) \
+pitch_ol.$(OBJEXT) pow2.$(OBJEXT) pre_big.$(OBJEXT) pre_proc.$(OBJEXT) \
+pred_lt.$(OBJEXT) preemph.$(OBJEXT) prm2bits.$(OBJEXT) \
+pstfilt.$(OBJEXT) q_gain_c.$(OBJEXT) q_gain_p.$(OBJEXT) \
+q_plsf.$(OBJEXT) q_plsf_5.$(OBJEXT) lsfwt.$(OBJEXT) reorder.$(OBJEXT) \
+residu.$(OBJEXT) lsp.$(OBJEXT) lpc.$(OBJEXT) ec_gains.$(OBJEXT) \
+spreproc.$(OBJEXT) syn_filt.$(OBJEXT) weight_a.$(OBJEXT) \
+qua_gain.$(OBJEXT) gc_pred.$(OBJEXT) q_plsf_3.$(OBJEXT) \
+post_pro.$(OBJEXT) dec_lag3.$(OBJEXT) dec_gain.$(OBJEXT) \
+d_plsf_3.$(OBJEXT) d4_17pf.$(OBJEXT) c4_17pf.$(OBJEXT) \
+d3_14pf.$(OBJEXT) c3_14pf.$(OBJEXT) d2_11pf.$(OBJEXT) c2_11pf.$(OBJEXT) \
+d2_9pf.$(OBJEXT) c2_9pf.$(OBJEXT) cbsearch.$(OBJEXT) spstproc.$(OBJEXT) \
+gain_q.$(OBJEXT) cod_amr.$(OBJEXT) dec_amr.$(OBJEXT) sp_enc.$(OBJEXT) \
+sp_dec.$(OBJEXT) ph_disp.$(OBJEXT) g_adapt.$(OBJEXT) calc_en.$(OBJEXT) \
+qgain795.$(OBJEXT) qgain475.$(OBJEXT) sqrt_l.$(OBJEXT) \
+set_sign.$(OBJEXT) s10_8pf.$(OBJEXT) bgnscd.$(OBJEXT) gmed_n.$(OBJEXT) \
+mac_32.$(OBJEXT) ex_ctrl.$(OBJEXT) c_g_aver.$(OBJEXT) lsp_avg.$(OBJEXT) \
+int_lsf.$(OBJEXT) c8_31pf.$(OBJEXT) d8_31pf.$(OBJEXT) \
+p_ol_wgh.$(OBJEXT) ton_stab.$(OBJEXT) vad1.$(OBJEXT) dtx_enc.$(OBJEXT) \
+dtx_dec.$(OBJEXT) a_refl.$(OBJEXT) b_cn_cod.$(OBJEXT) \
+calc_cor.$(OBJEXT) hp_max.$(OBJEXT) vadname.$(OBJEXT) vad2.$(OBJEXT) \
+r_fft.$(OBJEXT) lflg_upd.$(OBJEXT) e_homing.$(OBJEXT) \
+d_homing.$(OBJEXT) basicop2.$(OBJEXT) count.$(OBJEXT) \
+oper_32b.$(OBJEXT) copy.$(OBJEXT) log2.$(OBJEXT) set_zero.$(OBJEXT) \
+strfunc.$(OBJEXT) n_proc.$(OBJEXT) sid_sync.$(OBJEXT)
+AR = ar
+COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
+DIST_COMMON =  Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = gtar
+GZIP_ENV = --best
+SOURCES = $(libamr_a_SOURCES)
+OBJECTS = $(libamr_a_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .lo .o .obj .s
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps phapi/amr/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-libLIBRARIES:
+
+clean-libLIBRARIES:
+	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
+
+distclean-libLIBRARIES:
+
+maintainer-clean-libLIBRARIES:
+
+install-libLIBRARIES: $(lib_LIBRARIES)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(libdir)
+	@list='$(lib_LIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(libdir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(libdir)/$$p; \
+	  else :; fi; \
+	done
+	@$(POST_INSTALL)
+	@list='$(lib_LIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo " $(RANLIB) $(DESTDIR)$(libdir)/$$p"; \
+	    $(RANLIB) $(DESTDIR)$(libdir)/$$p; \
+	  else :; fi; \
+	done
+
+uninstall-libLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	list='$(lib_LIBRARIES)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(libdir)/$$p; \
+	done
+
+.c.o:
+	$(COMPILE) -c $<
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+libamr.a: $(libamr_a_OBJECTS) $(libamr_a_DEPENDENCIES)
+	-rm -f libamr.a
+	$(AR) cru libamr.a $(libamr_a_OBJECTS) $(libamr_a_LIBADD)
+	$(RANLIB) libamr.a
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $$unique $(LISP) -o $$here/TAGS)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = phapi/amr
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+a_refl.o: a_refl.c a_refl.h typedef.h typedefs.h basic_op.h oper_32b.h \
+	count.h cnst.h
+agc.o: agc.c agc.h typedef.h typedefs.h basic_op.h count.h cnst.h \
+	inv_sqrt.h
+autocorr.o: autocorr.c autocorr.h typedef.h typedefs.h basic_op.h \
+	oper_32b.h count.h cnst.h
+az_lsp.o: az_lsp.c az_lsp.h typedef.h typedefs.h basic_op.h oper_32b.h \
+	count.h cnst.h grid.tab
+b_cn_cod.o: b_cn_cod.c b_cn_cod.h typedef.h typedefs.h basic_op.h \
+	oper_32b.h count.h cnst.h window.tab
+basicop2.o: basicop2.c typedef.h typedefs.h basic_op.h
+bgnscd.o: bgnscd.c bgnscd.h typedef.h typedefs.h cnst.h basic_op.h \
+	count.h copy.h set_zero.h gmed_n.h sqrt_l.h
+bits2prm.o: bits2prm.c bits2prm.h typedef.h typedefs.h mode.h basic_op.h \
+	count.h bitno.tab cnst.h
+c1035pf.o: c1035pf.c c1035pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h inv_sqrt.h set_sign.h cor_h.h s10_8pf.h gray.tab
+c2_11pf.o: c2_11pf.c c2_11pf.h typedef.h typedefs.h basic_op.h count.h \
+	inv_sqrt.h cnst.h cor_h.h set_sign.h c2_11pf.tab
+c2_9pf.o: c2_9pf.c c2_9pf.h typedef.h typedefs.h basic_op.h count.h \
+	inv_sqrt.h cnst.h cor_h.h set_sign.h c2_9pf.tab
+c3_14pf.o: c3_14pf.c c3_14pf.h typedef.h typedefs.h basic_op.h count.h \
+	inv_sqrt.h cnst.h cor_h.h set_sign.h
+c4_17pf.o: c4_17pf.c c4_17pf.h typedef.h typedefs.h basic_op.h count.h \
+	inv_sqrt.h cnst.h cor_h.h set_sign.h gray.tab
+c8_31pf.o: c8_31pf.c c8_31pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h inv_sqrt.h cor_h.h set_sign.h s10_8pf.h
+c_g_aver.o: c_g_aver.c c_g_aver.h typedef.h typedefs.h mode.h cnst.h \
+	basic_op.h count.h set_zero.h
+calc_cor.o: calc_cor.c calc_cor.h typedef.h typedefs.h basic_op.h \
+	oper_32b.h count.h cnst.h
+calc_en.o: calc_en.c calc_en.h typedef.h typedefs.h mode.h basic_op.h \
+	oper_32b.h count.h cnst.h log2.h
+cbsearch.o: cbsearch.c cbsearch.h typedef.h typedefs.h mode.h c2_9pf.h \
+	c2_11pf.h c3_14pf.h c4_17pf.h c8_31pf.h c1035pf.h basic_op.h \
+	count.h cnst.h
+cl_ltp.o: cl_ltp.c cl_ltp.h typedef.h typedefs.h mode.h pitch_fr.h \
+	ton_stab.h cnst.h basic_op.h count.h oper_32b.h convolve.h \
+	g_pitch.h pred_lt.h enc_lag3.h enc_lag6.h q_gain_p.h
+cod_amr.o: cod_amr.c cod_amr.h typedef.h typedefs.h cnst.h mode.h lpc.h \
+	levinson.h lsp.h q_plsf.h cl_ltp.h pitch_fr.h ton_stab.h \
+	gain_q.h gc_pred.h g_adapt.h p_ol_wgh.h vad.h vad1.h cnst_vad.h \
+	vad2.h dtx_enc.h basic_op.h count.h copy.h set_zero.h \
+	qua_gain.h pre_big.h ol_ltp.h spreproc.h pred_lt.h spstproc.h \
+	cbsearch.h convolve.h
+convolve.o: convolve.c convolve.h typedef.h typedefs.h basic_op.h \
+	count.h
+copy.o: copy.c copy.h typedef.h typedefs.h basic_op.h count.h
+cor_h.o: cor_h.c cor_h.h typedef.h typedefs.h cnst.h basic_op.h count.h \
+	inv_sqrt.h
+count.o: count.c typedef.h typedefs.h count.h
+d1035pf.o: d1035pf.c d1035pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h gray.tab
+d2_11pf.o: d2_11pf.c d2_11pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h
+d2_9pf.o: d2_9pf.c d2_9pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h c2_9pf.tab
+d3_14pf.o: d3_14pf.c d3_14pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h
+d4_17pf.o: d4_17pf.c d4_17pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h gray.tab
+d8_31pf.o: d8_31pf.c d8_31pf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h
+d_gain_c.o: d_gain_c.c d_gain_c.h typedef.h typedefs.h mode.h gc_pred.h \
+	basic_op.h oper_32b.h count.h cnst.h log2.h pow2.h gains.tab
+d_gain_p.o: d_gain_p.c d_gain_p.h typedef.h typedefs.h mode.h basic_op.h \
+	oper_32b.h count.h cnst.h gains.tab
+d_homing.o: d_homing.c d_homing.h typedef.h typedefs.h mode.h bits2prm.h \
+	d_homing.tab bitno.tab cnst.h
+d_plsf.o: d_plsf.c d_plsf.h typedef.h typedefs.h cnst.h mode.h \
+	basic_op.h count.h copy.h q_plsf_5.tab
+d_plsf_3.o: d_plsf_3.c d_plsf.h typedef.h typedefs.h cnst.h mode.h \
+	basic_op.h count.h lsp_lsf.h reorder.h copy.h q_plsf_3.tab
+d_plsf_5.o: d_plsf_5.c d_plsf.h typedef.h typedefs.h cnst.h mode.h \
+	basic_op.h count.h lsp_lsf.h reorder.h copy.h q_plsf_5.tab
+dec_amr.o: dec_amr.c dec_amr.h typedef.h typedefs.h cnst.h mode.h \
+	dtx_dec.h dtx_enc.h q_plsf.h gc_pred.h d_plsf.h c_g_aver.h \
+	frame.h ec_gains.h ph_disp.h bgnscd.h lsp_avg.h basic_op.h \
+	count.h copy.h set_zero.h syn_filt.h agc.h int_lpc.h dec_gain.h \
+	dec_lag3.h dec_lag6.h d2_9pf.h d2_11pf.h d3_14pf.h d4_17pf.h \
+	d8_31pf.h d1035pf.h pred_lt.h d_gain_p.h d_gain_c.h int_lsf.h \
+	lsp_lsf.h ex_ctrl.h sqrt_l.h lsp.tab bitno.tab b_cn_cod.h
+dec_gain.o: dec_gain.c dec_gain.h typedef.h typedefs.h gc_pred.h mode.h \
+	basic_op.h oper_32b.h count.h cnst.h pow2.h log2.h qua_gain.tab \
+	qgain475.tab
+dec_lag3.o: dec_lag3.c dec_lag3.h typedef.h typedefs.h basic_op.h \
+	count.h
+dec_lag6.o: dec_lag6.c dec_lag6.h typedef.h typedefs.h basic_op.h \
+	count.h
+dtx_dec.o: dtx_dec.c dtx_dec.h typedef.h typedefs.h dtx_enc.h cnst.h \
+	q_plsf.h mode.h gc_pred.h d_plsf.h c_g_aver.h frame.h \
+	basic_op.h oper_32b.h copy.h set_zero.h log2.h lsp_az.h pow2.h \
+	a_refl.h b_cn_cod.h syn_filt.h lsp_lsf.h reorder.h count.h \
+	q_plsf_5.tab lsp.tab
+dtx_enc.o: dtx_enc.c dtx_enc.h typedef.h typedefs.h cnst.h q_plsf.h \
+	mode.h gc_pred.h basic_op.h oper_32b.h copy.h set_zero.h log2.h \
+	lsp_lsf.h reorder.h count.h lsp.tab
+e_homing.o: e_homing.c e_homing.h typedef.h typedefs.h cnst.h
+ec_gains.o: ec_gains.c ec_gains.h typedef.h typedefs.h gc_pred.h mode.h \
+	basic_op.h oper_32b.h count.h cnst.h gmed_n.h gains.tab
+enc_lag3.o: enc_lag3.c enc_lag3.h typedef.h typedefs.h basic_op.h \
+	count.h cnst.h
+enc_lag6.o: enc_lag6.c enc_lag6.h typedef.h typedefs.h basic_op.h \
+	count.h
+ex_ctrl.o: ex_ctrl.c ex_ctrl.h typedef.h typedefs.h cnst.h basic_op.h \
+	count.h copy.h set_zero.h gmed_n.h sqrt_l.h
+g_adapt.o: g_adapt.c g_adapt.h typedef.h typedefs.h basic_op.h \
+	oper_32b.h count.h cnst.h gmed_n.h
+g_code.o: g_code.c g_code.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h
+g_pitch.o: g_pitch.c g_pitch.h typedef.h typedefs.h mode.h basic_op.h \
+	oper_32b.h count.h cnst.h
+gain_q.o: gain_q.c gain_q.h typedef.h typedefs.h mode.h gc_pred.h \
+	g_adapt.h basic_op.h count.h qua_gain.h cnst.h g_code.h \
+	q_gain_c.h calc_en.h qgain795.h qgain475.h set_zero.h
+gc_pred.o: gc_pred.c gc_pred.h typedef.h typedefs.h mode.h basic_op.h \
+	oper_32b.h cnst.h count.h log2.h copy.h
+gmed_n.o: gmed_n.c gmed_n.h typedef.h typedefs.h basic_op.h count.h
+hp_max.o: hp_max.c hp_max.h typedef.h typedefs.h basic_op.h oper_32b.h \
+	count.h cnst.h
+int_lpc.o: int_lpc.c int_lpc.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h lsp_az.h
+int_lsf.o: int_lsf.c int_lsf.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h
+inter_36.o: inter_36.c inter_36.h typedef.h typedefs.h basic_op.h \
+	count.h cnst.h inter_36.tab
+inv_sqrt.o: inv_sqrt.c inv_sqrt.h typedef.h typedefs.h basic_op.h \
+	count.h inv_sqrt.tab
+lag_wind.o: lag_wind.c lag_wind.h typedef.h typedefs.h basic_op.h \
+	oper_32b.h count.h lag_wind.tab
+levinson.o: levinson.c levinson.h typedef.h typedefs.h cnst.h basic_op.h \
+	oper_32b.h count.h
+lflg_upd.o: lflg_upd.c typedef.h typedefs.h cnst.h basic_op.h oper_32b.h \
+	count.h vad2.h mode.h
+log2.o: log2.c log2.h typedef.h typedefs.h basic_op.h count.h log2.tab
+lpc.o: lpc.c lpc.h typedef.h typedefs.h levinson.h cnst.h mode.h \
+	basic_op.h oper_32b.h autocorr.h lag_wind.h count.h window.tab
+lsfwt.o: lsfwt.c lsfwt.h typedef.h typedefs.h cnst.h basic_op.h count.h
+lsp.o: lsp.c lsp.h typedef.h typedefs.h q_plsf.h cnst.h mode.h \
+	basic_op.h oper_32b.h copy.h az_lsp.h int_lpc.h count.h lsp.tab
+lsp_avg.o: lsp_avg.c lsp_avg.h typedef.h typedefs.h cnst.h basic_op.h \
+	oper_32b.h count.h q_plsf_5.tab copy.h
+lsp_az.o: lsp_az.c lsp_az.h typedef.h typedefs.h basic_op.h oper_32b.h \
+	count.h
+lsp_lsf.o: lsp_lsf.c lsp_lsf.h typedef.h typedefs.h basic_op.h count.h \
+	lsp_lsf.tab
+mac_32.o: mac_32.c mac_32.h typedef.h typedefs.h basic_op.h oper_32b.h \
+	count.h
+n_proc.o: n_proc.c
+ol_ltp.o: ol_ltp.c ol_ltp.h typedef.h typedefs.h mode.h p_ol_wgh.h vad.h \
+	vad1.h cnst_vad.h vad2.h cnst.h pitch_ol.h count.h basic_op.h
+oper_32b.o: oper_32b.c typedef.h typedefs.h basic_op.h oper_32b.h \
+	count.h
+p_ol_wgh.o: p_ol_wgh.c p_ol_wgh.h typedef.h typedefs.h mode.h vad.h \
+	vad1.h cnst_vad.h vad2.h basic_op.h oper_32b.h count.h cnst.h \
+	corrwght.tab gmed_n.h inv_sqrt.h calc_cor.h hp_max.h
+ph_disp.o: ph_disp.c ph_disp.h typedef.h typedefs.h mode.h basic_op.h \
+	count.h cnst.h copy.h ph_disp.tab
+pitch_fr.o: pitch_fr.c pitch_fr.h typedef.h typedefs.h mode.h basic_op.h \
+	oper_32b.h count.h cnst.h enc_lag3.h enc_lag6.h inter_36.h \
+	inv_sqrt.h convolve.h
+pitch_ol.o: pitch_ol.c pitch_ol.h typedef.h typedefs.h mode.h vad.h \
+	vad1.h cnst_vad.h vad2.h basic_op.h oper_32b.h count.h cnst.h \
+	inv_sqrt.h calc_cor.h hp_max.h
+post_pro.o: post_pro.c post_pro.h typedef.h typedefs.h basic_op.h \
+	oper_32b.h count.h
+pow2.o: pow2.c pow2.h typedef.h typedefs.h basic_op.h count.h pow2.tab
+pre_big.o: pre_big.c pre_big.h typedef.h typedefs.h mode.h cnst.h \
+	basic_op.h oper_32b.h syn_filt.h weight_a.h residu.h count.h
+pre_proc.o: pre_proc.c pre_proc.h typedef.h typedefs.h basic_op.h \
+	oper_32b.h count.h
+pred_lt.o: pred_lt.c pred_lt.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h
+preemph.o: preemph.c preemph.h typedef.h typedefs.h basic_op.h count.h
+prm2bits.o: prm2bits.c prm2bits.h typedef.h typedefs.h mode.h basic_op.h \
+	count.h bitno.tab cnst.h
+pstfilt.o: pstfilt.c pstfilt.h typedef.h typedefs.h mode.h cnst.h \
+	preemph.h agc.h basic_op.h set_zero.h weight_a.h residu.h \
+	copy.h syn_filt.h count.h
+q_gain_c.o: q_gain_c.c q_gain_c.h typedef.h typedefs.h mode.h gc_pred.h \
+	basic_op.h oper_32b.h count.h log2.h pow2.h gains.tab
+q_gain_p.o: q_gain_p.c q_gain_p.h typedef.h typedefs.h mode.h basic_op.h \
+	oper_32b.h count.h cnst.h gains.tab
+q_plsf.o: q_plsf.c q_plsf.h typedef.h typedefs.h cnst.h mode.h \
+	basic_op.h
+q_plsf_3.o: q_plsf_3.c q_plsf.h typedef.h typedefs.h cnst.h mode.h \
+	basic_op.h count.h lsp_lsf.h reorder.h lsfwt.h copy.h \
+	q_plsf_3.tab
+q_plsf_5.o: q_plsf_5.c q_plsf.h typedef.h typedefs.h cnst.h mode.h \
+	basic_op.h count.h lsp_lsf.h reorder.h lsfwt.h q_plsf_5.tab
+qgain475.o: qgain475.c qgain475.h typedef.h typedefs.h gc_pred.h mode.h \
+	basic_op.h mac_32.h oper_32b.h count.h cnst.h pow2.h log2.h \
+	qgain475.tab
+qgain795.o: qgain795.c qgain795.h typedef.h typedefs.h g_adapt.h \
+	basic_op.h oper_32b.h count.h cnst.h log2.h pow2.h sqrt_l.h \
+	calc_en.h mode.h q_gain_p.h mac_32.h gains.tab
+qua_gain.o: qua_gain.c qua_gain.h typedef.h typedefs.h gc_pred.h mode.h \
+	basic_op.h oper_32b.h count.h cnst.h pow2.h qua_gain.tab
+r_fft.o: r_fft.c typedef.h typedefs.h cnst.h basic_op.h oper_32b.h \
+	count.h vad2.h
+reorder.o: reorder.c reorder.h typedef.h typedefs.h basic_op.h count.h
+residu.o: residu.c residu.h typedef.h typedefs.h basic_op.h count.h \
+	cnst.h
+s10_8pf.o: s10_8pf.c s10_8pf.h typedef.h typedefs.h cnst.h basic_op.h \
+	count.h
+set_sign.o: set_sign.c set_sign.h typedef.h typedefs.h basic_op.h \
+	count.h inv_sqrt.h cnst.h
+set_zero.o: set_zero.c set_zero.h typedef.h typedefs.h basic_op.h \
+	count.h
+sid_sync.o: sid_sync.c sid_sync.h typedef.h typedefs.h mode.h frame.h \
+	basic_op.h count.h
+sp_dec.o: sp_dec.c sp_dec.h typedef.h typedefs.h cnst.h dec_amr.h mode.h \
+	dtx_dec.h dtx_enc.h q_plsf.h gc_pred.h d_plsf.h c_g_aver.h \
+	frame.h ec_gains.h ph_disp.h bgnscd.h lsp_avg.h pstfilt.h \
+	preemph.h agc.h post_pro.h basic_op.h count.h set_zero.h \
+	bits2prm.h bitno.tab
+sp_enc.o: sp_enc.c sp_enc.h typedef.h typedefs.h cnst.h pre_proc.h \
+	mode.h cod_amr.h lpc.h levinson.h lsp.h q_plsf.h cl_ltp.h \
+	pitch_fr.h ton_stab.h gain_q.h gc_pred.h g_adapt.h p_ol_wgh.h \
+	vad.h vad1.h cnst_vad.h vad2.h dtx_enc.h basic_op.h count.h \
+	set_zero.h prm2bits.h frame.h bitno.tab
+spreproc.o: spreproc.c spreproc.h cnst.h mode.h typedef.h typedefs.h \
+	basic_op.h oper_32b.h weight_a.h syn_filt.h residu.h copy.h \
+	count.h
+spstproc.o: spstproc.c spstproc.h typedef.h typedefs.h mode.h basic_op.h \
+	oper_32b.h count.h syn_filt.h cnst.h
+sqrt_l.o: sqrt_l.c sqrt_l.h typedef.h typedefs.h basic_op.h count.h \
+	sqrt_l.tab
+strfunc.o: strfunc.c strfunc.h mode.h frame.h
+syn_filt.o: syn_filt.c syn_filt.h typedef.h typedefs.h basic_op.h \
+	count.h cnst.h
+ton_stab.o: ton_stab.c ton_stab.h typedef.h typedefs.h mode.h cnst.h \
+	basic_op.h count.h oper_32b.h set_zero.h copy.h
+vad1.o: vad1.c vad.h vad1.h typedef.h typedefs.h cnst_vad.h vad2.h \
+	basic_op.h count.h oper_32b.h
+vad2.o: vad2.c typedef.h typedefs.h cnst.h basic_op.h oper_32b.h count.h \
+	log2.h pow2.h vad2.h
+vadname.o: vadname.c vadname.h
+weight_a.o: weight_a.c weight_a.h typedef.h typedefs.h basic_op.h \
+	count.h cnst.h
+
+info-am:
+info: info-am
+dvi-am:
+dvi: dvi-am
+check-am: all-am
+check: check-am
+installcheck-am:
+installcheck: installcheck-am
+install-exec-am: install-libLIBRARIES
+install-exec: install-exec-am
+
+install-data-am:
+install-data: install-data-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-am
+uninstall-am: uninstall-libLIBRARIES
+uninstall: uninstall-am
+all-am: Makefile $(LIBRARIES)
+all-redirect: all-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs:
+	$(mkinstalldirs)  $(DESTDIR)$(libdir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-libLIBRARIES mostlyclean-compile \
+		mostlyclean-libtool mostlyclean-tags \
+		mostlyclean-generic
+
+mostlyclean: mostlyclean-am
+
+clean-am:  clean-libLIBRARIES clean-compile clean-libtool clean-tags \
+		clean-generic mostlyclean-am
+
+clean: clean-am
+
+distclean-am:  distclean-libLIBRARIES distclean-compile \
+		distclean-libtool distclean-tags distclean-generic \
+		clean-am
+	-rm -f libtool
+
+distclean: distclean-am
+
+maintainer-clean-am:  maintainer-clean-libLIBRARIES \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-tags maintainer-clean-generic \
+		distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-am
+
+.PHONY: mostlyclean-libLIBRARIES distclean-libLIBRARIES \
+clean-libLIBRARIES maintainer-clean-libLIBRARIES uninstall-libLIBRARIES \
+install-libLIBRARIES mostlyclean-compile distclean-compile \
+clean-compile maintainer-clean-compile mostlyclean-libtool \
+distclean-libtool clean-libtool maintainer-clean-libtool tags \
+mostlyclean-tags distclean-tags clean-tags maintainer-clean-tags \
+distdir info-am info dvi-am dvi check check-am installcheck-am \
+installcheck install-exec-am install-exec install-data-am install-data \
+install-am install uninstall-am uninstall all-redirect all-am all \
+installdirs mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

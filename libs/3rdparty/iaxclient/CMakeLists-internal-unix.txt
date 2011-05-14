@@ -1,0 +1,20 @@
+ow_create_project(iaxclient)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+execute_process(
+	COMMAND
+		make
+	WORKING_DIRECTORY
+		${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+ow_add_public_library_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+ow_add_public_libraries(
+	iaxclient
+)

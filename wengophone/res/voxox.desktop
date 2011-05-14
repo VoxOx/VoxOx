@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=VoxOx
+Comment=Talk to people over the Internet and send instant messages over multiple protocols
+GenericName=VoIP softphone and IM client
+Exec=voxox
+Icon=voxox
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Qt;Network;Telephony;VideoConference;

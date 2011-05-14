@@ -1,0 +1,139 @@
+ow_create_shared_library(portaudio)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+ow_add_private_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/src/common
+)
+
+ow_add_private_definitions(
+	-DPA_NO_ASIO
+	-DPA_NO_WDMKS
+	-DSIZEOF_SHORT=2
+	-DSIZEOF_INT=4
+	-DSIZEOF_LONG=4
+)
+
+ow_add_sources(
+	src/common/pa_allocation.c
+	src/common/pa_converters.c
+	src/common/pa_cpuload.c
+	src/common/pa_dither.c
+	src/common/pa_front.c
+	src/common/pa_process.c
+	src/common/pa_skeleton.c
+	src/common/pa_stream.c
+	src/common/pa_trace.c
+)
+
+if (WIN32)
+	ow_add_sources(
+		src/os/win/pa_win_util.c
+		src/os/win/pa_win_hostapis.c
+	)
+
+	if (MSVC)
+		ow_add_sources(
+			src/os/win/pa_x86_plain_converters.c
+			build/msvc/portaudio.def
+		)
+	endif (MSVC)
+
+	ow_add_private_definitions(
+		-DPA_LITTLE_ENDIAN
+		-DPA_NO_ASIO
+		-DPA_NO_WDMKS
+	)
+
+	if (PORTAUDIO_DIRECTSOUND_SUPPORT)
+		ow_add_sources(
+			src/hostapi/dsound/pa_win_ds_dynlink.c
+			src/hostapi/dsound/pa_win_ds.c
+		)
+		ow_add_private_definitions(
+			-DPA_NO_WMME
+		)
+		message(STATUS "PortAudio DirectSound support activated")
+	else (PORTAUDIO_DIRECTSOUND_SUPPORT)
+		ow_add_sources(
+			src/hostapi/wmme/pa_win_wmme.c
+		)
+		ow_add_private_definitions(
+			-DPA_NO_DS
+		)
+	endif (PORTAUDIO_DIRECTSOUND_SUPPORT)
+
+	ow_add_private_libraries(
+		winmm
+	)
+endif (WIN32)
+
+if (LINUX)
+	ow_add_private_include_dirs(
+		${CMAKE_CURRENT_SOURCE_DIR}/src/os/unix
+	)
+	ow_add_sources(
+		src/os/unix/pa_unix_util.c
+		src/os/unix/pa_unix_hostapis.c
+	)
+	ow_add_private_definitions(
+		-DPA_LITTLE_ENDIAN
+		-DHAVE_LIBPTHREAD
+	)
+	ow_add_private_libraries(
+		pthread
+		m
+	)
+
+	if (NOT PORTAUDIO_OSS_SUPPORT AND NOT PORTAUDIO_ALSA_SUPPORT)
+		message(FATAL_ERROR "Choose at least one of these options: PORTAUDIO_OSS_SUPPORT / PORTAUDIO_ALSA_SUPPORT")
+	endif (NOT PORTAUDIO_OSS_SUPPORT AND NOT PORTAUDIO_ALSA_SUPPORT)
+
+	if (PORTAUDIO_OSS_SUPPORT)
+		ow_add_sources(
+			src/hostapi/oss/pa_unix_oss.c
+			src/hostapi/oss/recplay.c
+		)
+		ow_add_private_definitions(
+			-DPA_USE_OSS
+		)
+		message(STATUS "PortAudio OSS support activated")
+	endif (PORTAUDIO_OSS_SUPPORT)
+
+	if (PORTAUDIO_ALSA_SUPPORT)
+		ow_add_sources(
+			src/hostapi/alsa/pa_linux_alsa.c
+		)
+		ow_add_private_definitions(
+			-DPA_USE_ALSA
+		)
+		ow_use_private_libraries(
+			alsa
+		)
+		message(STATUS "PortAudio ALSA support activated")
+	endif (PORTAUDIO_ALSA_SUPPORT)
+endif (LINUX)
+
+if (APPLE)
+	ow_add_sources(
+		src/os/mac_osx/pa_mac_hostapis.c
+		src/hostapi/coreaudio/pa_mac_core.c
+		src/hostapi/coreaudio/pa_mac_core_blocking.c
+		src/hostapi/coreaudio/pa_mac_core_utilities.c
+		src/hostapi/coreaudio/ringbuffer.c
+	)
+	ow_add_private_definitions(
+		-DPA_BIG_ENDIAN
+		-DWORDS_BIGENDIAN
+		-DPA_USE_COREAUDIO
+	)
+
+	ow_use_private_frameworks(
+		CoreAudio
+		AudioToolBox
+	)
+endif (APPLE)
+
+ow_create_project_binary()

@@ -1,0 +1,9 @@
+if (NOT FFMPEG_FOUND)
+	find_package(FFMPEG REQUIRED)
+endif (NOT FFMPEG_FOUND)
+
+ow_create_project(ffmpeg)
+
+ow_use_public_libraries(
+	FFMPEG
+)

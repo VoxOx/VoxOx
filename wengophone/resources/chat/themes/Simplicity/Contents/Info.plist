@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Simplicity Adium Message Style</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.adiumx.simplicity.style</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>CFBundleName</key>
+	<string>Simplicity</string>
+	<key>CFBundlePackageType</key>
+	<string>AdIM</string>
+	<key>MessageViewVersion</key>
+	<integer>1</integer>
+	<key>DefaultFontFamily</key>
+	<string>Helvetica</string>
+	<key>DefaultFontSize</key>
+	<integer>12</integer>
+	<key>DisplayNameForNoVariant</key>
+	<string>Name</string>
+	<key>ShowsUserIcons</key>
+	<false/>
+    <key>DisableCustomBackground</key>
+	<true/>
+</dict>
+</plist>

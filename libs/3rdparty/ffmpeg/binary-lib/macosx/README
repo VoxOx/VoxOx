@@ -1,0 +1,2 @@
+libavutil.a and libavcodec.a have been compiled using the XCode project.
+See COMPILE_UB_FFMPEG_FOR_MACOSX for more information.

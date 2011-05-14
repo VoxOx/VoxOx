@@ -1,0 +1,16 @@
+/* Tool Tip Icon Starts Here */
+img.tooltipimg1, img.tooltipimg2, img.tooltipimg3, img.tooltipimg4 {
+	margin:-10px 0px 0px 0px;
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border:0px;
+	overflow:visible;
+	cursor:pointer;
+}
+
+img.tooltipimg1 { background: transparent url('../../images/settings/icon_tooltip1.png') 50% 50% no-repeat; }
+img.tooltipimg2 { background: transparent url('../../images/settings/icon_tooltip2.png') 50% 50% no-repeat; }
+img.tooltipimg3 { background: transparent url('../../images/settings/icon_tooltip3.png') 50% 50% no-repeat; }
+img.tooltipimg4 { background: transparent url('../../images/settings/icon_tooltip4.png') 50% 50% no-repeat; }
+/* Tool Tip Icon Ends Here */

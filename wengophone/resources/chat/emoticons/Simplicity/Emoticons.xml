@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<emoticondef>
+    <emoticons>
+        <emoticon>
+            <name>Angry Face</name>
+            <text>>:o</text>
+            <object>AngryFace.png</object>
+        </emoticon>
+
+      	<emoticon>
+            <name>Blush</name>
+            <text>:-[</text>
+            <text>:[</text>
+            <object>Blush.png</object>
+        </emoticon>
+	
+	<emoticon>
+            <name>Crazy</name>
+            <text>>:)</text>
+	    <text>>:-)</text>
+            <object>Crying.png</object>
+        </emoticon>	
+
+	<emoticon>
+            <name>Crying</name>
+            <text>:'(</text>
+            <object>Crying.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Embarrased</name>
+            <text>:-]</text>
+            <object>Embarrased.png</object>
+        </emoticon>
+       	
+	<emoticon>
+            <name>Foot In Mouth</name>
+            <text>:-!</text>
+            <object>FootInMouth.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Frown</name>
+            <text>:-(</text>
+            <text>:(</text>
+            <object>Frown.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Gasp</name>
+            <text>=-o</text>
+            <text>=-O</text>
+            <object>Gasp.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Grin</name>
+            <text>:-D</text>
+            <object>Grin.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Halo</name>
+            <text>O:-)</text>
+            <text>O:)</text>
+	    <text>o:-)</text>
+	    <text>o:)</text>
+            <object>Halo.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Kiss</name>
+            <text>:-*</text>
+            <object>Kiss.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Lips are Sealed</name>
+            <text>:-x</text>
+            <text>:-X</text>
+            <object>LipsareSealed.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Money-mouth</name>
+            <text>:-$</text>
+            <object>Moneymouth.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Neutral</name>
+            <text>:-|</text>
+            <object>Neutral.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>One Eye</name>
+            <text>O-)</text>
+            <object>OneEye.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Smile</name>
+            <text>:-)</text>
+            <text>:)</text>
+            <object>Smile.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Sticking Out Tongue</name>
+            <text>:-p</text>
+            <text>:-P</text>
+            <object>StickingOutTongue.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Undecided</name>
+            <text>:-\</text>
+            <text>:-/</text>
+            <object>Undecided.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Wearing Sunglasses</name>
+            <text>8-)</text>
+            <object>WearingSunglasses.png</object>
+        </emoticon>
+
+	<emoticon>
+            <name>Wink</name>
+            <text>;-)</text>
+            <text>;)</text>
+            <object>Wink.png</object>
+        </emoticon>
+
+    </emoticons>
+</emoticondef>

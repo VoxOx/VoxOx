@@ -1,0 +1,134 @@
+body
+{
+	color: #333333;
+	background-color: #ffffff;
+	background-image: url("images/back_l.png");
+	margin: 0;
+	background-repeat: repeat-y;
+	line-height: 1.3em;
+}
+
+p
+{
+	margin: 0;
+	padding: 0;
+}
+
+a { text-decoration: none; }
+
+.convo_container
+{
+	width: 100%;
+	padding-bottom: 1px;
+}
+
+.container
+{
+	padding-top: 1px;
+	border-top: 1px dotted #E9E9E9;
+}
+
+.container_next { padding-top: 2px; }
+
+.container, .container_next
+{
+	padding-left: 16px;
+	padding-right: 8px;
+	padding-bottom: 0px;
+	margin-left: 0px;
+	padding-bottom: 1px;
+}
+
+.fromstatus
+{
+	float: left;
+	padding-right: 7px;
+	position: relative;
+	top: 2px;
+}
+
+.next_label
+{
+	font-size: 16px;
+	font-family: Helvetica;
+	font-weight: normal;
+	position: relative;
+	top: 0px;
+	left: -12px;
+	text-align: right;
+	width: 10px;
+	float: left;
+	margin-right: -10px;
+}
+
+.sender { text-align: left; }
+
+.sender, .fromstatus
+{
+	font-size: 11px;
+	font-family: Helvetica;
+	font-weight: bold;
+}
+
+.sender, .next_label { overflow: hidden; }
+
+.time_initial
+{
+	color: #9F9F9F;
+	float: right;
+	text-align: right;
+	padding-left: 6px;
+	font-size: 9px;
+	font-family: Helvetica;
+}
+
+.message {
+	overflow: auto;
+}
+.context_message { color: #B6B6B6; }
+
+.message, .context_message
+{
+	width: auto;
+	text-align: left;
+}
+
+.indent { text-indent: 12px; }
+.clear { clear: both; }
+
+.buddyicon img
+{
+	float: left;
+	margin-top: 2px;
+	margin-right: 6px;
+	width: 24px;
+	height: 24px;
+	border-color: #CCCCCC;
+	border-width: 1px;
+}
+
+.buddyicon img[src="Incoming/buddy_icon.png"], .buddyicon img[src="Outgoing/buddy_icon.png"] { display: none; }
+
+.placeholder {
+	margin-left: 30px;
+}
+
+.placeholder[visible="Incoming/buddy_icon.png"], .placeholder[visible="Outgoing/buddy_icon.png"] {
+	margin-left: 0;
+}
+
+.placeholder_next {
+	margin-left: 30px;
+}
+
+.placeholder_next[visible="Incoming/buddy_icon.png"], .placeholder_next[visible="Outgoing/buddy_icon.png"] {
+	margin-left: 0;
+}
+
+img
+{
+	vertical-align: middle;
+	top: -3px;
+}
+
+#Chat { overflow: hidden; }

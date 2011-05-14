@@ -1,0 +1,35 @@
+ow_create_static_library(json)
+
+
+ow_use_public_libraries(
+	boost
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+#ow_add_private_include_dirs(
+#	${CMAKE_CURRENT_SOURCE_DIR}/src
+#)
+
+ow_add_sources(
+	src/json_spirit_reader.cpp
+	src/json_spirit_value.cpp
+	src/json_spirit_writer.cpp
+)
+
+ow_create_project_binary()
+
+
+#Original
+#SET(JSON_SPIRIT_SRCS
+#json_spirit_reader.cpp
+#json_spirit_value.cpp
+#json_spirit_writer.cpp)
+
+#FIND_PACKAGE(Boost 1.37 REQUIRED)
+#INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+
+#ADD_LIBRARY(json_spirit STATIC ${JSON_SPIRIT_SRCS})
+

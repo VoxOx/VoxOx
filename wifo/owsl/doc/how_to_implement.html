@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	<link rel="stylesheet" type="text/css" href="default.css" media="screen" title="Normal"/>
+	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+	<link rel="alternative stylesheet" type="text/css" href="print.css" media="screen" title="Print" />
+
+	<title>How to implement a transport layer protocol in OWSL</title>
+</head>
+
+<body>
+<h1>How to implement a transport layer protocol in OWSL</h1>
+
+<p>This document describes the design of OWSL in order to help in development of a transport layer implementation.</p>
+
+<h2>Overview of OWSL components</h2>
+
+<img class="padded_border" src="owsl_components.png" alt="OWSL components" />
+<p class="caption">OWSL components</p>
+
+<h3>API</h3>
+
+<p><acronym title="OpenWengo Socket Library">OWSL</acronym> has a <a href="http://en.wikipedia.org/wiki/Berkeley_sockets">BSD-like socket</a> <acronym title="Application Programming Interface">API</acronym>.</p>
+<p>The difference with the BSD socket is the management of socket type: many implementations can exist and <code>owsl_socket_type</code> has an API to register the prefered implementations. On socket creation OWSL choose an implementation among the registered ones which match with the type parameters.</p>
+<p>OWSL extends the BSD socket API with features like callback, socket name...</p>
+<p>The component <code>owsl_address</code> is a tool to manage addresses. With this component, an application can use IPv6 and IPv4 transparently.</p>
+
+<h3>Core</h3>
+
+<p><code>owsl_socket</code> contains functions for handle management, socket structure creation and socket informations.</p>
+<p><code>owsl_asynchronous</code> contains functions for callback and <code>select()</code> mechanism.</p>
+<p><code>owsl_monitor</code> has a dynamically configurable thread to manage system sockets by using <code>select()</code>. It can be controlled by the implementation and send events to a callback in the implementation.</p>
+
+<h3>Implementation</h3>
+
+<p>A transport protocol added in OWSL is called implementation. It could also be called a plugin.</p>
+
+<h3>Dependencies</h3>
+
+<p><code>owqueue</code> is a circular <acronym title="First In First Out">FIFO</acronym> with transaction, callback and packet features. It makes a lot of work in OWSL like handling blocking and non blocking mode.</p>
+<p><code>owlist</code> is a thread-safe linked list.</p>
+<p><code>pthread</code> is used for thread, mutexes, lock, etc...</p>
+
+<h2>An example of design</h2>
+
+<p>To illustrate the architecture, the following diagramm shows a reception through all the layers.</p>
+<p>The monitor and the queue layers could be draw at the same level because they are totally independents. The implementation is located between the queue/monitor layer at the bottom and the asynchronous/user API layer at the upper. To simplify, the API is not draw. That is why the user application is directly connected to the implementation but it is not the truth.</p>
+<p>A circle represent a waiting loop in a thread. It is woken up by an event represented by a zigzag arrow. A trapezoid is a blocking function that is also woken up by an event.</p>
+
+<img class="border" src="owsl_receive.png" alt="architecture of an OWSL receive" />
+<p class="caption">architecture of an OWSL receive</p>
+
+<p>When a packet is received by the OS, the monitor which was blocking on <code>select()</code> is woken up. It calls the callback function of the implementation and pass the event in parameter.</p>
+<p>The implementation receives the packet from the system socket and writes the packet in its input queue. If it is full, the queue sends the event to the implementation by calling a dedicated callback. To prevent the monitor from signalling another incoming packet that cannot be stored, the implementation disables the monitoring of incoming packet on this socket.</p>
+<p>After having received the packet, the implementation notifies the asynchronous layer with the read event. It has two effects: the event is sent to the callback launcher and a signal is sent to wake up the blocking asynchronous functions like <code>owsl_select()</code>. This way, all the asynchronous mechanism are trigerred.
+<p>The user may read the packet by a call to <code>owsl_recv()</code> in its callback or after a select or elsewhere. If it is in blocking mode, and if the input queue is empty then it blocks until a packet is write in the queue. At this moment, the read function of the queue sends a signal to the write function to unlock it. In another case, if the queue was full before the read, then the queue sends a signal to the implementation. So the queue callback can reenable the monitoring that was disabled when the queue became full.</p>
+
+<h2>Implementation</h2>
+
+<p>Let's see what is needed to implement a transport protocol in OWSL.</p>
+<p>It is important to keep in mind that a maximum of things are managed in the core to keep the protocol implementation as simple as possible.</p>
+
+<h3>Structures</h3>
+
+<h4>Socket type</h4>
+
+<p>An implementation (or plugin) is also called a socket type. In fact, each implementation must define one or many socket type. In example, UDP implementation defines two types: UDP/IPv4 and UDP/IPv6. These types are defined in the enumeration <code>OWSLSocketType</code> and in instances of the OWSLSocketTypeInfo structure.</p>
+
+<code class="block">struct OWSLSocketTypeInfo
+{
+	OWSLSocketType <b>type</b> ;                <em>/** unique identifier of socket type */</em>
+	OWSLAddressFamily <b>address_family</b> ;   <em>/** parameter of socket type */</em>
+	OWSLSocketMode <b>mode</b> ;                <em>/** parameter of socket type */</em>
+	OWSLCiphering <b>ciphering</b> ;            <em>/** parameter of socket type */</em>
+	int (* <b>global_parameter_set</b>) (const char * name, const void * value) ;
+	int (* <b>is_readable</b>) (OWSLSocketInfo * socket) ;
+	int (* <b>is_writable</b>) (OWSLSocketInfo * socket) ;
+	int (* <b>has_error</b>) (OWSLSocketInfo * socket) ;
+	int (* <b>blocking_mode_set</b>) (OWSLSocketInfo * socket, OWSLBlockingMode mode) ;
+	int (* <b>parameter_set</b>) (OWSLSocketInfo * socket, const char * name, const void * value) ;
+	struct sockaddr * (* <b>remote_address_get</b>) (OWSLSocketInfo * socket) ;
+	OWQueueCallback <b>on_queue_event</b> ;
+	OWSLSocketInfo * (* <b>socket</b>)   (OWSLSocketType type) ;
+	OWSLSocketInfo * (* <b>accept</b>)   (OWSLSocketInfo * socket,       struct sockaddr * address, int * address_length) ;
+	int              (* <b>close</b>)    (OWSLSocketInfo * socket) ;
+	int              (* <b>bind</b>)     (OWSLSocketInfo * socket, const struct sockaddr * address, int   address_length) ;
+	int              (* <b>connect</b>)  (OWSLSocketInfo * socket, const struct sockaddr * address, int   address_length) ;
+	int              (* <b>listen</b>)   (OWSLSocketInfo * socket, int pending_max) ;
+	int              (* <b>send</b>)     (OWSLSocketInfo * socket, const void * buffer, int length, int flags) ;
+	int              (* <b>recv</b>)     (OWSLSocketInfo * socket,       void * buffer, int size,   int flags) ;
+	int              (* <b>sendto</b>)   (OWSLSocketInfo * socket, const void * buffer, int length, int flags, const struct sockaddr * address, int   address_length) ;
+	int              (* <b>recvfrom</b>) (OWSLSocketInfo * socket,       void * buffer, int size,   int flags,       struct sockaddr * address, int * address_length) ;
+}
+</code>
+
+<p><code>address_family</code>, <code>mode</code> and <code>ciphering</code> classify the socket type and are used by <code>owsl_socket()</code> to retrieve the right socket type.</p>
+<p><code>global_parameter_set</code> should be defined if the protocol needs to use global parameters.</p>
+<p><code>is_readable</code>, <code>is_writable</code> and <code>has_error</code> should be defined if the functions <code>owsl_is_readable</code>, <code>owsl_is_writable</code> and <code>owsl_has_error</code> (in owsl_socket.c) are not sufficients for the implementation.</p>
+<p><code>blocking_mode_set</code> should be defined if the settings of the blocking mode of the queues are not sufficients for the implementation.</p>
+<p><code>parameter_set</code> should be defined if the protocol needs to use special parameters which are different for each socket.</p>
+<p><code>remote_address_get</code> should be defined if the protocol has a connected mode.</p>
+<p><code>queue_callback</code> should be defined if the queues are used.</p>
+<p>The BSD socket functions should be defined if they are relevant for the implementation. If it is NULL, the top level function will return an error.</p>
+
+<h4>Base socket</h4>
+
+<p>All the OWSL sockets have the same base: <code>OWSLSocketInfo</code>.</p>
+
+<code class="block">struct OWSLSocketInfo
+{
+	OWSLSocket <b>socket</b> ;                       <em>/** handle for higher level layer */</em>
+	struct OWSLSocketTypeInfo * <b>type_info</b> ;   <em>/** type of the socket */</em>
+	OWSLBlockingMode <b>blocking_mode</b> ;          <em>/** synchonous or asynchronous */</em>
+	OWQueue * <b>in_queue</b> ;                      <em>/** queue that contains data received from network */</em>
+	OWQueue * <b>out_queue</b> ;                     <em>/** queue that contains data to send over network */</em>
+	pthread_mutex_t <b>listening_mutex</b> ;         <em>/** listen is exclusive with connect, send, recv... */</em>
+	int <b>listening</b> ;                           <em>/** 1 if listen was called, -1 if listen cannot be called */</em>
+	int <b>connected</b> ;                           <em>/** 1 when really connected after connect or accept */</em>
+	int <b>error</b> ;                               <em>/** should be 0 */</em>
+	OWSLCallback <b>callback_function</b> ;          <em>/** called at each event */</em>
+	void * <b>callback_user_data</b> ;               <em>/** parameter for callback function */</em>
+	OWSLAddress <b>bound_address</b> ;               <em>/** local bound address */</em>
+	char * <b>name</b> ;                             <em>/** name of the socket, used for debugging purposes */</em>
+}
+</code>
+
+<p class="useless">The first field is a simple identifier for the socket. It is used to call the functions of the API.</p>
+<p class="useless"><code>type_info</code> is the link to the socket type structure.</p>
+<p><code>blocking_mode</code> is used and managed by the core.</p>
+<p><code>in_queue</code> and <code>out_queue</code> can be very important in the implementation. It is not mandatory to use it but could be a great help... It can store data, packet informations and can handle blocking/non blocking mode and atomic transaction.</p>
+<p class="useless"><code>listening_mutex</code> is used by the core to protect <code>listening</code>.</p>
+<p><code>listening</code> is set by the core. It can be tested to know if <code>listen()</code> was called for this socket. It is used by the asynchronous layer.</p>
+<p><code>connected</code> must be set by the implementation when the socket is really connected. It is used by the asynchronous layer.</p>
+<p><code>error</code> is set by the core when an error is notified by the implementation. It is used by the asynchronous layer.</p>
+<p class="useless"><code>callback_function</code> and <code>callback_user_data</code> are managed by the core. It is used by the asynchronous layer.</p>
+<p><code>address</code> is set by the core after a sucessful bind.</p>
+<p class="useless"><code>name</code> is managed by the core.</p>
+
+<h4>Specific socket</h4>
+
+<p>To keep a common socket structure between different implementations and allow specific parameters, the socket structure must be inherited by the specific socket structure of the implementation. An example for TCP:</p>
+
+<code class="block">typedef struct OWSLSocketInfo_TCP
+{
+	<b>OWSLSocketInfo</b> base ;   <em>/* must be the first field for inherited behaviour */</em>
+	OWSLSystemSocket system_socket ;
+	OWSLAddress remote_address ;
+	int remote_address_length ;
+} OWSLSocketInfo_TCP ;
+</code>
+
+<p>This structure can be casted in <code>OWSLSocketInfo</code> because the common part is in first position.</p>
+
+<h3>Socket creation</h3>
+
+<p>The handle is totally managed by the core. No need to care about it.</p>
+<p>A socket structure must be allocated with the function <code>owsl_socket_info_new()</code>. This function takes parameters for the socket type, the total size of the specific structure and the queues parameters (if used). Example for TCP:</p>
+
+<code class="block">OWSLSocketInfo * socket_info ;
+socket_info = <b>owsl_socket_info_new</b>
+(
+	type,                                               <em>/* socket type */</em>
+	sizeof (OWSLSocketInfo_TCP),                        <em>/* size of socket structure */</em>
+	OWSL_TCP_PACKET_AVG_SIZE * OWSL_QUEUE_PACKET_MAX,   <em>/* queues usable size */</em>
+	OWQUEUE_NO_PACKET,                                  <em>/* queues mode */</em>
+	OWSL_QUEUE_PACKET_MAX,                              <em>/* queues packet maximum */</em>
+	0,                                                  <em>/* queues packet info size */</em>
+	1,                                                  <em>/* create input queue */</em>
+	1                                                   <em>/* create output queue */</em>
+) ;
+if (socket_info != NULL)
+{
+	OWSLSocketInfo_TCP * socket_tcp = (OWSLSocketInfo_TCP *) socket_info ;
+	/* TCP specific stuff */
+	/* ... */
+}
+</code>
+
+<p>Only the specific parameters of the implementation need to be initialized after allocating the structure.</p>
+
+<p>The socket must be in blocking mode by default (including for <code>connect</code> and <code>accept</code> functions).</p>
+
+<h3>Integration in OWSL core</h3>
+
+<p>To make a new implementation in OWSL, the core must be modified at three places:</p>
+<ul>
+<li>A socket type identifier must be created in <code>OWSLSocketType</code> enumeration (in owsl.h).</li>
+<li>An initialization function must be declared in owsl_internal.h. This function (defined in the implementation) must create its own <code>OWSLSocketTypeInfo</code> instance and send it to the core by the function <code>owsl_socket_type_initialize</code>.</li>
+<li>The initialization function must be called in <code>owsl_socket_type_initialize_all</code>.</li>
+</ul>
+
+<p>As it is done for the initialization, a cleaning function can be called in owsl_socket_type_terminate_all if needed.</p>
+
+<h3>Asynchronous management</h3>
+
+<p>OWSL can be used in blocking or non blocking mode. To make the non blocking mode usable, an asynchronous management must be done. It can be handle by many ways:</p>
+<ul>
+<li>callback function</li>
+<li><code>owsl_select()</code> <a href="http://www.opengroup.org/onlinepubs/007908799/xsh/select.html">as in the BSD API</a></li>
+<li><code>owsl_poll()</code> <a href="http://www.opengroup.org/onlinepubs/007908799/xsh/poll.html">as in the BSD API</a> (not yet implemented)</li>
+</ul>
+
+<p>The only thing to do in the implementation is to notify the core at each event:</p>
+<ul>
+<li><code>OWSL_EVENT_READ</code> if there is a new packet or a new incoming connection</li>
+<li><code>OWSL_EVENT_WRITE</code> if a packet can be sent and that it was not possible before</li>
+<li><code>OWSL_EVENT_ERROR</code> if the socket is no more usable</li>
+</ul>
+
+<p>The function <code>owsl_notify()</code> calls <code>owsl_signal()</code> to unlock waiting threads and <code>owsl_callback()</code> to send the event in the callback function which is asynchronously called in a dedicated thread.</p>
+
+<h3>Monitor usage</h3>
+
+<p>The monitor should be used if the implementation uses a BSD socket. It helps to manage the socket by providing a thread which is blocking on <code>select()</code> for the registered sockets on the registered events.</p>
+
+<p><code>owsl_monitor_socket_add()</code> and <code>owsl_monitor_socket_remove()</code> <b>must not be called</b> in the monitor callback function.</p>
+
+<p>By adding or removing events to monitor, the implementation can decide if it is ready to receive an event. For example, if a packet is received in the BSD socket and the OWSL input queue is full, then monitor send many read events until the packet is removed from the BSD socket. To prevent from a polling which consumes the CPU, the implementation should remove the read event from the monitor until its input queue is no more full.</p>
+
+<p>To use the monitor, the BSD socket must be registered in. It automatically registers the socket for the error event. Read and write event must be "manually" added. The monitor will send events by calling the registered callback function. The last parameter of the callback is as usual an user data pointer ; it should be set to the socket structure.</p>
+
+<p>It is possible to register an event as a special one. If the special flag <code>OWSL_MONITOR_ONCE</code> is added, the events that was previously monitored for this socket are ignored until this special event arrives. It is signalled in the callback with the special flag. Then it is removed from the once events of the socket. If there is no other once event, the normal events are monitored.</p>
+
+<h3>Queue usage</h3>
+
+<p>A lot of work can be done by the owsl_queue. That is why its usage is highly recommended.</p>
+
+<p>Input and output queues are initialized (if enabled) by the core when creating the socket. The queue callback of the implementation is automatically registered for each queue. The callback user data is the socket structure.</p>
+
+<h3>System socket usage</h3>
+
+<p>System socket (also called BSD socket) can be managed with unified type and functions for Windows and POSIX systems:</p>
+<ul>
+<li><code>OWSLSystemSocket</code> is the unified type</li>
+<li><code>owsl_system_socket_blocking_mode_set</code> is the unified function to set the blocking mode</li>
+<li><code>OWSL_SYSTEM_SOCKET_CLOSE</code> is the unified close function (defined as a macro)</li>
+</ul>
+
+<h3>Miscellaneous usage</h3>
+
+<p><code>OW_MEMCPY</code> can be useful to implement accept and recvfrom. It makes a safe copy of data and copy data length.</p>
+
+<p><code>OW_GET_ERRNO</code> and <code>OW_SET_ERRNO</code> can be used to handle error codes on POSIX systems and Windows ones.</p>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!-- ##### SECTION Title ##### -->
+RTP payloads and profiles
+
+<!-- ##### SECTION Short_Description ##### -->
+This section describes the way that the oRTP stack manages RTP profiles and payload types.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+A rtp payload type is a number between 0 and 127 that identifies a particular payload 
+(GSM, PCMU, MPEG,...) within a given rtp profile. The #PayloadType object in oRTP describes
+a payload.
+
+An RTP profile is a table that assigns particular payloads (GSM, MPEG...) to a payload type
+number within the range 0..127. In oRTP, profiles are represented by the #RtpProfile object.
+
+For example in the AV profile (Audio Video profile, defined in RFC1890), often used 
+by telephony applications, the payload type number 8 is assigned to PCMA 
+(A-law compressed audio) at sampling frequency 8000 Hz, mono.
+
+By default, all RTP sessions created by oRTP use the AV profile, but you can change the profile
+of an RTP session using rtp_session_set_profile().
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+rtp_session_set_profile()
+</para>
+
+<!-- ##### STRUCT PayloadType ##### -->
+<para>
+
+</para>
+
+@type: 
+@bytes_per_sample: 
+@zero_pattern: 
+@pattern_length: 
+@normal_bitrate: 
+@mime_type: 
+@flags: 
+@user_data: 
+
+<!-- ##### STRUCT RtpProfile ##### -->
+<para>
+
+</para>
+
+@name: 
+@payload: 
+
+<!-- ##### VARIABLE av_profile ##### -->
+<para>
+This is the Audio Video profile defined in RFC1890.
+</para>
+
+
+<!-- ##### MACRO rtp_profile_clear_all ##### -->
+<para>
+
+</para>
+
+@profile: 
+
+
+<!-- ##### MACRO rtp_profile_get_name ##### -->
+<para>
+
+</para>
+
+@profile: 
+
+
+<!-- ##### MACRO rtp_profile_set_name ##### -->
+<para>
+
+</para>
+
+@profile: 
+@nm: 
+
+
+<!-- ##### MACRO rtp_profile_set_payload ##### -->
+<para>
+
+</para>
+
+@profile: 
+@index: 
+@pt: 
+
+
+<!-- ##### MACRO rtp_profile_get_payload ##### -->
+<para>
+
+</para>
+
+@profile: 
+@index: 
+
+
+<!-- ##### MACRO rtp_profile_clear_payload ##### -->
+<para>
+
+</para>
+
+@profile: 
+@index: 
+
+
+<!-- ##### MACRO rtp_profile_clear_all ##### -->
+<para>
+
+</para>
+
+@profile: 
+
+

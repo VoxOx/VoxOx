@@ -1,0 +1,119 @@
+<ui version="4.0" >
+ <class>VideoWindow</class>
+ <widget class="QWidget" name="VideoWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>401</width>
+    <height>343</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>@product@ - Video</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <property name="spacing" >
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frame" >
+     <layout class="QGridLayout" >
+      <property name="margin" >
+       <number>0</number>
+      </property>
+      <property name="spacing" >
+       <number>2</number>
+      </property>
+      <item row="2" column="1" >
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>281</width>
+          <height>34</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0" >
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>34</width>
+          <height>221</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="2" >
+       <widget class="OsdButton" name="fullScreenButton" >
+        <property name="icon" >
+         <iconset resource="../../../../resources/wengophone.qrc" >:/pics/video_fullscreen.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>26</width>
+          <height>26</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3" >
+       <widget class="OsdButton" name="attachDetachButton" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../../../../resources/wengophone.qrc" >:/pics/video_detach.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>26</width>
+          <height>26</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="OsdButton" name="flipButton" >
+        <property name="icon" >
+         <iconset resource="../../../../resources/wengophone.qrc" >:/pics/video_flip.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>26</width>
+          <height>26</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OsdButton</class>
+   <extends>QToolButton</extends>
+   <header>qtutil/OsdButton.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>flipButton</tabstop>
+  <tabstop>fullScreenButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../resources/wengophone.qrc" />
+ </resources>
+ <connections/>
+</ui>

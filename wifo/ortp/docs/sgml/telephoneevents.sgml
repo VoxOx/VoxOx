@@ -1,0 +1,208 @@
+<refentry id="ortp-Telephone-events-(RFC2833)-">
+<refmeta>
+<refentrytitle>Telephone events (RFC2833)</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>ORTP Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Telephone events (RFC2833)</refname><refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+#include &lt;telephonyevents.h&gt;
+
+
+struct      <link linkend="telephone-event">telephone_event</link>;
+<link linkend="gint">gint</link>        <link linkend="rtp-session-telephone-events-supported">rtp_session_telephone_events_supported</link>
+                                            (<link linkend="RtpSession">RtpSession</link> *session);
+<link linkend="mblk-t">mblk_t</link>*     <link linkend="rtp-session-create-telephone-event-packet">rtp_session_create_telephone_event_packet</link>
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             int start);
+<link linkend="gint">gint</link>        <link linkend="rtp-session-add-telephone-event">rtp_session_add_telephone_event</link> (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="mblk-t">mblk_t</link> *packet,
+                                             <link linkend="guchar">guchar</link> event,
+                                             <link linkend="gint">gint</link> end,
+                                             <link linkend="guchar">guchar</link> volume,
+                                             <link linkend="guint16">guint16</link> duration);
+<link linkend="gint">gint</link>        <link linkend="rtp-session-read-telephone-event">rtp_session_read_telephone_event</link>
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="mblk-t">mblk_t</link> *packet,
+                                             <link linkend="telephone-event-t">telephone_event_t</link> **tab);
+<link linkend="gint">gint</link>        <link linkend="rtp-session-send-dtmf">rtp_session_send_dtmf</link>           (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> dtmf,
+                                             <link linkend="guint32">guint32</link> userts);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="telephone-event">struct telephone_event</title>
+<programlisting>struct telephone_event {
+
+#ifdef WORDS_BIGENDIAN
+	guint32 event:8;
+	guint32 E:1;
+	guint32 R:1;
+	guint32 volume:6;
+	guint32 duration:16;
+#else
+	guint32 event:8;
+	guint32 volume:6;
+	guint32 R:1;
+	guint32 E:1;
+	guint32 duration:16;
+#endif
+};
+</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-telephone-events-supported">rtp_session_telephone_events_supported ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_telephone_events_supported
+                                            (<link linkend="RtpSession">RtpSession</link> *session);</programlisting>
+<para>
+Tells whether telephony events payload type is supported within the context of the rtp
+session.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara>	a rtp session 
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the payload type number used for telephony events if found, -1 if not found.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-create-telephone-event-packet">rtp_session_create_telephone_event_packet ()</title>
+<programlisting><link linkend="mblk-t">mblk_t</link>*     rtp_session_create_telephone_event_packet
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             int start);</programlisting>
+<para>
+Allocates a new rtp packet to be used to add named telephony events. The application can use
+then <link linkend="rtp-session-add-telephone-event">rtp_session_add_telephone_event</link>() to add named events to the packet.
+Finally the packet has to be sent with <link linkend="rtp-session-sendm-with-ts">rtp_session_sendm_with_ts</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>start</parameter>&nbsp;:</term>
+<listitem><simpara>	boolean to indicate if the marker bit should be set.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a message block containing the rtp packet if successfull, NULL if the rtp session
+cannot support telephony event (because the rtp profile it is bound to does not include
+a telephony event payload type).
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-add-telephone-event">rtp_session_add_telephone_event ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_add_telephone_event (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="mblk-t">mblk_t</link> *packet,
+                                             <link linkend="guchar">guchar</link> event,
+                                             <link linkend="gint">gint</link> end,
+                                             <link linkend="guchar">guchar</link> volume,
+                                             <link linkend="guint16">guint16</link> duration);</programlisting>
+<para>
+Adds a named telephony event to a rtp packet previously allocated using
+<link linkend="rtp-session-create-telephone-event-packet">rtp_session_create_telephone_event_packet</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara>	a rtp session.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>packet</parameter>&nbsp;:</term>
+<listitem><simpara>	a rtp packet as a <link linkend="mblk-t">mblk_t</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>event</parameter>&nbsp;:</term>
+<listitem><simpara>	the event type as described in rfc2833, ie one of the TEV_ macros.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>end</parameter>&nbsp;:</term>
+<listitem><simpara>		boolean to indicate if the end bit should be set. (end of tone)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>volume</parameter>&nbsp;:</term>
+<listitem><simpara>	the volume of the telephony tone, as described in rfc2833
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>duration</parameter>&nbsp;:</term>
+<listitem><simpara>the duration of the telephony tone, in timestamp unit.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>0 on success.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-read-telephone-event">rtp_session_read_telephone_event ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_read_telephone_event
+                                            (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="mblk-t">mblk_t</link> *packet,
+                                             <link linkend="telephone-event-t">telephone_event_t</link> **tab);</programlisting>
+<para>
+Reads telephony events from a rtp packet. *<parameter>tab</parameter> points to the beginning of the event buffer.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session from which telephony events are received.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>packet</parameter>&nbsp;:</term>
+<listitem><simpara>	a rtp packet as a mblk_t.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tab</parameter>&nbsp;:</term>
+<listitem><simpara>		the address of a pointer.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the number of events in the packet if successfull, 0 if the packet did not
+contain telephony events.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="rtp-session-send-dtmf">rtp_session_send_dtmf ()</title>
+<programlisting><link linkend="gint">gint</link>        rtp_session_send_dtmf           (<link linkend="RtpSession">RtpSession</link> *session,
+                                             <link linkend="gchar">gchar</link> dtmf,
+                                             <link linkend="guint32">guint32</link> userts);</programlisting>
+<para>
+This functions creates telephony events packets for <parameter>dtmf</parameter> and sends them.
+It uses <link linkend="rtp-session-create-telephone-event-packet">rtp_session_create_telephone_event_packet</link>() and
+<link linkend="rtp-session-add-telephone-event">rtp_session_add_telephone_event</link>() to create them and finally
+<link linkend="rtp-session-sendm-with-ts">rtp_session_sendm_with_ts</link>() to send them.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&nbsp;:</term>
+<listitem><simpara> a rtp session
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dtmf</parameter>&nbsp;:</term>
+<listitem><simpara> a character meaning the dtmf (ex: '1', '#' , '9' ...)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>userts</parameter>&nbsp;:</term>
+<listitem><simpara> the timestamp
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>	0 if successfull, -1 if the session cannot support telephony events or if the dtmf
+given as argument is not valid.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,2985 @@
+OWBuild Source Code Dump
+
+*****  OWAddPrivateCompileFlags.cmake  *****
+
+# - ow_add_private_compile_flags(flag1 ... flagN)
+# Adds private compilation flags to the current project
+#
+# A compilation flag is a command line option given to the compiler when it is
+# compiling a file, for example it can be for GNU GCC: -O3 (optimisation level),
+# -g (compile with debug symbol), -Wall (enable warnings)...
+#
+# Term 'private' means that compile flags will be
+# automatically used inside inherited projects
+# See ow_add_public_compile_flags() for the 'public' version of this function
+#
+# GNU GCC Command Options: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Invoking-GCC.html
+# Microsoft Visual C++ Compiler Options: http://msdn2.microsoft.com/en-us/library/9s7c9wdw.aspx
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_private_compile_flags(
+# 	-Wall
+#	-g
+# )
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output produced:
+# gcc -g -Wall mytest.c -o mytest
+#
+# Internally ow_add_private_compile_flags() uses a variable named ${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS
+# It uses CMake function set_target_properties() with COMPILE_FLAGS property, see ow_finish_binary()
+# for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_private_compile_flags)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS)
+		set(${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS
+			${${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS}
+			${ARGN}
+		)
+	else (${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS)
+		set(${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS
+			${ARGN}
+		)
+	endif (${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS)
+
+endmacro (ow_add_private_compile_flags)
+
+
+*****  OWAddPrivateDefinitions.cmake  *****
+
+# - ow_add_private_definitions(def1 ... defN)
+# Adds private -D define flags to the current project
+#
+# -D define flags are added to the command line of C and C++ compilers
+# A definitions or a define is for example: -DDEBUG, -DWIN32... and can be tested
+# in C/C++ language via #ifdef #else preprocessor directives
+#
+# Term 'private' means that define flags will be
+# automatically used inside inherited projects
+# See ow_add_public_definitions() for the 'public' version of this function
+#
+# GNU GCC Preprocessor Options: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Preprocessor-Options.html
+# Microsoft C/C++ Preprocessor Reference: http://msdn2.microsoft.com/en-us/library/y4skk93w.aspx
+# Microsoft Visual C++ Compiler Options: http://msdn2.microsoft.com/en-us/library/9s7c9wdw.aspx
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# if (CMAKE_BUILD_TYPE STREQUAL Debug)
+# 	ow_add_private_definitions(
+# 		-DDEBUG
+# 	)
+# endif (CMAKE_BUILD_TYPE STREQUAL Debug)
+#
+# ow_add_private_definitions(
+# 	-DUNICODE
+# )
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output produced in debug mode:
+# gcc -DUNICODE -DDEBUG mytest.c -o mytest
+#
+# Internally ow_add_private_definitions() wrapps CMake function add_definitions()
+# ow_add_private_definitions() adds defines to a variable (a list)
+# named ${PROJECT_NAME}_PRIVATE_DEFINITIONS, see ow_prepare_binary() for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_private_definitions)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_PRIVATE_DEFINITIONS)
+		set(${PROJECT_NAME}_PRIVATE_DEFINITIONS
+			${${PROJECT_NAME}_PRIVATE_DEFINITIONS}
+			${ARGN}
+		)
+	else (${PROJECT_NAME}_PRIVATE_DEFINITIONS)
+		set(${PROJECT_NAME}_PRIVATE_DEFINITIONS
+			${ARGN}
+		)
+	endif (${PROJECT_NAME}_PRIVATE_DEFINITIONS)
+
+	ow_unique(unique ${${PROJECT_NAME}_PRIVATE_DEFINITIONS})
+	set(${PROJECT_NAME}_PRIVATE_DEFINITIONS
+		${unique}
+	)
+
+endmacro (ow_add_private_definitions)
+
+
+*****  OWAddPrivateIncludeDirs.cmake  *****
+
+# - ow_add_private_include_dirs(dir1 ... dirN)
+# Adds private include directories to the current project
+#
+# Include directories specify where to search for include files (headers *.h)
+# By default the directories are added to the head of the list of directories
+# This default behavior can be changed by setting CMAKE_INCLUDE_DIRECTORIES_BEFORE to OFF
+# inside OWDefaultConfig.cmake file
+#
+# Term 'private' means that include directories will be
+# automatically used inside inherited projects
+# See ow_add_public_include_dirs() for the 'public' version of this function
+#
+# GNU GCC Options for Directory Search: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Directory-Options.html
+# /I Visual C++ Compiler Option: http://msdn2.microsoft.com/en-us/library/73f9s62w.aspx
+#
+# Tips:
+# Try to minimize the number of include directories, this will increase a bit compilation time
+# but keep in mind that "early optimization is evil"
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_public_include_dirs(
+# 	${CMAKE_CURRENT_SOURCE_DIR}/include
+# )
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output produced:
+# gcc -I/home/me/myprogram/include mytest.c -o mytest
+#
+# Internally ow_add_private_include_dirs() uses a variable named ${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS
+# It wrapps CMake function include_directories(), see ow_prepare_binary() for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_private_include_dirs)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS)
+		set(${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS
+			${${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS}
+			${ARGN}
+		)
+	else (${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS)
+		set(${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS
+			${ARGN}
+		)
+	endif (${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS)
+
+endmacro (ow_add_private_include_dirs)
+
+
+*****  OWAddPrivateLibraries.cmake  *****
+
+# - ow_add_private_libraries(lib1 ... libN)
+# Adds private link libraries to the current project
+#
+# Links current project/target with the given libraries
+# Libraries specified using ow_add_public_libraries() should be accessible
+# You can give a full path to a library to link with
+# See ow_add_private_library_dirs() to add a library path to your project
+#
+# Term 'private' means that link libraries will be
+# automatically used inside inherited projects
+# See ow_add_public_libraries() for the 'public' version of this function
+#
+# GNU GCC Link Options: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Link-Options.html
+# Microsoft Visual C++ Linker Options: http://msdn2.microsoft.com/en-us/library/y0zzbyt4.aspx
+#
+# Tips:
+# If you link with unnecessary libraries it does not matter (besides the ugliness),
+# the resulting program won't depend on these libraries if not needed
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_private_libraries(
+# 	#FFmpeg library
+# 	libavcodec.a
+# )
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output produced:
+# gcc mytest.c -lavcodec -o mytest
+#
+# Internally, ow_add_private_libraries() wrapps CMake function target_link_libraries()
+# and defines variable ${PROJECT_NAME}_PRIVATE_LIBRARIES, see ow_finish_binary() for
+# more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_private_libraries)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_PRIVATE_LIBRARIES)
+		set(${PROJECT_NAME}_PRIVATE_LIBRARIES
+			${${PROJECT_NAME}_PRIVATE_LIBRARIES}
+			${ARGN}
+		)
+	else (${PROJECT_NAME}_PRIVATE_LIBRARIES)
+		set(${PROJECT_NAME}_PRIVATE_LIBRARIES
+			${ARGN}
+		)
+	endif (${PROJECT_NAME}_PRIVATE_LIBRARIES)
+
+endmacro (ow_add_private_libraries)
+
+
+*****  OWAddPrivateLibraryDirs.cmake  *****
+
+# - ow_add_private_library_dirs(dir1 ... dirN)
+# Adds private link directories (directories in which to search for libraries
+# e.g library path) to the current project
+#
+# Specifies the paths in which the linker should search for libraries
+#
+# Term 'private' means that link directories will be
+# automatically used inside inherited projects
+# See ow_add_public_library_dirs() for the 'public' version of this function
+#
+# GNU GCC Options for Directory Search: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Directory-Options.html
+# Microsoft Visual C++ Additional Libpath: http://msdn2.microsoft.com/en-us/library/1xhzskbe.aspx
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_private_libraries(
+# 	#Path to FFmpeg library
+# 	/path/to/libavcodec
+# )
+#
+# ow_add_private_libraries(
+# 	#FFmpeg library
+# 	libavcodec.a
+# )
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output produced:
+# gcc -L/path/to/libavcodec mytest.c -lavcodec -o mytest
+#
+# Internally ow_add_private_library_dirs() uses a variable named ${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS
+# It uses CMake function link_directories(), see ow_prepare_binary() for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_private_library_dirs)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS)
+		set(${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS
+			${${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS}
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} private library directories"
+		)
+	else (${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS)
+		set(${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} private library directories"
+		)
+	endif (${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS)
+
+	ow_unique(unique ${${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS})
+	set(${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS
+		${unique}
+		CACHE INTERNAL "${PROJECT_NAME} private library directories"
+	)
+
+endmacro (ow_add_private_library_dirs)
+
+
+*****  OWAddPrivateLinkFlags.cmake  *****
+
+# - ow_add_private_link_flags(flag1 ... flagN)
+# Adds private link flags to the current project
+#
+# Adds extra flags to the link step of a project/target
+# You won't generally need to use this function
+#
+# Term 'private' means that link flags will be
+# automatically used inside inherited projects
+# See ow_add_public_link_flags() for the 'public' version of this function
+#
+# GNU GCC Link Options: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Link-Options.html
+# Microsoft Visual C++ Linker Options: http://msdn2.microsoft.com/en-us/library/y0zzbyt4.aspx
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_private_link_flags(
+# 	/NODEFAULTLIB:MSVCRT.LIB
+# )
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output produced:
+# cl /out:mytest /NODEFAULTLIB:MSVCRT.LIB
+#
+# Internally, ow_add_private_link_flags() wrapps CMake function set_target_properties()
+# using LINK_FLAGS property and defines variable ${PROJECT_NAME}_PRIVATE_LINK_FLAGS,
+# see ow_finish_binary() for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_private_link_flags)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_PRIVATE_LINK_FLAGS)
+		set(${PROJECT_NAME}_PRIVATE_LINK_FLAGS
+			${${PROJECT_NAME}_PRIVATE_LINK_FLAGS}
+			${ARGN}
+		)
+	else (${PROJECT_NAME}_PRIVATE_LINK_FLAGS)
+		set(${PROJECT_NAME}_PRIVATE_LINK_FLAGS
+			${ARGN}
+		)
+	endif (${PROJECT_NAME}_PRIVATE_LINK_FLAGS)
+
+endmacro (ow_add_private_link_flags)
+
+
+*****  OWAddPublicDefinitions.cmake  *****
+
+# - ow_add_public_definitions(def1 ... defN)
+# Adds public -D define flags to the current project
+#
+# See ow_add_private_definitions() for complete documentation
+#
+# Term 'public' means that define flags will be
+# automatically used inside inherited projects
+#
+# Internally ow_add_public_definitions() wrapps CMake function add_definitions()
+# It defines variable ${PROJECT_NAME}_DEFINITIONS, see ow_prepare_binary() for more details
+# ${PROJECT_NAME}_DEFINITIONS complies with modules conventions from
+# http://www.cmake.org/cgi-bin/viewcvs.cgi/Modules/readme.txt?root=CMake&view=markup
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_public_definitions)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_DEFINITIONS)
+		set(${PROJECT_NAME}_DEFINITIONS
+			${${PROJECT_NAME}_DEFINITIONS}
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public definitions"
+		)
+	else (${PROJECT_NAME}_DEFINITIONS)
+		set(${PROJECT_NAME}_DEFINITIONS
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public definitions"
+		)
+	endif (${PROJECT_NAME}_DEFINITIONS)
+
+	ow_unique(unique ${${PROJECT_NAME}_DEFINITIONS})
+	set(${PROJECT_NAME}_DEFINITIONS
+		${unique}
+		CACHE INTERNAL "${PROJECT_NAME} public definitions"
+	)
+
+endmacro (ow_add_public_definitions)
+
+
+*****  OWAddPublicIncludeDirs.cmake  *****
+
+# - ow_add_public_include_dirs(dir1 ... dirN)
+# Adds public include directories to the current project
+#
+# See ow_add_private_include_dirs() for complete documentation
+#
+# Term 'public' means that include directories will be
+# automatically used inside inherited projects
+#
+# Internally ow_add_public_include_dirs() wrapps CMake function include_directories()
+# It defines variable ${PROJECT_NAME}_INCLUDE_DIRS, see ow_prepare_binary() for more details
+# ${PROJECT_NAME}_INCLUDE_DIRS complies with modules conventions from
+# http://www.cmake.org/cgi-bin/viewcvs.cgi/Modules/readme.txt?root=CMake&view=markup
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_public_include_dirs)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_INCLUDE_DIRS)
+		set(${PROJECT_NAME}_INCLUDE_DIRS
+			${${PROJECT_NAME}_INCLUDE_DIRS}
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public include directories"
+		)
+	else (${PROJECT_NAME}_INCLUDE_DIRS)
+		set(${PROJECT_NAME}_INCLUDE_DIRS
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public include directories"
+		)
+	endif (${PROJECT_NAME}_INCLUDE_DIRS)
+
+	ow_unique(unique ${${PROJECT_NAME}_INCLUDE_DIRS})
+	set(${PROJECT_NAME}_INCLUDE_DIRS
+		${unique}
+		CACHE INTERNAL "${PROJECT_NAME} public include directories"
+	)
+
+endmacro (ow_add_public_include_dirs)
+
+
+*****  OWAddPublicLibraries.cmake  *****
+
+# - ow_add_public_libraries(lib1 ... libN)
+# Adds public link libraries to the current project
+#
+# See ow_add_private_libraries() for complete documentation
+#
+# Term 'public' means that link libraries will be
+# automatically used inside inherited projects
+#
+# Internally ow_add_public_libraries() wrapps CMake function target_link_libraries()
+# It defines variable ${PROJECT_NAME}_LIBRARIES, see ow_finish_binary() for more details
+# ${PROJECT_NAME}_LIBRARIES complies with modules conventions from
+# http://www.cmake.org/cgi-bin/viewcvs.cgi/Modules/readme.txt?root=CMake&view=markup
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_public_libraries)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_LIBRARIES)
+		set(${PROJECT_NAME}_LIBRARIES
+			${${PROJECT_NAME}_LIBRARIES}
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public libraries"
+		)
+	else (${PROJECT_NAME}_LIBRARIES)
+		set(${PROJECT_NAME}_LIBRARIES
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public libraries"
+		)
+	endif (${PROJECT_NAME}_LIBRARIES)
+
+	ow_unique(unique ${${PROJECT_NAME}_LIBRARIES})
+	set(${PROJECT_NAME}_LIBRARIES
+		${unique}
+		CACHE INTERNAL "${PROJECT_NAME} public libraries"
+	)
+
+endmacro (ow_add_public_libraries)
+
+
+*****  OWAddPublicLibraryDirs.cmake  *****
+
+# - ow_add_public_library_dirs(dir1 ... dirN)
+# Adds public link directories (directories in which to search for libraries
+# e.g library path) to the current project
+#
+# See ow_add_private_library_dirs() for complete documentation
+#
+# Term 'public' means that link directories will be
+# automatically used inside inherited projects
+#
+# Internally ow_add_public_library_dirs() wrapps CMake function link_directories()
+# It defines variable ${PROJECT_NAME}_LIBRARY_DIRS, see ow_prepare_binary() for more details
+# ${PROJECT_NAME}_LIBRARY_DIRS complies with modules conventions from
+# http://www.cmake.org/cgi-bin/viewcvs.cgi/Modules/readme.txt?root=CMake&view=markup
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_public_library_dirs)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_LIBRARY_DIRS)
+		set(${PROJECT_NAME}_LIBRARY_DIRS
+			${${PROJECT_NAME}_LIBRARY_DIRS}
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public library directories"
+		)
+	else (${PROJECT_NAME}_LIBRARY_DIRS)
+		set(${PROJECT_NAME}_LIBRARY_DIRS
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public library directories"
+		)
+	endif (${PROJECT_NAME}_LIBRARY_DIRS)
+
+	ow_unique(unique ${${PROJECT_NAME}_LIBRARY_DIRS})
+	set(${PROJECT_NAME}_LIBRARY_DIRS
+		${unique}
+		CACHE INTERNAL "${PROJECT_NAME} public library directories"
+	)
+
+endmacro (ow_add_public_library_dirs)
+
+
+*****  OWAddPublicLinkFlags.cmake  *****
+
+# - ow_add_public_link_flags(flag1 ... flagN)
+# Adds public link flags to the current project
+#
+# See ow_add_private_link_flags() for complete documentation
+#
+# Term 'public' means that link flags will be
+# automatically used inside inherited projects
+#
+# Internally ow_add_public_link_flags() wrapps CMake function set_target_properties()
+# using LIN_FLAGS property
+# It defines variable ${PROJECT_NAME}_PUBLIC_LINK_FLAGS, see ow_finish_binary() for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_public_link_flags)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_PUBLIC_LINK_FLAGS)
+		set(${PROJECT_NAME}_PUBLIC_LINK_FLAGS
+			${${PROJECT_NAME}_PUBLIC_LINK_FLAGS}
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public link flags"
+		)
+	else (${PROJECT_NAME}_PUBLIC_LINK_FLAGS)
+		set(${PROJECT_NAME}_PUBLIC_LINK_FLAGS
+			${ARGN}
+			CACHE INTERNAL "${PROJECT_NAME} public link flags"
+		)
+	endif (${PROJECT_NAME}_PUBLIC_LINK_FLAGS)
+
+	ow_unique(unique ${${PROJECT_NAME}_PUBLIC_LINK_FLAGS})
+	set(${PROJECT_NAME}_PUBLIC_LINK_FLAGS
+		${unique}
+		CACHE INTERNAL "${PROJECT_NAME} public link flags"
+	)
+
+endmacro (ow_add_public_link_flags)
+
+
+*****  OWAddSharedLibraryDefinitions.cmake  *****
+
+# - ow_add_shared_library_definitions()
+# Internal function, adds shared library definitions for declspec(dllimport) and declspec(dllexport)
+#
+# To build a shared library under Windows you need to define:
+# #ifdef MYLIB_DLL
+# 	#ifdef BUILD_MYLIB_DLL
+# 		#define MYLIB_API __declspec(dllexport)
+# 	#else
+# 		#define MYLIB_API __declspec(dllimport)
+# 	#endif
+# #else
+# 	#define MYLIB_API
+# #endif
+#
+# MYLIB_API int get_a_value();
+#
+# The original CMakeLists.txt:
+# ow_create_shared_library(mylib)
+#
+# ow_add_public_definitions(
+# 	-DMYLIB_DLL
+# )
+#
+# ow_add_private_definitions(
+# 	-DMYLIB_DLL
+# 	-DBUILD_MYLIB_DLL
+# )
+#
+# ow_add_sources(
+# 	mylib.c
+# )
+#
+# ow_create_project_binary()
+#
+# ow_add_shared_library_definitions() does the job for you, thus your
+# CMakeLists.txt looks like:
+# ow_create_shared_library(mylib)
+#
+# ow_add_sources(
+# 	mylib.c
+# )
+#
+# ow_create_project_binary()
+#
+# If mylib project is set to static library rather than shared library from cache,
+# then defines will be automatically removed
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_shared_library_definitions)
+
+	ow_check_project()
+
+	string(TOUPPER ${PROJECT_NAME} tmp)
+
+	# Avoid warning like this:
+	# <command line>:1:4: warning: missing whitespace after the macro name
+	string(REPLACE "-" "_" tmp ${tmp})
+
+	ow_add_public_definitions(
+		-D${tmp}_DLL
+	)
+
+	#ow_add_private_definitions(
+	#	-D${tmp}_DLL
+	#	-DBUILD_${tmp}_DLL
+	#)
+	set_target_properties(${PROJECT_NAME} PROPERTIES DEFINE_SYMBOL "BUILD_${tmp}_DLL -D${tmp}_DLL")
+
+endmacro (ow_add_shared_library_definitions)
+
+
+*****  OWAddSources.cmake  *****
+
+# - ow_add_sources(src1 ... srcN)
+# Adds source files (.cpp, .c...) to the current project
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output produced:
+# gcc mytest.c -o mytest
+#
+# Internally ow_add_sources() wrapps CMake function add_library or add_executable()
+# It defines variable ${PROJECT_NAME}_SRCS, see ow_create_project_binary() for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_add_sources)
+
+	ow_check_project()
+
+	if (${PROJECT_NAME}_SRCS)
+		set(${PROJECT_NAME}_SRCS
+			${${PROJECT_NAME}_SRCS}
+			${ARGN}
+		)
+	else (${PROJECT_NAME}_SRCS)
+		set(${PROJECT_NAME}_SRCS
+			${ARGN}
+		)
+	endif (${PROJECT_NAME}_SRCS)
+
+endmacro (ow_add_sources)
+
+
+*****  OWAutoconf.cmake  *****
+
+# - ow_autoconf(configureCommand makeCommand)
+# Runs Autoconf tool
+#
+# Runs ${configureCommand} and then ${makeCommand}
+# Both commands are executed from ${CMAKE_CURRENT_SOURCE_DIR} directory
+#
+# Example:
+# ow_autoconf("./configure" "make")
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_autoconf configureCommand makeCommand)
+
+	execute_process(
+		COMMAND
+			${configureCommand}
+		WORKING_DIRECTORY
+			${CMAKE_CURRENT_SOURCE_DIR}
+	)
+
+	execute_process(
+		COMMAND
+			${makeCommand}
+		WORKING_DIRECTORY
+			${CMAKE_CURRENT_SOURCE_DIR}
+	)
+
+endmacro (ow_autoconf)
+
+
+*****  OWChangeIdentificationName.cmake  *****
+
+# - ow_change_identification_name(file name)
+# Mac OS X only.
+# Calls "install_name_tool -id ${file} ${name}"
+#
+# Manual Page For install_name_tool():
+# http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/install_name_tool.1.html
+# Deploying Applications on MacOSX from Trolltech:
+# http://doc.trolltech.com/qq/qq09-mac-deployment.html
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_change_identification_name file name)
+
+	if (APPLE)
+		exec_program("install_name_tool"
+			ARGS
+				"-id ${name} ${file}"
+		)
+	endif (APPLE)
+
+endmacro (ow_change_identification_name)
+
+
+*****  OWChangeInstallName.cmake  *****
+
+# - ow_change_install_name(src dst file)
+# Mac OS X only.
+# Calls "install_name_tool -change ${src} ${dst} ${file}"
+#
+# install_name_tool allows to change information about where an application
+# looks for libraries or what these libraries are called
+#
+# Manual Page For install_name_tool():
+# http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/install_name_tool.1.html
+# Deploying Applications on MacOSX from Trolltech:
+# http://doc.trolltech.com/qq/qq09-mac-deployment.html
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_change_install_name src dst file)
+
+	if (APPLE)
+		exec_program("install_name_tool"
+			ARGS
+				"-change ${src} ${dst} ${file}"
+		)
+	endif (APPLE)
+
+endmacro (ow_change_install_name)
+
+
+*****  OWCheckCXXCompilerFlag.cmake  *****
+
+# - ow_check_cxx_compiler_flag(flag result)
+# Checks whether the compiler supports a given flag
+#
+# Example:
+# ow_check_cxx_compiler_flag("-fPIC" WITH_FPIC)
+# if (WITH_FPIC)
+# 	add_definitions(-fPIC)
+# endif (WITH_FPIC)
+#
+# Copyright (C) 2006  Alexander Neundorf <neundorf@kde.org>
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+include(CheckCXXSourceCompiles)
+
+macro (ow_check_cxx_compiler_flag flag result)
+	set(SAFE_CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS}")
+	set(CMAKE_REQUIRED_DEFINITIONS "${flag}")
+	check_cxx_source_compiles("int main(){return 0;}" ${result})
+	set(CMAKE_REQUIRED_DEFINITIONS "${SAFE_CMAKE_REQUIRED_DEFINITIONS}")
+endmacro (ow_check_cxx_compiler_flag)
+
+
+*****  OWCheckProject.cmake  *****
+
+# - ow_check_project()
+# Internal function, checks if the project is valid or not
+#
+# Checks for the presence of the variable ${PROJECT_NAME}
+#
+# Copyright (C) 2006  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_check_project)
+
+	if (NOT PROJECT_NAME)
+		message(FATAL_ERROR "No project name defined, "
+			"use ow_create_executable() or ow_create_plugin_library() or "
+			"ow_create_shared_library() or ow_create_static_library() or "
+			"ow_create_project() first")
+	endif (NOT PROJECT_NAME)
+
+endmacro (ow_check_project)
+
+
+*****  OWCopyDir.cmake  *****
+
+# - ow_copy_dir(src dst)
+# Copies a directory to ${dst} only if ${src} is different (newer) than ${dst}
+#
+# See ow_copy_file()
+#
+# Example:
+# ow_copy_dir(${CMAKE_CURRENT_SOURCE_DIR}/*.png ${BUILD_DIR}/.)
+# Copies all *.png files from ${CMAKE_CURRENT_SOURCE_DIR} to ${BUILD_DIR} directory
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_copy_dir src dst)
+
+	file(GLOB fileList ${src})
+	if (fileList)
+		foreach (file ${fileList})
+			ow_copy_file(${file} ${dst})
+		endforeach (file ${fileList})
+	endif (fileList)
+
+endmacro (ow_copy_dir)
+
+
+*****  OWCopyDirRecursive.cmake  *****
+
+# - ow_copy_dir_recursive(src dst)
+# Copies recursively a directory to ${dst} only if ${src} is different (newer) than ${dst}
+#
+# See ow_copy_dir() and ow_copy_file()
+#
+# Example:
+# ow_copy_dir_recursive(${CMAKE_CURRENT_SOURCE_DIR}/* ${BUILD_DIR}/.)
+# Copies recursively ${CMAKE_CURRENT_SOURCE_DIR} directory to ${BUILD_DIR} directory
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_copy_dir_recursive src dst)
+
+	get_filename_component(relativePath ${src} PATH)
+
+	file(GLOB_RECURSE fileList ${src})
+	if (fileList)
+		foreach (file ${fileList})
+			file(RELATIVE_PATH path ${relativePath} ${file})
+			get_filename_component(path ${path} PATH)
+
+			ow_copy_file(${file} ${dst}/${path}/.)
+		endforeach (file ${fileList})
+	endif (fileList)
+
+endmacro (ow_copy_dir_recursive)
+
+
+*****  OWCopyFile.cmake  *****
+
+# - ow_copy_file(src dst)
+# Copies a file to ${dst} only if ${src} is different (newer) than ${dst}
+#
+# See ow_copy_dir() and ow_copy_dir_recursive()
+#
+# Example:
+# ow_copy_file(${CMAKE_CURRENT_SOURCE_DIR}/icon.png ${BUILD_DIR}/.)
+# Copies file icon.png to ${BUILD_DIR} directory
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_copy_file src dst)
+
+	# Removes all path containing .svn or CVS or CMakeLists.txt during the copy
+	if (NOT ${src} MATCHES ".*\\.svn|CVS|CMakeLists\\.txt.*")
+
+		if (CMAKE_VERBOSE_MAKEFILE)
+			message(STATUS "Copy file from ${src} to ${dst}")
+		endif (CMAKE_VERBOSE_MAKEFILE)
+
+		# Creates directory if necessary
+		get_filename_component(_path ${dst} PATH)
+		file(MAKE_DIRECTORY ${_path})
+
+		exec_program(
+				${CMAKE_COMMAND}
+			ARGS
+				"-E copy_if_different \"${src}\" \"${dst}\""
+		)
+	endif (NOT ${src} MATCHES ".*\\.svn|CVS|CMakeLists\\.txt.*")
+
+endmacro (ow_copy_file)
+
+
+*****  OWCreateDMG.cmake  *****
+
+# - ow_create_dmg(name dir)
+# Creates a .dmg for MacOSX
+#
+# ${name}: name of the .dmg to create
+# ${dir}: path to .app to create the .dmg from
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_create_dmg name dir)
+
+	if (APPLE)
+		execute_process(
+			COMMAND
+				"hdiutil" create -fs HFS+ -volname ${name} -srcfolder ${dir} ${BUILD_DIR}/${name}.dmg
+		)
+	endif (APPLE)
+
+endmacro (ow_create_dmg)
+
+
+*****  OWCreateExecutable.cmake  *****
+
+# - ow_create_executable(name)
+# Creates an executable (.exe) given its name
+#
+# ow_create_executable() creates a project named ${name} (${PROJECT_NAME})
+# and works in combination with ow_create_project_binary()
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output generated:
+# gcc mytext.c -o mytest
+#
+# Internally, ow_create_executable() sets variable ${PROJECT_NAME}_PROJECT_TYPE
+# to Executable
+# This variable will be used later on by ow_create_project_binary()
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_create_executable name)
+
+	ow_create_project(${name})
+
+	set(${PROJECT_NAME}_PROJECT_TYPE
+		Executable
+		CACHE STRING "${PROJECT_NAME} project type (Static, Shared, Plugin, Executable)"
+	)
+
+endmacro (ow_create_executable)
+
+
+*****  OWCreatePluginLibrary.cmake  *****
+
+# - ow_create_plugin_library(name)
+# Creates a plugin library (e.g a shared library) given its name
+#
+# ow_create_plugin_library() creates a project named ${name} (${PROJECT_NAME})
+# and works in combination with ow_create_project_binary()
+#
+# Example:
+# ow_create_plugin_library(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output generated:
+# gcc mytext.c -shared -o mytest.so
+#
+# Internally, ow_create_plugin_library() sets variable ${PROJECT_NAME}_PROJECT_TYPE
+# to Plugin
+# This variable will be used later on by ow_create_project_binary()
+#
+# Copyright (C) 2006  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_create_plugin_library name)
+
+	ow_create_project(${name})
+
+	set(${PROJECT_NAME}_PROJECT_TYPE
+		Plugin
+		CACHE STRING "${PROJECT_NAME} project type (Static, Shared, Plugin, Executable)"
+	)
+
+endmacro (ow_create_plugin_library)
+
+
+*****  OWCreateProject.cmake  *****
+
+# - ow_create_project(name)
+# Creates an empty project given its name
+#
+# Most of the time you won't need to use this function, use:
+# - ow_create_executable()
+# - ow_create_shared_library()
+# - ow_create_static_library()
+# - ow_create_plugin_library()
+# instead
+#
+# Internally ow_create_project() calls project() CMake function
+# and then initializes all project variables (${PROJECT_NAME}_INCLUDE_DIRS,
+# ${PROJECT_NAME}_LIBRARIES, ${PROJECT_NAME}_LIBRARY_DIRS, ${PROJECT_NAME}_DEFINITIONS...)
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_create_project name)
+
+	# Creates the variable ${PROJECT_NAME} containing the project name
+	project(${name})
+
+	#set(${PROJECT_NAME}_PROJECT_TYPE "" CACHE STRING "${PROJECT_NAME} project type (Static, Shared, Plugin, Executable)")
+
+	set(${PROJECT_NAME}_SRCS "")
+
+	# Resets the include directories
+	set_directory_properties(PROPERTIES INCLUDE_DIRECTORIES "")
+	set(${PROJECT_NAME}_INCLUDE_DIRS "" CACHE INTERNAL "${PROJECT_NAME} public include directories")
+	set(${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS "")
+
+	set(${PROJECT_NAME}_LIBRARIES "" CACHE INTERNAL "${PROJECT_NAME} public libraries")
+	set(${PROJECT_NAME}_PRIVATE_LIBRARIES "")
+
+	# Resets link directories (e.g library directories, e.g library paths)
+	set_directory_properties(PROPERTIES LINK_DIRECTORIES "")
+	set(${PROJECT_NAME}_LIBRARY_DIRS "" CACHE INTERNAL "${PROJECT_NAME} public library directories")
+	set(${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS "" CACHE INTERNAL "${PROJECT_NAME} private library directories")
+
+	# Resets the definitions
+	set_directory_properties(PROPERTIES DEFINITIONS "")
+	set_directory_properties(PROPERTIES DEFINITION "")
+	set(${PROJECT_NAME}_DEFINITIONS "" CACHE INTERNAL "${PROJECT_NAME} public definitions")
+	set(${PROJECT_NAME}_PRIVATE_DEFINITIONS "")
+
+	# Resets compile flags
+	set(${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS "")
+
+	# Resets link flags
+	set(${PROJECT_NAME}_PUBLIC_LINK_FLAGS "")
+	set(${PROJECT_NAME}_PRIVATE_LINK_FLAGS "")
+
+	# Resets build version and API version
+	set(${PROJECT_NAME}_BUILD_VERSION "")
+	set(${PROJECT_NAME}_API_VERSION "")
+
+endmacro (ow_create_project)
+
+
+*****  OWCreateProjectBinary.cmake  *****
+
+# - ow_create_project_binary(arg1 ... argN)
+# Creates a binary (static/shared/plugin library or a executable) using the current project
+#
+# This function should be the last one to be called in a CMakeLists.txt
+# The binary generated is named after ${PROJECT_NAME} variable
+# The type of binary generated depends on the function ow_create_*() that you called before:
+# - ow_create_executable()
+# - ow_create_shared_library()
+# - ow_create_static_library()
+# - ow_create_plugin_library()
+# This info is stored inside ${PROJECT_NAME}_PROJECT_TYPE variable
+# that can be either Static, Shared, Plugin or Executable
+# ${PROJECT_NAME}_PROJECT_TYPE variable can be overwritten via CMake cache
+# This allow you to change a static library to a shared one for example
+# even if ow_create_static_library() is used inside the CMakeLists.txt
+#
+# Binaries are copied to ${PROJECT_BINARY_COPY_DIR} (=${BUILD_DIR} by default) directory using ow_post_build_copy_file()
+# Not all binaries are copied, only *.pdb, *.exe, *.so, *.dylib, *.dll, *.app
+# .a and .lib binaries are not copied (not useful to have them inside ${BUILD_DIR})
+#
+# The variable PROJECT_BINARY_COPY_DIR may be set before calling this macro
+# the path where to copy the resulting project binary.
+#
+# If you used ow_create_executable(), arguments can be:
+# WIN32, MACOSX_BUNDLE, EXCLUDE_FROM_ALL...
+# Check CMake documentation for full documentation
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# set(PROJECT_BINARY_COPY_DIR ${BUILD_DIR}/mydir/)
+# ow_create_project_binary()
+#
+# Output generated:
+# gcc mytext.c -o mytest
+#
+# Internally ow_create_project_binary() wrapps CMake functions add_library() and add_executable()
+# ow_create_project_binary() calls ow_prepare_project_binary() first, performs some tasks and then calls
+# ow_finish_project_binary() in order to complete the binary generation processus
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_create_project_binary)
+
+	ow_prepare_project_binary()
+
+	if (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Static)
+		add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SRCS})
+	endif (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Static)
+
+	# Default value for ${PROJECT_BINARY_COPY_DIR}
+	if (NOT PROJECT_BINARY_COPY_DIR)
+		set(PROJECT_BINARY_COPY_DIR ${BUILD_DIR})
+	endif (NOT PROJECT_BINARY_COPY_DIR)
+
+	# Shared library
+	if (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Shared)
+
+		add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SRCS})
+
+		# Copy project binary
+		if (MSVC)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.dll ${PROJECT_BINARY_COPY_DIR}/)
+			if (CMAKE_BUILD_TYPE STREQUAL Debug OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+				ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pdb ${PROJECT_BINARY_COPY_DIR}/)
+			endif (CMAKE_BUILD_TYPE STREQUAL Debug OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+		endif (MSVC)
+
+		if (MINGW)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/lib${PROJECT_NAME}.dll ${PROJECT_BINARY_COPY_DIR}/${PROJECT_NAME}.dll)
+		endif (MINGW)
+
+		if (UNIX AND NOT APPLE)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/lib${PROJECT_NAME}.so ${PROJECT_BINARY_COPY_DIR}/)
+		endif (UNIX AND NOT APPLE)
+
+	endif (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Shared)
+
+	# Plugin library
+	if (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Plugin)
+
+		list(REMOVE_ITEM ${PROJECT_NAME}_LIBRARIES ${PROJECT_NAME})
+		set(${PROJECT_NAME}_LIBRARIES
+			${${PROJECT_NAME}_LIBRARIES}
+			CACHE INTERNAL "${PROJECT_NAME} public libraries"
+		)
+
+		add_library(${PROJECT_NAME} MODULE ${${PROJECT_NAME}_SRCS})
+
+		# Copy project binary
+		if (MSVC)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.dll ${PROJECT_BINARY_COPY_DIR}/)
+			if (CMAKE_BUILD_TYPE STREQUAL Debug OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+				ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pdb ${PROJECT_BINARY_COPY_DIR}/)
+			endif (CMAKE_BUILD_TYPE STREQUAL Debug OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+		endif (MSVC)
+
+		if (MINGW)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/lib${PROJECT_NAME}.dll ${PROJECT_BINARY_COPY_DIR}/lib${PROJECT_NAME}.dll)
+		endif (MINGW)
+
+		if (UNIX AND NOT APPLE)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/lib${PROJECT_NAME}.so ${PROJECT_BINARY_COPY_DIR}/)
+		endif (UNIX AND NOT APPLE)
+
+	endif (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Plugin)
+
+	# Executable
+	if (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Executable)
+
+		list(REMOVE_ITEM ${PROJECT_NAME}_LIBRARIES ${PROJECT_NAME})
+		set(${PROJECT_NAME}_LIBRARIES
+			${${PROJECT_NAME}_LIBRARIES}
+			CACHE INTERNAL "${PROJECT_NAME} public libraries"
+		)
+
+		if (CMAKE_BUILD_TYPE STREQUAL Debug)
+			# With console, /SUBSYSTEM:CONSOLE
+			add_executable(${PROJECT_NAME} ${ARGN} ${${PROJECT_NAME}_SRCS})
+		else (CMAKE_BUILD_TYPE STREQUAL Debug)
+			# Without console, /SUBSYSTEM:WINDOWS
+			add_executable(${PROJECT_NAME} WIN32 ${ARGN} ${${PROJECT_NAME}_SRCS})
+		endif (CMAKE_BUILD_TYPE STREQUAL Debug)
+
+		# Copy project binary
+		if (MSVC)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.exe ${PROJECT_BINARY_COPY_DIR}/)
+			if (CMAKE_BUILD_TYPE STREQUAL Debug OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+				ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pdb ${PROJECT_BINARY_COPY_DIR}/)
+			endif (CMAKE_BUILD_TYPE STREQUAL Debug OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+		endif (MSVC)
+
+		if (APPLE)
+			ow_list_contains("${ARGN}" "MACOSX_BUNDLE" result)
+			if (result)
+				ow_post_build_copy_dir(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.app ${PROJECT_BINARY_COPY_DIR}/${PROJECT_NAME}.app)
+			else (result)
+				ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME} ${PROJECT_BINARY_COPY_DIR}/)
+			endif (result)
+		endif (APPLE)
+
+		if (UNIX AND NOT APPLE)
+			ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME} ${PROJECT_BINARY_COPY_DIR}/)
+		endif (UNIX AND NOT APPLE)
+
+	endif (${PROJECT_NAME}_PROJECT_TYPE STREQUAL Executable)
+
+	ow_finish_project_binary()
+
+endmacro (ow_create_project_binary)
+
+
+*****  OWCreateSharedLibrary.cmake  *****
+
+# - ow_create_shared_library(name)
+# Creates a shared library (.dll, .dylib, .so) given its name
+#
+# ow_create_shared_library() creates a project named ${name} (${PROJECT_NAME})
+# and works in combination with ow_create_project_binary()
+#
+# Example:
+# ow_create_shared_library(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output generated:
+# gcc mytext.c -shared -o mytest.so
+#
+# Internally, ow_create_shared_library() sets variable ${PROJECT_NAME}_PROJECT_TYPE
+# to Shared
+# This variable will be used later on by ow_create_project_binary()
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_create_shared_library name)
+
+	ow_create_project(${name})
+
+	set(${PROJECT_NAME}_PROJECT_TYPE
+		Shared
+		CACHE STRING "${PROJECT_NAME} project type (Static, Shared, Plugin, Executable)"
+	)
+
+endmacro (ow_create_shared_library)
+
+
+*****  OWCreateStaticLibrary.cmake  *****
+
+# - ow_create_static_library(name)
+# Creates a static library (.lib, .a) given its name
+#
+# ow_create_static_library() creates a project named ${name} (${PROJECT_NAME})
+# and works in combination with ow_create_project_binary()
+#
+# Example:
+# ow_create_static_library(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output generated:
+# gcc mytext.c -static -o mytest.so
+#
+# Internally, ow_create_static_library() sets variable ${PROJECT_NAME}_PROJECT_TYPE
+# to Static
+# This variable will be used later on by ow_create_project_binary()
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_create_static_library name)
+
+	ow_create_project(${name})
+
+	set(${PROJECT_NAME}_PROJECT_TYPE
+		Static
+		CACHE STRING "${PROJECT_NAME} project type (Static, Shared, Plugin, Executable)"
+	)
+
+endmacro (ow_create_static_library)
+
+
+*****  OWDeclareInstallScript.cmake  *****
+
+# - ow_declare_install_script()
+# Declares a CMakeLists.txt that will be run when ${PROJECT_NAME}-install target is run
+#
+# Permits to have not only one install target but many ${PROJECT_NAME}-install targets:
+# allows more flexibility
+# Creates directory ${CMAKE_BINARY_DIR}/install/${PROJECT_NAME} and copies generated files
+# from install target inside
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_declare_install_script)
+
+	ow_check_project()
+
+	file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/install/${PROJECT_NAME}")
+
+	set(_MORE_OPTIONS "")
+	if (WIN32)
+		set(_MORE_OPTIONS "-G" "NMake Makefiles")
+	endif (WIN32)
+
+	add_custom_target(${PROJECT_NAME}-install
+		"cmake" ${_MORE_OPTIONS} "${CMAKE_CURRENT_SOURCE_DIR}/install" "-DSOURCE_DIR=${CMAKE_SOURCE_DIR}" "-DBINARY_DIR=${CMAKE_BINARY_DIR}"
+		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/install/${PROJECT_NAME}")
+
+	add_dependencies(${PROJECT_NAME}-install ${PROJECT_NAME})
+
+endmacro (ow_declare_install_script)
+
+
+*****  OWDefaultCompilerFlags.cmake  *****
+
+# Defines default compiler/linker flags
+#
+# GNU GCC Command Options: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Invoking-GCC.html
+# GNU GCC Warning Options: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Warning-Options.html
+# GNU GCC Link Options: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/Link-Options.html
+# Microsoft Visual C++ Compiler Options: http://msdn2.microsoft.com/en-us/library/fwkeyyhe.aspx
+# Microsoft Visual C++ Linker Options: http://msdn2.microsoft.com/en-us/library/y0zzbyt4.aspx
+#
+# Copyright (C) 2006-2007  Wengo
+# Copyright (C) 2006-2007  Andreas Schneider <mail@cynapses.org>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+# With -fPIC
+if (UNIX AND NOT WIN32)
+	if (CMAKE_SIZEOF_VOID_P MATCHES "8")
+		ow_check_cxx_compiler_flag("-fPIC" WITH_FPIC)
+		if (WITH_FPIC)
+			add_definitions(-fPIC)
+		endif (WITH_FPIC)
+	endif (CMAKE_SIZEOF_VOID_P MATCHES "8")
+
+	if (GCC4)
+		# See http://www.cynapses.org/tmp/gcc/fortify_source
+		add_definitions(-D_FORTIFY_SOURCE=2)
+	endif (GCC4)
+endif (UNIX AND NOT WIN32)
+
+# Enable warnings
+if (MSVC)
+	#add_definitions(/W4)
+else (MSVC)
+	add_definitions(-Wall -Wstrict-aliasing)
+	if (GCC4)
+		add_definitions(-Wextra)
+	endif (GCC4)
+	add_definitions(-Wno-unused-parameter)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wmissing-prototypes")
+endif (MSVC)
+
+if (CMAKE_BUILD_TYPE STREQUAL Debug)
+	if (MSVC)
+		# No MSVCRT.LIB linking under Visual C++ when in debug mode
+		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:MSVCRT.LIB")
+		set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:MSVCRT.LIB")
+		set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} /NODEFAULTLIB:MSVCRT.LIB")
+	endif (MSVC)
+
+	if (APPLE)
+		# Use dwarf-2 debugging format: it produces much smaller executables
+		# (from 372M to 37MB on my machine)
+		add_definitions(-gdwarf-2)
+	endif (APPLE)
+
+	# Defines DEBUG when in debug mode
+	add_definitions(-DDEBUG)
+else (CMAKE_BUILD_TYPE STREQUAL Debug)
+	if (MSVC)
+		# No MSVCRTD.LIB linking under Visual C++ when in release mode
+		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:MSVCRTD.LIB")
+		set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:MSVCRTD.LIB")
+		set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} /NODEFAULTLIB:MSVCRTD.LIB")
+	endif (MSVC)
+endif (CMAKE_BUILD_TYPE STREQUAL Debug)
+
+if (CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+	if (MSVC)
+		# /O2 Creates fast code
+		# /O1 Creates small code
+		string(REPLACE "/O2" "/O1" CMAKE_C_FLAGS_RELWITHDEBINFO ${CMAKE_C_FLAGS_RELWITHDEBINFO})
+		string(REPLACE "/O2" "/O1" CMAKE_CXX_FLAGS_RELWITHDEBINFO ${CMAKE_CXX_FLAGS_RELWITHDEBINFO})
+	endif (MSVC)
+
+	add_definitions(-DDEBUG)
+endif (CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
+
+if (CMAKE_VERBOSE_MAKEFILE)
+	if (NOT MSVC)
+		add_definitions(-fmessage-length=0)
+	endif (NOT MSVC)
+endif (CMAKE_VERBOSE_MAKEFILE)
+
+#ow_get_gcc_version(version)
+#message("GCC Version: ${version}")
+#message("CFLAGS: ${CMAKE_C_FLAGS}")
+#message("CXXFLAGS: ${CMAKE_CXX_FLAGS}")
+
+
+*****  OWDefaultConfig.cmake  *****
+
+# Defines general default CMake configuration options
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+# Mininum required CMake version
+cmake_minimum_required(VERSION 2.4.4)
+
+# This option is OFF for optimization reasons (compilation time)
+# Always include srcdir and builddir in include path
+# This saves typing ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} in
+# about every subdir
+# Since CMake 2.4.0
+set(CMAKE_INCLUDE_CURRENT_DIR OFF)
+
+# By default CMake appends the directories onto the current list of directories
+# This default behavior can be changed by setting CMAKE_INCLUDE_DIRECTORIES_BEFORE to ON
+# It puts the include dirs which are in the source or build tree
+# before all other include dirs, so the headers in the sources
+# are prefered over the already installed ones
+# Since CMake 2.4.1
+set(CMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE ON)
+
+# Use colored output
+# Since CMake 2.4.0
+set(CMAKE_COLOR_MAKEFILE ON)
+
+# Define the generic version of the libraries
+set(GENERIC_LIB_VERSION "1.0.0")
+set(GENERIC_LIB_SOVERSION "1")
+
+
+*****  OWDetectSystem.cmake  *****
+
+# Detects system compiler and OS used
+#
+# Operating systems:
+# - WIN32
+# - UNIX
+#   - CYGWIN
+#   - APPLE
+#   - LINUX
+#
+# Compilers:
+# - MSVC (Microsoft Visual C++)
+#   - MSVC60 (Visual C++ 6)
+#   - MSVC70 (Visual C++ .NET)
+#   - MSVC71 (Visual C++ 2003)
+#   - MSVC80 (Visual C++ 2005)
+# - GCC
+#   - MINGW (Native GCC under Windows)
+#   - GCC3 (GNU GCC 3.x)
+#   - GCC4 (GNU GCC 4.x)
+#     - GCC40 (GNU GCC 4.0.x)
+#     - GCC41 (GNU GCC 4.1.x)
+# - BORLAND (Borland C++)
+# - WATCOM (Watcom C/C++ Compiler)
+#
+# Copyright (C) 2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+# GCC
+set(GCC ${CMAKE_COMPILER_IS_GNUCC})
+ow_get_gcc_version(version)
+if (version MATCHES "3.*")
+	set(GCC3 true)
+endif (version MATCHES "3.*")
+if (version MATCHES "4.*")
+	set(GCC4 true)
+endif (version MATCHES "4.*")
+if (version MATCHES "4\\.0.*")
+	set(GCC40 true)
+endif (version MATCHES "4\\.0.*")
+if (version MATCHES "4\\.1.*")
+	set(GCC41 true)
+endif (version MATCHES "4\\.1.*")
+
+# LINUX
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+	set(LINUX true)
+endif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+
+
+*****  OWDumpOWBuild.cmake  *****
+
+# - ow_dump_owbuild()
+# Internal function, dump OWBuild source code in one file
+#
+# This is for documentation propose: it is easier to make a search in one
+# file where all source code is contained
+#
+# Copyright (C) 2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_dump_owbuild)
+
+	set(owbuildPath ${CMAKE_SOURCE_DIR}/owbuild/owbuild)
+	set(owbuildDumpFile ${owbuildPath}/owbuild-dump.txt)
+
+	# Create dump file
+	file(WRITE ${owbuildDumpFile} "")
+
+	# File title
+	file(APPEND ${owbuildDumpFile} "OWBuild Source Code Dump")
+
+	file(GLOB fileList ${owbuildPath}/*.cmake)
+	if (fileList)
+		foreach (file ${fileList})
+			file(READ ${file} output)
+			get_filename_component(filename ${file} NAME)
+			file(APPEND ${owbuildDumpFile} "\n\n*****  ${filename}  *****\n\n${output}")
+		endforeach (file ${fileList})
+	endif (fileList)
+
+endmacro (ow_dump_owbuild)
+
+ow_dump_owbuild()
+
+
+*****  OWEnsureOutOfSourceBuild.cmake  *****
+
+# - ow_ensure_out_of_source_build()
+# Ensures build directory is different from source directory
+#
+# If the build directory is the source directory then it will bump
+# an error message and stop the compilation processus
+#
+# Copyright (C) 2006  Alexander Neundorf <neundorf@kde.org>
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_ensure_out_of_source_build)
+
+	string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" inSource)
+	if (inSource)
+		message(FATAL_ERROR "A separate build directory is required, please create one and run cmake from this directory")
+	endif (inSource)
+
+endmacro (ow_ensure_out_of_source_build)
+
+
+*****  OWFinishProjectBinary.cmake  *****
+
+# - ow_finish_project_binary()
+# Internal function, finishes the creation of a binary file, used by ow_create_shared_library(), ow_create_executable()...
+#
+# General algorithm is:
+# ow_create_project() calls ow_create_shared_library(), ow_create_executable()...
+# ow_create_project_binary() calls ow_prepare_project_binary() and then ow_finish_project_binary()
+#
+# ow_finish_project_binary() exists since CMake functions target_link_libraries(),
+# set_target_properties() need to be run after add_executable(),
+# add_library() (called inside ow_create_project_binary())
+#
+# ow_finish_project_binary() handles link libraries, compile flags (including defines),
+# link flags and api/build version
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_finish_project_binary)
+
+	ow_check_project()
+
+	ow_unique(${PROJECT_NAME}_LIBRARIES ${${PROJECT_NAME}_LIBRARIES} ${${PROJECT_NAME}_PRIVATE_LIBRARIES})
+	target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_LIBRARIES})
+
+	if (${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS)
+		ow_unique(${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS ${${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS})
+
+		string(REPLACE ";" " " ${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS "${${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS}")
+
+		set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS ${${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS})
+	endif (${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS)
+
+	if (${PROJECT_NAME}_DEFINITIONS OR ${PROJECT_NAME}_PRIVATE_DEFINITIONS)
+		ow_unique(unique ${${PROJECT_NAME}_DEFINITIONS} ${${PROJECT_NAME}_PRIVATE_DEFINITIONS})
+
+		string(REPLACE ";" " " unique "${unique}")
+
+		# Does not work under MacOSX
+		#set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS ${unique})
+		add_definitions(${unique})
+	endif (${PROJECT_NAME}_DEFINITIONS OR ${PROJECT_NAME}_PRIVATE_DEFINITIONS)
+
+	if (${PROJECT_NAME}_PUBLIC_LINK_FLAGS OR ${PROJECT_NAME}_PRIVATE_LINK_FLAGS)
+		ow_unique(unique ${${PROJECT_NAME}_PUBLIC_LINK_FLAGS} ${${PROJECT_NAME}_PRIVATE_LINK_FLAGS})
+
+		string(REPLACE ";" " " unique "${unique}")
+
+		set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS ${unique})
+	endif (${PROJECT_NAME}_PUBLIC_LINK_FLAGS OR ${PROJECT_NAME}_PRIVATE_LINK_FLAGS)
+
+	if (${PROJECT_NAME}_BUILD_VERSION AND ${PROJECT_NAME}_API_VERSION)
+		set_target_properties(${PROJECT_NAME}
+			PROPERTIES
+				VERSION ${${PROJECT_NAME}_BUILD_VERSION}
+				SOVERSION ${${PROJECT_NAME}_API_VERSION}
+		)
+	endif (${PROJECT_NAME}_BUILD_VERSION AND ${PROJECT_NAME}_API_VERSION)
+
+	if (${PROJECT_NAME}_PROJECT_TYPE MATCHES Shared OR ${PROJECT_NAME}_PROJECT_TYPE MATCHES Plugin)
+		ow_add_shared_library_definitions()
+	endif (${PROJECT_NAME}_PROJECT_TYPE MATCHES Shared OR ${PROJECT_NAME}_PROJECT_TYPE MATCHES Plugin)
+
+	if (CMAKE_VERBOSE_MAKEFILE)
+		ow_project_log()
+	endif (CMAKE_VERBOSE_MAKEFILE)
+
+endmacro (ow_finish_project_binary)
+
+
+*****  OWGetCurrentDateTime.cmake  *****
+
+# - ow_get_current_date_time(time)
+# Gets the current date time
+#
+# Example:
+# ow_get_current_date_time(time)
+# message(${time})
+#
+# Output generated:
+# 20070323121316
+#
+# which means: 2007-03-23 12:13:16 (YYYY-MM-DD HH:MM:SS)
+#
+# Copyright (C) 2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_get_current_date_time time)
+
+	if (UNIX AND NOT WIN32)
+		set(flags -DLINK_LIBRARIES=stdc++)
+	endif (UNIX AND NOT WIN32)
+
+	try_run(runResult compileResult ${CMAKE_BINARY_DIR}
+		"${CMAKE_CURRENT_SOURCE_DIR}/owbuild/owbuild/getcurrentdatetime.cpp"
+		OUTPUT_VARIABLE ${time}
+		CMAKE_FLAGS ${flags}
+	)
+	string(REGEX MATCH "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" ${time} ${${time}})
+
+endmacro (ow_get_current_date_time)
+
+
+*****  OWGetGCCVersion.cmake  *****
+
+# - ow_get_gcc_version(version)
+# Internal function, gets GNU GCC version number
+#
+# Example:
+# ow_get_gcc_version(version)
+# message(${version})
+#
+# Output generated:
+# 4.0.1
+#
+# Copyright (C) 2007  Wengo
+# Copyright (C) 2007  Andreas Schneider <mail@cynapses.org>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_get_gcc_version version)
+
+	if (CMAKE_COMPILER_IS_GNUCC)
+		exec_program(
+			${CMAKE_CXX_COMPILER}
+			ARGS
+				--version
+			OUTPUT_VARIABLE
+				output
+		)
+		string(REGEX REPLACE ".* ([0-9]\\.[0-9]\\.[0-9]) .*" "\\1" version ${output})
+	endif(CMAKE_COMPILER_IS_GNUCC)
+
+endmacro (ow_get_gcc_version)
+
+
+*****  OWGetSvnRevision.cmake  *****
+
+# - ow_get_svn_revision(revision)
+# Gets current subversion revision number
+#
+# Performs a svnversion command line on ${CMAKE_SOURCE_DIR} directory
+# You need to install the subversion command line, check http://subversion.tigris.org/
+# if you don't have it already
+# ow_get_svn_revision() is being called by OWInitializationInfo.cmake that sets
+# SVN_REVSION variable already thus you don't need to call ow_get_svn_revision()
+#
+# Example:
+# set(SVN_REVISION "0")
+# ow_get_svn_revision(SVN_REVISION)
+# message(STATUS "svn revision: " ${SVN_REVISION})
+#
+# Copyright (C) 2006  Andreas Schneider <mail@cynapses.org>
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_get_svn_revision revision)
+
+	if (NOT SUBVERSION_FOUND)
+		find_package(Subversion)
+	endif (NOT SUBVERSION_FOUND)
+
+	find_file(SVN_DOT_DIR
+		NAMES
+			entries
+		PATHS
+			${CMAKE_SOURCE_DIR}/.svn
+	)
+
+	if (SUBVERSION_SVN_VERSION_EXECUTABLE AND SVN_DOT_DIR)
+		execute_process(
+			COMMAND
+				${SUBVERSION_SVN_VERSION_EXECUTABLE} ${CMAKE_SOURCE_DIR} --no-newline
+			RESULT_VARIABLE
+				SVN_REVISION_RESULT_VARIABLE
+			OUTPUT_VARIABLE
+				SVN_REVISION_OUTPUT_VARIABLE
+		)
+
+		if (SVN_REVISION_RESULT_VARIABLE EQUAL 0)
+			string(REGEX MATCH "^[0-9]+" ${revision} ${SVN_REVISION_OUTPUT_VARIABLE})
+		else (SVN_REVISION_RESULT_VARIABLE EQUAL 0)
+			set(${revision} 0)
+		endif (SVN_REVISION_RESULT_VARIABLE EQUAL 0)
+	else (SUBVERSION_SVN_VERSION_EXECUTABLE AND SVN_DOT_DIR)
+		message("Subversion (svn) command line not found, it is recommended to install it")
+	endif (SUBVERSION_SVN_VERSION_EXECUTABLE AND SVN_DOT_DIR)
+
+endmacro (ow_get_svn_revision)
+
+
+*****  OWGlobalVariables.cmake  *****
+
+# Defines global public variables
+#
+# CMAKE_BUILD_TYPE = set to Debug by default
+# BUILD_TYPE = same as CMAKE_BUILD_TYPE but lowercase (debug, release, minsizerel...)
+# BUILD_DIR = directory where compiled files will be copied, ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE} by default
+# LOCALE_COPY_DIR = location for translations files (*.qm), ${BUILD_DIR}/lang by default
+# SVN_REVISION = subversion revision number, see ow_get_svn_revision()
+# CURRENT_DATE_TIME = current date time: 20070323121316 (e.g 2007-03-23 12:13:16)
+#
+# Useful CMake variables:
+# http://www.cmake.org/Wiki/CMake_Useful_Variables
+# All variables defined by CMake:
+# http://www.cmake.org/Wiki/CMake_Useful_Variables/Get_Variables_From_CMake_Dashboards
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+# Sets a global variable to test if OWBuild is already included or not in the build system
+set(OWBUILD_INCLUDED TRUE)
+
+# Sets the default build type to Debug
+if (NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE
+		Debug
+		CACHE STRING "Choose the build type, options are: None Debug Release RelWithDebInfo MinSizeRel" FORCE
+	)
+endif (NOT CMAKE_BUILD_TYPE)
+
+# Directory where compiled files will be copied, ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE} by default
+# In lower case
+string(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
+set(BUILD_DIR
+	${CMAKE_BINARY_DIR}/${BUILD_TYPE}
+	CACHE PATH "Build directory, depends on build type" FORCE
+)
+
+# Location for translation files (*.qm), ${BUILD_DIR}/lang by default
+set(LOCALE_COPY_DIR
+	"${BUILD_DIR}/lang"
+	CACHE PATH "Location for translations (*.qm files)" FORCE
+)
+file(MAKE_DIRECTORY ${LOCALE_COPY_DIR})
+
+# Gets svn revision
+set(SVN_REVISION "0")
+ow_get_svn_revision(SVN_REVISION)
+# Bugfix with svn revision number that can integrate a : and
+# this does not work under Windows for the installer name, replace it by -
+string(REPLACE ":" "-" SVN_REVISION ${SVN_REVISION})
+
+# Gets current date time
+set(CURRENT_DATE_TIME "0")
+ow_get_current_date_time(CURRENT_DATE_TIME)
+
+
+*****  OWHdiUtil.cmake  *****
+
+# - ow_hdiutil(volname src dst)
+# Mac OS X only.
+#  calls "hdiutil create -fs HFS+ -volname ${volname} -srcfolder ${src} ${dst}"
+#
+# hdiutil creates a .dmg file.
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_hdiutil volname src dst)
+
+	if (APPLE)
+		exec_program("hdiutil"
+			ARGS
+				"create -fs HFS+ -volname ${volname} -srcfolder ${src} ${dst}"
+		)
+	endif (APPLE)
+
+endmacro (ow_hdiutil)
+
+
+*****  OWInitializationInfo.cmake  *****
+
+# Shows general debug informations (OS, processor, compiler, build directory, build type...)
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+message(STATUS "OS: " ${CMAKE_SYSTEM})
+message(STATUS "Processor: " ${CMAKE_SYSTEM_PROCESSOR})
+message(STATUS "Compiler: " ${CMAKE_C_COMPILER})
+message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
+message(STATUS "Build tool: " ${CMAKE_BUILD_TOOL})
+message(STATUS "Build directory: " ${BUILD_DIR})
+message(STATUS "svn revision: " ${SVN_REVISION})
+message(STATUS "Time: " ${CURRENT_DATE_TIME})
+
+
+*****  OWListContains.cmake  *****
+
+# - ow_list_contains(list string result)
+# Internal function, checks if ${string} is in ${list}
+#
+# Example:
+# set(list
+# 	"bonjour"
+# 	"hello"
+# 	"guten tag"
+# 	"ciao"
+# 	"hola"
+# )
+# ow_list_contains(${list} "hello" result)
+# message("list contains hello?" ${result})
+#
+# Output generated:
+# list contains hello? YES
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_list_contains list string result)
+
+	set(${result} NO)
+
+	foreach (loop ${list})
+		if (${loop} MATCHES ${string})
+			set(${result} YES)
+		endif (${loop} MATCHES ${string})
+	endforeach (loop)
+
+endmacro (ow_list_contains)
+
+
+*****  OWLocaleRelease.cmake  *****
+
+# - ow_locale_release(tsDir)
+# Generates translations, this is specific to Qt-4
+#
+# Runs lrelease using .ts files and generates .qm files
+# See ow_locale_update()
+#
+# Example:
+# ow_locale_release(path/to/ts_files)
+# $> make lrelease
+# This will generate the .qm files
+#
+# If you want to build generate .qm files automatically when running make, add
+# this line:
+# add_dependencies(your_main_target lrelease)
+#
+# Copyright (C) 2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+# qmFiles = output
+# ARGN = input, .ts files
+macro (ow_lrelease qmFiles)
+	# Location for translation files (*.qm), ${BUILD_DIR}/lang by default
+	file(MAKE_DIRECTORY ${LOCALE_COPY_DIR})
+
+	foreach(tsFile ${ARGN})
+
+		get_filename_component(basename ${tsFile} NAME_WE)
+
+		get_filename_component(qmFile
+			${LOCALE_COPY_DIR}/${basename}.qm
+			ABSOLUTE
+		)
+
+		add_custom_command(
+			OUTPUT ${qmFile}
+			COMMAND
+				${QT_LRELEASE_EXECUTABLE}
+				-nounfinished
+				-verbose
+				${tsFile}
+				-qm ${qmFile}
+			DEPENDS
+				${tsFile}
+			WORKING_DIRECTORY
+				${CMAKE_CURRENT_SOURCE_DIR}
+		)
+
+		set(qmFiles ${${qmFiles}} ${qmFile})
+
+	endforeach(tsFile ${ARGN})
+
+endmacro (ow_lrelease)
+
+
+macro (ow_locale_release tsDir)
+
+	find_program(QT_LRELEASE_EXECUTABLE
+		NAMES
+			lrelease-qt4
+			lrelease
+		PATHS
+			$ENV{QTDIR}/bin
+			"[HKEY_CURRENT_USER\\Software\\Trolltech\\Qt3Versions\\4.0.0;InstallDir]/bin"
+			"[HKEY_CURRENT_USER\\Software\\Trolltech\\Versions\\4.0.0;InstallDir]/bin"
+	)
+
+	message(STATUS "Found lrelease: ${QT_LRELEASE_EXECUTABLE}")
+
+	file(GLOB tsFiles ${tsDir}/*.ts)
+
+	ow_lrelease(qmFiles ${tsFiles})
+	add_custom_target(
+		lrelease DEPENDS ${qmFiles}
+	)
+
+endmacro (ow_locale_release)
+
+
+*****  OWLocaleUpdate.cmake  *****
+
+# - ow_locale_update(proFile dir1 ... dirN)
+# Generates translations .ts files, this is specific to Qt-4
+#
+# Generates a QMake .pro file ${CMAKE_CURRENT_SOURCE_DIR}/lang.pro for translations
+# .cpp, .c, .ui, .ts... files are found recursively using file(GLOB_REVERSE)
+# then it runs lupdate using the .pro file to generate .ts files
+# See ow_locale_release()
+#
+# QMake .pro file ${CMAKE_CURRENT_SOURCE_DIR}/lang.pro generated:
+#
+# HEADERS += header.h \
+#            header.hh \
+#            header.hpp \
+#            header.hxx \
+#            header.h++ \
+#
+# SOURCES += source.c \
+#            source.cpp \
+#            source.cc \
+#            source.cxx \
+#            source.c++ \
+#
+# FORMS += form.ui \
+#
+# TRANSLATIONS += translation.ts \
+#
+# Example:
+# add_custom_target(lupdate
+# 	COMMAND
+# 		"${CMAKE_COMMAND}"
+# 		-DPRO_FILE="${PRO_FILE}"
+# 		-P "${CMAKE_CURRENT_SOURCE_DIR}/owbuild/owbuild/OWLocaleUpdate.cmake"
+# 	WORKING_DIRECTORY
+# 		${CMAKE_CURRENT_SOURCE_DIR}
+# )
+# $> make lupdate
+# This will create a file ${CMAKE_CURRENT_SOURCE_DIR}/lang.pro + update .ts files
+#
+# Copyright (C) 2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+# Creates the QMake .pro file
+# tsFiles = output
+# proFile = intput
+# ARGN = intput, directories where to look for source files
+macro (ow_generate_pro_file tsFiles proFile)
+
+	set(headers "")
+	set(sources "")
+	set(forms "")
+	set(translations "")
+
+	message(STATUS "Please wait while generating the QMake .pro file...")
+	message(STATUS "QMake .pro file: " ${proFile})
+
+	# Other possible algorithm:
+	# file(GLOB_RECURSE headers ${dir}/*.h)
+	# file(GLOB_RECURSE sources ${dir}/*.cpp)
+	# file(GLOB_RECURSE forms ${dir}/*.ui)
+	# file(GLOB_RECURSE translations ${dir}/*.ts)
+
+	foreach (dir ${ARGN})
+
+		message(STATUS "Scan directory: "${dir})
+
+		file(GLOB_RECURSE fileList ${dir}/*)
+
+		if (fileList)
+			foreach (file ${fileList})
+
+				get_filename_component(ext ${file} EXT)
+
+				# Removes all path containing .svn or CVS
+				if (NOT ${file} MATCHES ".*\\.svn|CVS.*")
+
+					if (ext)
+
+						# Add file to ${headers}
+						if ("${ext}" STREQUAL ".h")
+							set(headers ${headers} ${file})
+						endif ("${ext}" STREQUAL ".h")
+						if ("${ext}" STREQUAL ".hh")
+							set(headers ${headers} ${file})
+						endif ("${ext}" STREQUAL ".hh")
+						if ("${ext}" STREQUAL ".hpp")
+							set(headers ${headers} ${file})
+						endif ("${ext}" STREQUAL ".hpp")
+						if ("${ext}" STREQUAL ".hxx")
+							set(headers ${headers} ${file})
+						endif ("${ext}" STREQUAL ".hxx")
+						#if ("${ext}" STREQUAL ".h++")
+						#	set(headers ${headers} ${file})
+						#endif ("${ext}" STREQUAL ".h++")
+
+						# Add file to ${sources}
+						if ("${ext}" STREQUAL ".c")
+							set(sources ${sources} ${file})
+						endif ("${ext}" STREQUAL ".c")
+						if ("${ext}" STREQUAL ".cpp")
+							set(sources ${sources} ${file})
+						endif ("${ext}" STREQUAL ".cpp")
+						if ("${ext}" STREQUAL ".cc")
+							set(sources ${sources} ${file})
+						endif ("${ext}" STREQUAL ".cc")
+						if ("${ext}" STREQUAL ".cxx")
+							set(sources ${sources} ${file})
+						endif ("${ext}" STREQUAL ".cxx")
+						#if ("${ext}" STREQUAL ".c++")
+						#	set(sources ${sources} ${file})
+						#endif ("${ext}" STREQUAL ".c++")
+
+						# Add file to ${forms}
+						if ("${ext}" STREQUAL ".ui")
+							set(forms ${forms} ${file})
+						endif ("${ext}" STREQUAL ".ui")
+
+						# Add file to ${translations}
+						if ("${ext}" STREQUAL ".ts")
+							set(translations ${translations} ${file})
+						endif ("${ext}" STREQUAL ".ts")
+
+					endif (ext)
+
+				endif (NOT ${file} MATCHES ".*\\.svn|CVS.*")
+
+			endforeach (file ${fileList})
+		endif (fileList)
+
+	endforeach (dir ${ARGN})
+
+	message(STATUS "Write ${proFile}...")
+
+	# file(WRITE ) overwrites the file if it already exists, creates the file if it does not exist
+	file(WRITE ${proFile} "")
+
+	if (headers)
+		file(APPEND ${proFile} "HEADERS += \\\n")
+		foreach (header ${headers})
+			file(APPEND ${proFile} "           \"${header}\" \\\n")
+		endforeach (header ${headers})
+		file(APPEND ${proFile} "\n\n")
+	endif (headers)
+
+	if (sources)
+		file(APPEND ${proFile} "SOURCES += \\\n")
+		foreach (source ${sources})
+			file(APPEND ${proFile} "           \"${source}\" \\\n")
+		endforeach (source ${sources})
+		file(APPEND ${proFile} "\n\n")
+	endif (sources)
+
+	if (forms)
+		file(APPEND ${proFile} "FORMS += \\\n")
+		foreach (form ${forms})
+			file(APPEND ${proFile} "         \"${form}\" \\\n")
+		endforeach (form ${forms})
+		file(APPEND ${proFile} "\n\n")
+	endif (forms)
+
+	if (translations)
+		file(APPEND ${proFile} "TRANSLATIONS += \\\n")
+		foreach (translation ${translations})
+			file(APPEND ${proFile} "                \"${translation}\" \\\n")
+		endforeach (translation ${translations})
+		file(APPEND ${proFile} "\n\n")
+	endif (translations)
+
+	set(${tsFiles} ${translations})
+
+endmacro (ow_generate_pro_file)
+
+
+# Runs lupdate
+# proFile = input
+macro (ow_lupdate proFile)
+
+	find_program(QT_LUPDATE_EXECUTABLE
+		NAMES
+			lupdate-qt4
+			lupdate
+		PATHS
+			$ENV{QTDIR}/bin
+			"[HKEY_CURRENT_USER\\Software\\Trolltech\\Qt3Versions\\4.0.0;InstallDir]/bin"
+			"[HKEY_CURRENT_USER\\Software\\Trolltech\\Versions\\4.0.0;InstallDir]/bin"
+	)
+
+	message(STATUS "Found lupdate: ${QT_LUPDATE_EXECUTABLE}")
+
+	execute_process(
+		COMMAND
+			${QT_LUPDATE_EXECUTABLE}
+			-noobsolete
+			-verbose
+			${proFile}
+		WORKING_DIRECTORY
+			${CMAKE_CURRENT_SOURCE_DIR}
+	)
+
+endmacro (ow_lupdate)
+
+
+macro (ow_locale_update proFile)
+	ow_generate_pro_file(tsFiles ${proFile} ${ARGN})
+	ow_lupdate(${proFile})
+	message(STATUS "Translations .ts files generated")
+endmacro (ow_locale_update)
+
+
+# FIXME This is specific to WengoPhone
+# Didn't find another way to do it :(
+# maybe via ${CMAKE_COMMAND} -D
+ow_locale_update(
+	${PRO_FILE}
+	${CMAKE_CURRENT_SOURCE_DIR}/wengophone/src/presentation
+	${CMAKE_CURRENT_SOURCE_DIR}/crashreport
+	${CMAKE_CURRENT_SOURCE_DIR}/libs/qtutil
+	${CMAKE_CURRENT_SOURCE_DIR}/libs/owbrowser
+)
+
+
+*****  OWPostBuildCopyDir.cmake  *****
+
+# - ow_post_build_copy_dir(src dst)
+# Internal function, copies a directory to ${dst} using the current project
+#
+# The copy command is run after target ${PROJECT_NAME} has been built (POST_BUILD option from CMake)
+# Works the same as ow_copy_dir()
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_post_build_copy_dir(${CMAKE_CURRENT_SOURCE_DIR}/*.png ${BUILD_DIR}/.)
+#
+# ow_create_project_binary(mytest)
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_post_build_copy_dir src dst)
+
+	ow_check_project()
+
+	# Creates directory if necessary
+	get_filename_component(_path ${dst} PATH)
+	file(MAKE_DIRECTORY ${_path})
+
+	add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+			\"${src}\"
+			\"${dst}\"
+		COMMENT "Copying dir ${dst}"
+	)
+
+endmacro (ow_post_build_copy_dir)
+
+
+*****  OWPostBuildCopyFile.cmake  *****
+
+# - ow_post_build_copy_file(src dst)
+# Internal function, copies a file to ${dst} using the current project
+#
+# The copy command is run after target ${PROJECT_NAME} has been built (POST_BUILD option from CMake)
+# Works the same as ow_copy_file()
+#
+# Example:
+# ow_create_executable(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_post_build_copy_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.exe ${BUILD_DIR}/.)
+#
+# ow_create_project_binary(mytest)
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_post_build_copy_file src dst)
+
+	ow_check_project()
+
+	# Creates directory if necessary
+	get_filename_component(_path ${dst} PATH)
+	file(MAKE_DIRECTORY ${_path})
+
+	add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			\"${src}\"
+			\"${dst}\"
+		COMMENT "Copying file ${dst}"
+	)
+
+endmacro (ow_post_build_copy_file)
+
+
+*****  OWPrepareProjectBinary.cmake  *****
+
+# - ow_prepare_project_binary()
+# Internal function, prepares the creation of a binary file, used by ow_create_project_binary()
+#
+# ow_prepare_project_binary() uses include_directories()
+# and link_directories() CMake functions
+# See ow_finish_project_binary() and ow_create_project_binary() for complete documentation
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_prepare_project_binary)
+
+	ow_check_project()
+
+	if (NOT ${PROJECT_NAME}_SRCS)
+		message(FATAL_ERROR "No sources added, use ow_add_sources()")
+	endif (NOT ${PROJECT_NAME}_SRCS)
+
+	ow_add_public_libraries(${PROJECT_NAME})
+
+	ow_unique(unique ${${PROJECT_NAME}_INCLUDE_DIRS} ${${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS})
+	include_directories(${unique})
+
+	ow_unique(unique ${${PROJECT_NAME}_LIBRARY_DIRS} ${${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS})
+	link_directories(${unique})
+
+endmacro (ow_prepare_project_binary)
+
+
+*****  OWProjectLog.cmake  *****
+
+# - ow_project_log()
+# Internal function, shows debug informations about the current project
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_project_log)
+
+	ow_check_project()
+
+	message(STATUS "**")
+	message(STATUS "** PROJECT_NAME=${PROJECT_NAME}")
+
+	message(STATUS "** ${PROJECT_NAME}_PROJECT_TYPE=${${PROJECT_NAME}_PROJECT_TYPE}")
+
+	#message(STATUS "** ${PROJECT_NAME}_SRCS=${${PROJECT_NAME}_SRCS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_INCLUDE_DIRS=${${PROJECT_NAME}_INCLUDE_DIRS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS=${${PROJECT_NAME}_PRIVATE_INCLUDE_DIRS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_LIBRARIES=${${PROJECT_NAME}_LIBRARIES}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_LIBRARIES=${${PROJECT_NAME}_PRIVATE_LIBRARIES}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_LIBRARY_DIRS=${${PROJECT_NAME}_LIBRARY_DIRS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS=${${PROJECT_NAME}_PRIVATE_LIBRARY_DIRS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_DEFINITIONS=${${PROJECT_NAME}_DEFINITIONS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_DEFINITIONS=${${PROJECT_NAME}_PRIVATE_DEFINITIONS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS=${${PROJECT_NAME}_PRIVATE_COMPILE_FLAGS}")
+
+	message(STATUS "** ${PROJECT_NAME}_PUBLIC_LINK_FLAGS=${${PROJECT_NAME}_PUBLIC_LINK_FLAGS}")
+	message(STATUS "** ${PROJECT_NAME}_PRIVATE_LINK_FLAGS=${${PROJECT_NAME}_PRIVATE_LINK_FLAGS}")
+
+	message(STATUS "** ${PROJECT_NAME}_BUILD_VERSION=${${PROJECT_NAME}_BUILD_VERSION}")
+	message(STATUS "** ${PROJECT_NAME}_API_VERSION=${${PROJECT_NAME}_API_VERSION}")
+	message(STATUS "**")
+
+endmacro (ow_project_log)
+
+
+*****  OWSetLibraryVersion.cmake  *****
+
+# - ow_set_library_version(buildVersion apiVersion)
+# Sets the library version (build + api) for the current project
+#
+# Example:
+# ow_create_shared_library(mytest)
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_set_library_version(1.1.2 1)
+#
+# ow_create_project_binary()
+#
+# Output generated:
+# libmytest-1.1.2.so
+#
+# Internally ow_set_library_version() uses variables named ${PROJECT_NAME}_BUILD_VERSION
+# and ${PROJECT_NAME}_API_VERSION, see ow_finish_binary() for more details
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_set_library_version buildVersion apiVersion)
+
+	ow_check_project()
+
+	set(${PROJECT_NAME}_BUILD_VERSION
+		${buildVersion}
+	)
+
+	set(${PROJECT_NAME}_API_VERSION
+		${apiVersion}
+	)
+
+endmacro (ow_set_library_version)
+
+
+*****  OWSvnCheckout.cmake  *****
+
+# - ow_svn_checkout(url dst)
+# Does a subversion checkout from an url to a destination directory ${CMAKE_CURRENT_SOURCE_DIR}/${dst}
+#
+# svn special options can be passed via ${ARGN}
+# ow_svn_checkout() is a bloquant function that runs command line 'svn co'
+# thus you need to install the subversion command line, check http://subversion.tigris.org/
+# if you don't have it already
+#
+# Example:
+# ow_svn_checkout(https://dev.openwengo.com/svn/openwengo/webcam/trunk libs/webcam -r 9053 -q)
+#
+# This will make a svn checkout from https://dev.openwengo.com/svn/openwengo/webcam/trunk (revision 9053
+# and quiet mode) and copy it to directory ${CMAKE_CURRENT_SOURCE_DIR}/libs/webcam
+#
+# Copyright (C) 2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_svn_checkout url dst)
+
+	if (NOT SUBVERSION_FOUND)
+		find_package(Subversion REQUIRED)
+	endif (NOT SUBVERSION_FOUND)
+
+	execute_process(
+		COMMAND
+			${SUBVERSION_SVN_EXECUTABLE} co ${url} ${CMAKE_CURRENT_SOURCE_DIR}/${dst} ${ARGN}
+	)
+
+endmacro (ow_svn_checkout)
+
+
+*****  OWUnique.cmake  *****
+
+# - ow_unique(uniqueList list)
+# Internal function, makes the given list have only one instance of each unique element
+#
+# See http://voxel.jouy.inra.fr/darcs/contrib-itk/WrapITK-unstable/CMakeUtilityFunctions.cmake
+#
+# Example:
+# ow_unique(unique ${${PROJECT_NAME}_PUBLIC_LINK_FLAGS} ${${PROJECT_NAME}_PRIVATE_LINK_FLAGS})
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_unique uniqueList)
+	set(uniqueTmp
+		""
+	)
+
+	foreach (loop ${ARGN})
+		if (NOT "${uniqueTmp}" MATCHES "(^|;)${loop}(;|$)")
+			set(uniqueTmp
+				${uniqueTmp}
+				${loop}
+			)
+		endif (NOT "${uniqueTmp}" MATCHES "(^|;)${loop}(;|$)")
+	endforeach (loop)
+
+	set(${uniqueList}
+		${uniqueTmp}
+	)
+endmacro (ow_unique)
+
+
+*****  OWUsePrivateFrameworks.cmake  *****
+
+# - ow_use_private_frameworks(framework1 ... frameworkN)
+# MacOSX only, uses privately a framework inside the current project:
+# imports properties from a framework to the current project
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+if (APPLE)
+	include(CMakeFindFrameworks)
+
+	macro (ow_use_private_frameworks)
+
+		ow_check_project()
+
+		foreach (fwk ${ARGN})
+			cmake_find_frameworks(${fwk})
+
+			set(first ${${fwk}_FRAMEWORKS})
+
+			ow_add_private_link_flags(
+				"-framework ${fwk}"
+			)
+		endforeach (fwk ${ARGN})
+
+	endmacro (ow_use_private_frameworks)
+endif (APPLE)
+
+
+*****  OWUsePrivateLibraries.cmake  *****
+
+# - ow_use_private_libraries(lib1 ... libN)
+# Uses privately a library inside the current project: imports properties from a library to the current project
+#
+# ow_use_private_libraries() and ow_use_public_libraries() implement
+# OWBuild inheritance system
+#
+# A project (ow_create_executable(), ow_create_shared_library()...)
+# has public/private attributes (changed via ow_add_public_include_dirs(),
+# ow_add_public_definitions()...)
+# If a new project inherits from another, all public attributes from
+# the last one will be inherited and become attributes of the new one
+# This means that project B public include dirs, definitions, compile flags, link flags...
+# will get into project A if A inherits from B
+# Of course if project B inherits publicly from a project C (and D...), then A will get all
+# the public attributes from B and C (and D...)
+#
+#       C     D
+#        \   /
+#         \ /
+#          B
+#           \
+#            \
+#             A (<- inherits from B that inherits from C and D)
+#
+# You can inherit from a project publicly or privately, this will
+# respectively propagate inherited attributes to subproject or not
+#
+# This has to be seen as mutli-inheritance from Oriented Object Programming,
+# thus UML diagrams perfectly fit the design sep of a build system based on OWBuild
+#
+# Of course OWBuild does not provide full-feature inheritance but only a subset
+# that fits the needs for a simple and yet powerful build system
+# If you are not familiar with inheritance, check:
+# http://en.wikipedia.org/wiki/Inheritance_%28computer_science%29
+#
+# Term 'private' means that public attributes inherited will become
+# private attributes once inherited and won't be propagated to subprojects
+# See ow_use_public_libraries() for the 'public' version of this function
+#
+# Example:
+# ow_create_shared_library(mylib)
+#
+# ow_add_public_include_dirs(
+# 	${CMAKE_CURRENT_SOURCE_DIR}/include
+# )
+#
+# ow_add_public_definitions(
+# 	-DMYDEFINE
+# )
+#
+# ow_add_sources(
+# 	mylib.c
+# )
+#
+# ow_create_project_binary()
+#
+#
+# ow_create_executable(mytest)
+#
+# ow_use_private_libraries(
+# 	mylib
+# )
+#
+# ow_add_sources(
+# 	mytest.c
+# )
+#
+# ow_create_project_binary()
+#
+# Output generated:
+# gcc -I/home/me/mylib/include -DMYDEFINE mytest.c -lmylib -o mytest
+#
+# Project mytest gets -I/home/me/mylib/include, -DMYDEFINE, -lmylib
+# from project mylib
+#
+# Internally ow_use_private_libraries() uses variables ${PROJECT_NAME}_INCLUDE_DIRS,
+# ${PROJECT_NAME}_LIBRARIES, ${PROJECT_NAME}_LIBRARY_DIRS, ${PROJECT_NAME}_DEFINITIONS,
+# ${PROJECT_NAME}_PUBLIC_LINK_FLAGS...
+# All these variables are project attributes, ow_add_public_*() ow_add_private_*() are
+# accessors (setters)
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_use_private_libraries)
+
+	ow_check_project()
+
+	foreach (loop ${ARGN})
+		if (NOT ${loop}_INCLUDE_DIRS)
+			if (NOT ${loop}_INCLUDE_DIR)
+				message(FATAL_ERROR "${PROJECT_NAME}: ${loop}_INCLUDE_DIRS and ${loop}_INCLUDE_DIR empty,"
+					" check that ${loop} is declared before ${PROJECT_NAME}")
+			endif (NOT ${loop}_INCLUDE_DIR)
+		endif (NOT ${loop}_INCLUDE_DIRS)
+		ow_add_private_include_dirs(
+			${${loop}_INCLUDE_DIRS}
+			${${loop}_INCLUDE_DIR}
+		)
+
+		#if (NOT ${loop}_LIBRARIES)
+		#	message(FATAL_ERROR "${loop}_LIBRARIES empty")
+		#endif (NOT ${loop}_LIBRARIES)
+		if (${loop}_LIBRARIES)
+			ow_add_private_libraries(
+				${${loop}_LIBRARIES}
+			)
+		endif (${loop}_LIBRARIES)
+		if (${loop}_LIBRARY)
+			ow_add_private_libraries(
+				${${loop}_LIBRARY}
+			)
+		endif (${loop}_LIBRARY)
+
+		if (${loop}_LIBRARY_DIRS)
+			ow_add_private_library_dirs(
+				${${loop}_LIBRARY_DIRS}
+			)
+		endif (${loop}_LIBRARY_DIRS)
+
+		if (${loop}_DEFINITIONS)
+			ow_add_private_definitions(
+				${${loop}_DEFINITIONS}
+			)
+		endif (${loop}_DEFINITIONS)
+
+		if (${loop}_PUBLIC_LINK_FLAGS)
+			ow_add_private_link_flags(
+				${${loop}_PUBLIC_LINK_FLAGS}
+			)
+		endif (${loop}_PUBLIC_LINK_FLAGS)
+	endforeach (loop)
+
+endmacro (ow_use_private_libraries)
+
+
+*****  OWUsePublicFrameworks.cmake  *****
+
+# - ow_use_public_frameworks(framework1 ... frameworkN)
+# MacOSX only, uses publicly a framework inside the current project:
+# imports properties from a framework to the current project
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+if (APPLE)
+	include(CMakeFindFrameworks)
+
+	macro (ow_use_public_frameworks)
+
+		ow_check_project()
+
+		foreach (fwk ${ARGN})
+			cmake_find_frameworks(${fwk})
+
+			set(first ${${fwk}_FRAMEWORKS})
+
+			ow_add_public_link_flags(
+				"-framework ${fwk}"
+			)
+		endforeach (fwk ${ARGN})
+
+	endmacro (ow_use_public_frameworks)
+endif (APPLE)
+
+
+*****  OWUsePublicLibraries.cmake  *****
+
+# - ow_use_public_libraries(lib1 ... libN)
+# Uses publicly a library inside the current project: imports properties from a library to the current project
+#
+# See ow_use_private_libraries() for complete documentation
+#
+# Term 'public' means that public attributes inherited will stay
+# public attributes once inherited and will be propagated to subprojects
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_use_public_libraries)
+
+	ow_check_project()
+
+	foreach (loop ${ARGN})
+		if (NOT ${loop}_INCLUDE_DIRS)
+			if (NOT ${loop}_INCLUDE_DIR)
+				message(FATAL_ERROR "${PROJECT_NAME}: ${loop}_INCLUDE_DIRS and ${loop}_INCLUDE_DIR empty,"
+					" check that ${loop} is declared before ${PROJECT_NAME}")
+			endif (NOT ${loop}_INCLUDE_DIR)
+		endif (NOT ${loop}_INCLUDE_DIRS)
+		ow_add_public_include_dirs(
+			${${loop}_INCLUDE_DIRS}
+			${${loop}_INCLUDE_DIR}
+		)
+
+		#if (NOT ${loop}_LIBRARIES)
+		#	message(FATAL_ERROR "${loop}_LIBRARIES empty")
+		#endif (NOT ${loop}_LIBRARIES)
+		if (${loop}_LIBRARIES)
+			ow_add_public_libraries(
+				${${loop}_LIBRARIES}
+			)
+		endif (${loop}_LIBRARIES)
+		if (${loop}_LIBRARY)
+			ow_add_public_libraries(
+				${${loop}_LIBRARY}
+			)
+		endif (${loop}_LIBRARY)
+
+		if (${loop}_LIBRARY_DIRS)
+			ow_add_public_library_dirs(
+				${${loop}_LIBRARY_DIRS}
+			)
+		endif (${loop}_LIBRARY_DIRS)
+
+		if (${loop}_DEFINITIONS)
+			ow_add_public_definitions(
+				${${loop}_DEFINITIONS}
+			)
+		endif (${loop}_DEFINITIONS)
+
+		if (${loop}_PUBLIC_LINK_FLAGS)
+			ow_add_public_link_flags(
+				${${loop}_PUBLIC_LINK_FLAGS}
+			)
+		endif (${loop}_PUBLIC_LINK_FLAGS)
+	endforeach (loop)
+
+endmacro (ow_use_public_libraries)
+
+
+*****  OWZipDirectory.cmake  *****
+
+# - ow_zip_directory(src dst)
+# Creates a zip archive of a directory
+#
+# On Windows, it uses the '7z' executable, provided by 7-Zip
+# On Linux and Mac, it uses the 'zip' command
+#
+# Example:
+# ow_zip_directory(src dst)
+#
+# Output generated:
+# On Windows: 7z a -tZip -axdst dst src
+#	-ax flag is used to exclude the archive to be archived.
+#		This could happen if your try to zip the directory
+#		where the archive has already been generated
+#
+#
+# On Unix: zip dst src -x dst
+#
+#	-x exclude the archive. See above for reason.
+#
+# Copyright (C) 2006-2007  Wengo
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING file.
+
+
+macro (ow_zip_directory src dst)
+
+	message(STATUS "Creating file: ${dst}.(zip|tar.bz2)")
+
+	file(RELATIVE_PATH relativePathSrc ${CMAKE_CURRENT_BINARY_DIR} ${src})
+	file(RELATIVE_PATH relativePathDst ${CMAKE_CURRENT_BINARY_DIR} ${dst})
+
+	if (WIN32)
+		find_program(7ZIP_EXECUTABLE 7z
+			PATHS
+				"C:/Program Files/7-Zip"
+		)
+
+		# 7z.exe a -tZip -mx9 -ax dst.zip dst.zip src
+		# -mx9 means maximum compression
+		execute_process(COMMAND "${7ZIP_EXECUTABLE}" a -tZip -mx9 "-ax${relativePathDst}.zip" "${relativePathDst}.zip" "${relativePathSrc}")
+	endif (WIN32)
+
+	if (DISABLED)
+		find_program(ZIP_EXECUTABLE zip)
+
+		# zip -9 -r dst.zip src -x dst.zip
+		# -9 means maximum compression
+		execute_process(COMMAND "${ZIP_EXECUTABLE}" "-9" "-r" "${relativePathDst}.zip" "${relativePathSrc}" "-x" "${relativePathDst}.zip")
+	endif (DISABLED)
+
+	if (UNIX)
+		find_program(TAR_EXECUTABLE tar)
+
+		# tar -cvjf dst.tar.bz2 src
+		message("${TAR_EXECUTABLE}" "-cvjf" "${relativePathDst}.tar.bz2" "${relativePathSrc}")
+		execute_process(
+			COMMAND "${TAR_EXECUTABLE}" -cvjf "${relativePathDst}.tar.bz2" "${relativePathSrc}"
+		)
+	endif (UNIX)
+
+endmacro (ow_zip_directory)

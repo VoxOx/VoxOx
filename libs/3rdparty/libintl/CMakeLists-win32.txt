@@ -1,0 +1,11 @@
+ow_create_project(libintl)
+
+ow_add_public_libraries(
+	${CMAKE_CURRENT_SOURCE_DIR}/gettext-0.13.1/lib/intl.lib
+)
+
+ow_add_public_include_dirs(
+	${CMAKE_CURRENT_SOURCE_DIR}/gettext-0.13.1/include/
+)
+
+ow_copy_dir(${CMAKE_CURRENT_SOURCE_DIR}/gettext-0.13.1/bin/*.dll ${BUILD_DIR})

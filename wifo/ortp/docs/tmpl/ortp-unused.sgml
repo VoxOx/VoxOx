@@ -1,0 +1,92 @@
+<!-- ##### SECTION ./tmpl/stackinit.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/stackinit.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/stackinit.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/stackinit.sgml:Title ##### -->
+Stack Initialisation
+
+
+<!-- ##### SECTION ./tmpl/telephonyevents.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/telephonyevents.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/telephonyevents.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/telephonyevents.sgml:Title ##### -->
+Telephony events (RFC2833)
+
+
+<!-- ##### FUNCTION ortp_init_scheduler ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION rtp_session_add_telephony_event ##### -->
+<para>
+
+</para>
+
+@session: 
+@packet: 
+@event: 
+@end: 
+@volume: 
+@duration: 
+@Returns: 
+
+<!-- ##### FUNCTION rtp_session_create_telephony_event_packet ##### -->
+<para>
+
+</para>
+
+@session: 
+@start: 
+@Returns: 
+
+<!-- ##### FUNCTION rtp_session_read_telephony_event ##### -->
+<para>
+
+</para>
+
+@session: 
+@packet: 
+@tab: 
+@Returns: 
+
+<!-- ##### FUNCTION rtp_session_telephony_events_supported ##### -->
+<para>
+
+</para>
+
+@session: 
+@Returns: 
+
+<!-- ##### VARIABLE telephony_events ##### -->
+<para>
+
+</para>
+
+

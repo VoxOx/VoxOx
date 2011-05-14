@@ -1,0 +1,9 @@
+if (NOT PTHREAD_FOUND)
+	find_package(PTHREAD REQUIRED)
+endif (NOT PTHREAD_FOUND)
+
+ow_create_project(pthread)
+
+ow_use_public_libraries(
+	PTHREAD
+)

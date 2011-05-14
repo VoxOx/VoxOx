@@ -1,0 +1,100 @@
+/* Multi-Window Tabs CSS Start Here */
+ul.multiwindow_tabs {
+	text-align:center;
+	position:absolute;
+	list-style-type:none;
+	z-index:1000;
+}
+#tabs_contact { left:65px; top:0px; }
+ul.multiwindow_tabs li {
+	display:block;
+	float:left;
+	padding:0px 15px 0px 15px;
+	margin:0px;
+	height:21px;
+	line-height:19px;
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px 0px repeat-x;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+	/*
+	-webkit-box-shadow: #333 5px 5px 5px;
+	-moz-box-shadow: #333 5px 5px 5px;
+	*/
+	cursor:pointer;
+	text-shadow: #FFF 1px 1px 0px;
+	text-align:center;
+}
+ul.multiwindow_tabs li:hover, ul.multiwindow_tabs li.Tab-On {
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px -21px repeat-x;
+	border:1px solid #556bb2;
+}
+/* Multi-Window Tabs CSS End Here */
+
+/* Multi-Window CSS Starts Here */
+div.multiwindow {
+	position:absolute;
+	left:10px;
+	top:20px;
+	width:390px;
+	display:none;
+	background-color:#FFF;
+	border:0px solid red;
+}
+div.multiwindow div.multiwindow_top, div.multiwindow div.multiwindow_body, div.multiwindow div.multiwindow_bottom {
+	position:relative;
+	width:100%;
+	float:left;
+}
+div.multiwindow div.multiwindow_top { height:7px; background: transparent url('../../images/settings/img_inner_window_vertical.png') 0px 0px repeat-x; }
+	div.multiwindow div.multiwindow_top .corner_tl { background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px 0px no-repeat; float:left; }
+	div.multiwindow div.multiwindow_top .corner_tr { background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -14px no-repeat; float:right; }
+div.multiwindow div.multiwindow_bottom { height:7px; background: transparent url('../../images/settings/img_inner_window_vertical.png') 0px -7px repeat-x; }
+	div.multiwindow div.multiwindow_bottom .corner_bl { background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -7px no-repeat; float:left; }
+	div.multiwindow div.multiwindow_bottom .corner_br { background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -21px no-repeat; float:right; }
+	.corner_tl, .corner_tr, .corner_bl, .corner_br { width:7px; height:7px; }
+div.multiwindow div.multiwindow_body { 
+	position:relative;
+	display:block;
+	/*height:100%;*/
+	width:100%; 
+}
+div.multiwindow div.multiwindow_body div.side_l, div.multiwindow div.multiwindow_body div.multiwindow_body_content, div.multiwindow div.multiwindow_body div.side_r {
+	position:relative;
+	display:block;
+	float:left;
+	height:100%;
+	min-height:100%;
+}
+div.multiwindow div.multiwindow_body .side_l {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') 0px 0px repeat-y;
+	width:7px;
+}
+div.multiwindow div.multiwindow_body .side_r {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') -7px 0px repeat-y;
+	width:7px;
+}
+div.multiwindow div.multiwindow_body div.multiwindow_body_content { width:376px; }
+div.multiwindow div.multiwindow_body div.multiwindow_body_content form div.settings_section_hdr {
+	width:350px;
+	height:1px;
+	margin:15px 13px 10px 13px;
+	font-size:12px;
+	line-height:0px;
+	border-bottom:1px solid #c2c2c2;
+	display:block;
+	float:left;
+}
+div.multiwindow_body_content { text-align:left; }
+div.multiwindow_body_content form { padding-top:20px; position:relative; }
+
+td.side_l2 {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') 0px 0px repeat-y;
+	width:7px;
+}
+td.side_r2 {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') -7px 0px repeat-y;
+	width:7px;
+}
+td.multiwindow_body_content2 { width:376px; height:356px; }
+/* Multi-Window CSS Ends Here */

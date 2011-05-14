@@ -1,0 +1,280 @@
+/* Form & Button Styles Start Here */
+form, fieldset {
+	padding:0px;
+	margin:0px;
+	border:0px;
+}
+input[type=text], input[type=password] {
+	width:200px;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+}
+input.file {
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+}
+button {
+	height:21px;
+	line-height:15px;
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px 0px repeat-x;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+	cursor:pointer;
+}
+button.bttn_pressed {
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px -21px repeat-x;
+	border:1px solid #556bb2;
+}
+button.bttn_fakefilebrowes {
+	height:21px;
+	line-height:15px;
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px 0px repeat-x;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+	cursor:pointer;
+	z-index: 2;
+}
+
+div.opt_file {
+	display:block;
+	position:relative;
+}
+div.opt_file div{
+	float:left;
+}
+	#opt_file_myname{
+		float:right;
+		padding-right:120px;
+	}
+
+div.filebrowser {
+	position:relative;
+	overflow:hidden;
+}
+div.filebrowser input.file {
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+/* Form & Button Styles Ends Here */
+
+ul.multiwindow_tabs {
+	text-align:center;
+	position:absolute;
+	list-style-type:none;
+	z-index:1000;
+}
+#tabs_phone {
+	left:15px;
+	top:0px;
+}
+ul.multiwindow_tabs li {
+	display:block;
+	float:left;
+	padding:0px 15px 0px 15px;
+	margin:0px;
+	height:21px;
+	line-height:19px;
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px 0px repeat-x;
+	border:1px solid #838383;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 5px;
+	/*
+	-webkit-box-shadow: #333 5px 5px 5px;
+	-moz-box-shadow: #333 5px 5px 5px;
+	*/
+	cursor:pointer;
+	text-shadow: #FFF 1px 1px 0px;
+	text-align:center;
+}
+ul.multiwindow_tabs li:hover, ul.multiwindow_tabs li.Tab-On {
+	background: transparent url('../../images/settings/img_innerwindow_tabs.png') 0px -21px repeat-x;
+	border:1px solid #556bb2;
+}
+div.multiwindow {
+	position:absolute;
+	left:10px;
+	top:20px;
+	height:100%;
+	display:none;
+}
+div.multiwindow div {
+	position:relative;
+	float:left;
+}
+div.multiwindow div.multiwindow_top {
+	width:390px;
+	height:7px;
+	background: transparent url('../../images/settings/img_inner_window_vertical.png') 0px 0px repeat-x;
+}
+div.multiwindow div.multiwindow_body {
+	width:390px;
+}
+div.multiwindow div.multiwindow_bottom {
+	width:390px;
+	height:7px;
+	background: transparent url('../../images/settings/img_inner_window_vertical.png') 0px -7px repeat-x;
+}
+
+.corner_tl, .corner_tr, .corner_bl, .corner_br {
+	width:7px;
+	height:7px;
+}
+div.multiwindow div.multiwindow_top .corner_tl {
+	background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px 0px no-repeat;
+	float:left;
+}
+div.multiwindow div.multiwindow_top .corner_tr {
+	background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -14px no-repeat;
+	float:right;
+}
+div.multiwindow div.multiwindow_bottom .corner_bl {
+	background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -7px no-repeat;
+	float:left;
+}
+div.multiwindow div.multiwindow_bottom .corner_br {
+	background: #FFF url('../../images/settings/img_inner_window_corners.png') 0px -21px no-repeat;
+	float:right;
+}
+
+div.multiwindow div.multiwindow_body div.side_l,
+div.multiwindow div.multiwindow_body div.multiwindow_body_content,
+div.multiwindow div.multiwindow_body div.side_r {
+	float:left;
+	/*height:100%;*/
+	min-height:400px;
+}
+div.multiwindow div.multiwindow_body .side_l {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') 0px 0px repeat-y;
+	width:7px;
+}
+div.multiwindow div.multiwindow_body .side_r {
+	background: #FFF url('../../images/settings/img_inner_window_horizontal.png') -7px 0px repeat-y;
+	width:7px;
+}
+div.multiwindow div.multiwindow_body div.multiwindow_body_content {
+	width:376px;
+}
+
+div.multiwindow div.multiwindow_body div.multiwindow_body_content form div.settings_section_hdr {
+	width:350px;
+	height:1px;
+	margin:15px 13px 10px 13px;
+	font-size:12px;
+	line-height:0px;
+	border-bottom:1px solid #c2c2c2;
+	display:block;
+	float:left;
+}
+
+div.multiwindow_body_content { text-align:left; }
+div.multiwindow_body_content form { padding-top:20px; position:relative; }
+
+div.multiwindow_body_content form fieldset {
+	padding-left:30px;
+	width:325px;
+	float:left;
+}
+div.multiwindow_body_content input[type=text], div.multiwindow_body_content input[type=password] {
+	width:200px;
+}
+div.multiwindow_body_content form fieldset label {
+	text-align:right;
+	display:inline-block;
+	width:75px;
+}
+div.multiwindow_body_content form fieldset div.filebrowser {	
+	display:block;
+	float:left;
+	height:21px;	
+}
+
+div.multiwindow_buttons {
+	position:absolute;
+	left:50px;
+	top:500px;
+	width:501px;
+	text-align:right;
+}
+
+div.settings_section_hdr span{
+	background-color:#FFF;
+	padding-right:5px;
+}
+div.settings_section_hdr input[type=checkbox]{
+	padding:0px;
+	margin:-5px 0px 0px 0px;
+}
+
+#list_settings {
+	width:117px;
+	text-align:left;
+	list-style-type:none;
+	color:#FFF;
+	margin:0px;
+	padding:0px;
+}
+#list_settings li{
+	display:block;
+	float:left;
+	width:117px;
+	height:33px;
+	cursor:pointer;
+}
+#list_settings li:hover, #list_settings li.selected{
+	background-color:#333333;
+}
+#list_settings li div {
+	margin-top:7px;
+	padding:0px 0px 0px 35px;
+	height:20px;
+	line-height:18px;
+}
+
+div.frm_error {
+	width:100%;
+	text-align:center;
+	color:#FF0000;
+	padding:20px 0px 10px 0px;
+	display:none;
+}
+
+.bttn_add, .bttn_delete {
+	cursor:pointer;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}
+
+.bttn_add {
+	background: #FFF url('../../images/settings/bttns_add_delete.png') 0px 0px no-repeat;
+}
+.bttn_delete {
+	background: #FFF url('../../images/settings/bttns_add_delete.png') 0px -16px no-repeat;
+}
+
+/* Tool Tip Icon Starts Here */
+img.tooltipimg1, img.tooltipimg2, img.tooltipimg3, img.tooltipimg4 {
+	margin:-10px 0px 0px 0px;
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border:0px;
+	overflow:visible;
+	cursor:pointer;
+}
+
+img.tooltipimg1 { background: transparent url('../../images/settings/icon_tooltip1.png') 50% 50% no-repeat; }
+img.tooltipimg2 { background: transparent url('../../images/settings/icon_tooltip2.png') 50% 50% no-repeat; }
+img.tooltipimg3 { background: transparent url('../../images/settings/icon_tooltip3.png') 50% 50% no-repeat; }
+img.tooltipimg4 { background: transparent url('../../images/settings/icon_tooltip4.png') 50% 50% no-repeat; }
+/* Tool Tip Icon Ends Here */
+
+/* Edit In Place CSS Starts Here */
+
+/* Edit In Place CSS Ends Here */

@@ -1,0 +1,38 @@
+Index: iaxclient.h
+===================================================================
+--- iaxclient.h	(revision 8897)
++++ iaxclient.h	(working copy)
+@@ -233,7 +233,7 @@
+ EXPORT int iaxc_service_audio();
+ EXPORT int iaxc_start_processing_thread();
+ EXPORT int iaxc_stop_processing_thread();
+-EXPORT void iaxc_call(char *num);
++EXPORT int iaxc_call(char *num);
+ EXPORT int iaxc_unregister( int id );
+ EXPORT int iaxc_register(char *user, char *pass, char *host);
+ EXPORT void iaxc_send_busy_on_incoming_call(int callNo);    //frik
+Index: iaxclient_lib.c
+===================================================================
+--- iaxclient_lib.c	(revision 8897)
++++ iaxclient_lib.c	(working copy)
+@@ -993,9 +993,9 @@
+ 	}
+ }
+ 
+-EXPORT void iaxc_call(char *num)
++EXPORT int iaxc_call(char *num)
+ {
+-	int callNo;
++	int callNo = -1;
+ 	struct iax_session *newsession;
+ 	char *ext = strstr(num, "/");
+ 
+@@ -1054,6 +1054,8 @@
+ 
+ iaxc_call_bail:
+ 	put_iaxc_lock();
++
++	return callNo;
+ }
+ 
+ //frik

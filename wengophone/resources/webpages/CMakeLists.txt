@@ -1,0 +1,5 @@
+if (WIN32)
+	if (COPY_DATA_FILES_ON_CONFIGURE)
+		ow_copy_dir_recursive(${CMAKE_CURRENT_SOURCE_DIR}/* ${DATA_COPY_DIR}/webpages/.)
+	endif (COPY_DATA_FILES_ON_CONFIGURE)
+endif (WIN32)
